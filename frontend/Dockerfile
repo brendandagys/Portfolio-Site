@@ -6,8 +6,9 @@ COPY ["package.json", "package-lock.json", "./"]
 
 RUN npm install --production
 
-COPY ./dist ./dist
+COPY ./src ./src
+COPY ./public ./public
 
-EXPOSE 5000
+EXPOSE 3000
 
 CMD ["npm", "start"]
