@@ -9,13 +9,13 @@ const app = express()
 
 // app.use(express.json())
 
+app.get('/api/health', (req: Request, res: Response) => {
+  res.send('Healthy!')
+})
+
 if (process.env.NODE_ENV === 'production') {
   // Express will serve production assets like our main.js or main.css file
   app.use(express.static(path.join(process.cwd(), '..', 'frontend', 'build')))
-
-  app.get('/health', (req: Request, res: Response) => {
-    res.send('Healthy!')
-  })
 
   // Express will serve up the index.html file if it doesn't recognize the route
   app.get('*', (req: Request, res: Response) => {
@@ -23,11 +23,11 @@ if (process.env.NODE_ENV === 'production') {
       path.resolve(process.cwd(), '..', 'frontend', 'build', 'index.html')
     )
   })
-} else {
-  app.get('/', (req: Request, res: Response) => {
-    res.send('API server is running...')
-  })
 }
+
+app.get('*', (req: Request, res: Response) => {
+  res.send('API server is running...')
+})
 
 const PORT = process.env.PORT ?? 5000
 
