@@ -1,13 +1,7 @@
 FROM node:alpine
-
-WORKDIR /app
-
+WORKDIR /usr/src/backend
 COPY ["package.json", "package-lock.json", "./"]
-
-RUN npm install --production
-
+RUN npm install
 COPY ./dist ./dist
-
 EXPOSE 5000
-
 CMD ["node", "dist/server.js"]

@@ -3,11 +3,12 @@ import { Request, Response } from 'express'
 
 import path from 'path'
 import dotenv from 'dotenv'
-dotenv.config({ path: __dirname + '/../.env' })
+
+dotenv.config({ path: __dirname + (process.env.ENVPATH ?? '/../.env') })
 
 const app = express()
 
-// app.use(express.json())
+app.use(express.json())
 
 app.get('/api/health', (req: Request, res: Response) => {
   res.send('Healthy!')

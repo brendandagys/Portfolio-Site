@@ -1,0 +1,19 @@
+services:
+  frontend:
+    build:
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - '3000:3000'
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./frontend:/usr/src/frontend
+      - /usr/src/frontend/nodemodules
+    stdin_open: true
+
+  backend:
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./backend:/usr/src/backend
+      - /usr/src/backend/node_modules
