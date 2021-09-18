@@ -1,7 +1,12 @@
+FROM node:14.17-alpine as builder
+WORKDIR /usr/src/backend
+COPY . .
+RUN npx tsc -p ./tsconfig.json
+
 FROM node:14.17-alpine
 WORKDIR /usr/src/backend
+COPY --from=builder usr/src/backend/dist ./dist
 COPY ["package.json", "package-lock.json", "./"]
-RUN npm install
-COPY ./dist ./dist
+RUN npm install --production
 EXPOSE 5000
 CMD ["node", "dist/server.js"]
