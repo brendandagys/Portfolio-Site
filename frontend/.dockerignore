@@ -4,3 +4,4 @@ build
 Dockerfile.prod
 Dockerfile.dev
 .dockerignore
+*.pem
