@@ -4,4 +4,4 @@ COPY ["package.json", "package-lock.json", "./"]
 RUN npm i
 COPY . .
 EXPOSE 5001
-CMD ["nodemon", "server.ts"]
+CMD ["npm", "run", "docker-dev"]

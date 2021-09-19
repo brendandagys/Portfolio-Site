@@ -27,7 +27,7 @@ app.get('/api/health', (req: Request, res: Response) => {
 // }
 
 app.get('*', (req: Request, res: Response) => {
-  res.send('API server is running...')
+  res.send(`API server running in ${process.env.NODE_ENV}...`)
 })
 
 const PORT = process.env.PORT ?? 5000

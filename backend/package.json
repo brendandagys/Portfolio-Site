@@ -5,7 +5,8 @@
   "description": "Backend server for Brendan Dagys' personal website.",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "ENVPATH=/.env concurrently \"tsc -w\" \"nodemon --watch './**/*.ts' --exec 'ts-node' server.ts\" \"npm start --prefix ../frontend\""
+    "dev": "ENVPATH=/.env concurrently \"tsc -w\" \"nodemon --watch './**/*.ts' --exec 'ts-node' server.ts\" \"npm start --prefix ../frontend\"",
+    "docker-dev": "nodemon server.ts"
   },
   "author": "Brendan Dagys",
   "license": "ISC",
