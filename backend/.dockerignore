@@ -1,0 +1,6 @@
+.env*
+node_modules
+dist
+Dockerfile.prod
+Dockerfile.dev
+.dockerignore

@@ -1,8 +1,6 @@
 .env*
 node_modules
 build
-dist
-Dockerfile
 Dockerfile.prod
 Dockerfile.dev
 .dockerignore
