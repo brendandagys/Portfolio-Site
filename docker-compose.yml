@@ -11,6 +11,4 @@ services:
     build:
       context: ./backend
     ports:
-      - '5001:5001'
-    environment:
-      PORT: 5001
+      - '5001:5000'
