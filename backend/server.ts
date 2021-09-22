@@ -9,7 +9,10 @@ dotenv.config({ path: __dirname + (process.env.ENVPATH ?? '/../.env') })
 const app = express()
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*')
+  res.set({
+    'Access-Control-Allow-Origin': 'http://brendandagys.com',
+    Vary: 'Origin',
+  })
   next()
 })
 
