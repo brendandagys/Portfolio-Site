@@ -4,6 +4,8 @@ services:
   frontend:
     build:
       context: ./frontend
+    ports:
+      - '80:80'
     environment:
       EXPRESS_HOST: backend
 
@@ -11,4 +13,4 @@ services:
     build:
       context: ./backend
     ports:
-      - '5001:5000'
+      - '8080:8080'

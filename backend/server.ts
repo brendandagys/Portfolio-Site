@@ -1,12 +1,17 @@
 import express from 'express'
 import { Request, Response } from 'express'
 
-import path from 'path'
+// import path from 'path'
 import dotenv from 'dotenv'
 
 dotenv.config({ path: __dirname + (process.env.ENVPATH ?? '/../.env') })
 
 const app = express()
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  next()
+})
 
 app.use(express.json())
 
@@ -30,10 +35,6 @@ app.get('*', (req: Request, res: Response) => {
   res.send(`API server running in ${process.env.NODE_ENV}...`)
 })
 
-const PORT = process.env.PORT ?? 5000
-
-app.listen(PORT, () =>
-  console.log(
-    `API server running in ${process.env.NODE_ENV} on port ${PORT}...`
-  )
+app.listen('8080', () =>
+  console.log(`API server running in ${process.env.NODE_ENV} on port 8080...`)
 )
