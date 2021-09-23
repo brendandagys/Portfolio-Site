@@ -41,6 +41,7 @@ Resources:
                 # Owner: !Ref RepositoryOwner
                 RepositoryName: !Ref Repository
                 BranchName: !Ref Branch
+              RunOrder: 1
         - 
           Name: Build
           Actions: 
@@ -59,6 +60,7 @@ Resources:
                   Name: MyAppBuild
               Configuration:
                 ProjectName: !Ref CodeBuild
+              RunOrder: 2
   CodeBuildRole:
     Type: AWS::IAM::Role
     Properties:
@@ -142,6 +144,15 @@ Resources:
                   - "codebuild:BatchGetBuilds"
                   - "codebuild:StartBuild"
                 Resource: "*"
+              -
+                Effect: Allow
+                Action:
+                  - "codecommit:UploadArchive"
+                  - "codecommit:GetCommit"
+                  - "codecommit:GetUploadArchiveStatus"
+                  - "codecommit:GetBranch"
+                  - "codecommit:CancelUploadArchive"
+                Resource: "*"
   CodeBuild:
     Type: 'AWS::CodeBuild::Project'
     Properties:
@@ -159,15 +170,14 @@ Resources:
       Source:
         Type: CODEPIPELINE
         BuildSpec: !Sub |
-          version: 0.1
+          version: 0.2
           phases:
             pre_build:
               commands:
-                - echo Installing source NPM dependencies...
+                - cd frontend
                 - npm install
             build:
               commands:
-                - echo Build started on `date`
                 - npm run build
             post_build:
               on-failure: CONTINUE
