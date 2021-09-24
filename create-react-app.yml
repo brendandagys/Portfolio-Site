@@ -172,13 +172,14 @@ Resources:
         BuildSpec: !Sub |
           version: 0.2
           phases:
-            pre_build:
+            install:
               commands:
                 - cd frontend
                 - npm install
             build:
               commands:
                 - npm run build
+                - echo $CODEBUILD_SRC_DIR
             post_build:
               on-failure: CONTINUE
               commands:
@@ -189,9 +190,8 @@ Resources:
                 # - aws cloudfront create-invalidation --distribution-id ${Distribution} --paths ./build/index.html
           artifacts:
             files:
-              - '**/*'
-            base-directory: build
-  PipelineBucket: 
+              - 'frontend/build/**/*'
+  PipelineBucket:
     Type: 'AWS::S3::Bucket'
     Properties: {}
   DeployBucket:
