@@ -40,6 +40,7 @@ Resources:
                 RepositoryName: !Ref Repository
                 BranchName: !Ref Branch
               RunOrder: 1
+              Region: ca-central-1
         - Name: Build
           Actions:
             - Name: BuildAction
@@ -174,6 +175,7 @@ Resources:
                 #uncomment if you have service-worker.js 
                 # - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/service-worker.js s3://${DeployBucket}/
                 - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/index.html s3://${DeployBucket}/
+                # - aws cloudfront create-invalidation --distribution-id ${Distribution} --paths ./build/index.html
           artifacts:
             files:
               - 'frontend/build/**/*'
@@ -183,7 +185,7 @@ Resources:
   DeployBucket:
     Type: 'AWS::S3::Bucket'
     Properties:
-      # AccessControl: PublicRead
+      AccessControl: PublicRead
       BucketName: 'brendandagys.com'
       WebsiteConfiguration:
         IndexDocument: index.html
