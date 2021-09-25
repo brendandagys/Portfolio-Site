@@ -12,6 +12,8 @@ dist/
 # misc
 .DS_Store
 .env*
+*.pem
+TLS/
 
 npm-debug.log*
 yarn-debug.log*

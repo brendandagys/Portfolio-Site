@@ -7,6 +7,7 @@ FROM node:14.17-alpine
 WORKDIR /usr/src/backend
 COPY --from=builder usr/src/backend/dist ./dist
 COPY ["package.json", "package-lock.json", "./"]
+COPY ["./TLS/key.pem", "./TLS/cert.pem", "./dist/"]
 RUN npm i --production
 EXPOSE 8080
 CMD ["node", "dist/server.js"]

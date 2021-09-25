@@ -4,4 +4,4 @@ dist
 Dockerfile.prod
 Dockerfile.dev
 .dockerignore
-*.pem
+# *.pem
