@@ -231,6 +231,12 @@ Resources:
     Type: 'AWS::CloudFront::Distribution'
     Properties:
       DistributionConfig:
+        Aliases:
+          - brendandagys.com
+        ViewerCertificate:
+          SslSupportMethod: sni-only
+          AcmCertificateArn: !Ref Certificate
+          MinimumProtocolVersion: TLSv1
         Origins:
           - DomainName: !GetAtt DeployBucket.DomainName
             Id: !Ref DeployBucket
