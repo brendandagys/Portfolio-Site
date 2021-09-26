@@ -227,24 +227,24 @@ Resources:
                 - !Ref DeployBucket
                 - /*
 
-  # Distribution:
-  #   Type: 'AWS::CloudFront::Distribution'
-  #   Properties:
-  #     DistributionConfig:
-  #       Origins:
-  #         - DomainName: !GetAtt DeployBucket.DomainName
-  #           Id: !Ref DeployBucket
-  #           S3OriginConfig:
-  #             OriginAccessIdentity: ''
-  #       DefaultRootObject: index.html
-  #       Enabled: true
-  #       DefaultCacheBehavior:
-  #         MinTTL: 86400
-  #         MaxTTL: 31536000
-  #         ForwardedValues:
-  #           QueryString: true
-  #         TargetOriginId: !Ref DeployBucket
-  #         ViewerProtocolPolicy: 'redirect-to-https'
+  Distribution:
+    Type: 'AWS::CloudFront::Distribution'
+    Properties:
+      DistributionConfig:
+        Origins:
+          - DomainName: !GetAtt DeployBucket.DomainName
+            Id: !Ref DeployBucket
+            S3OriginConfig:
+              OriginAccessIdentity: ''
+        DefaultRootObject: index.html
+        Enabled: true
+        DefaultCacheBehavior:
+          MinTTL: 86400
+          MaxTTL: 31536000
+          ForwardedValues:
+            QueryString: true
+          TargetOriginId: !Ref DeployBucket
+          ViewerProtocolPolicy: 'redirect-to-https'
 
   ECSCluster:
     Type: AWS::ECS::Cluster
@@ -273,7 +273,7 @@ Resources:
             - !Ref SubnetId
           SecurityGroups:
             - !Ref FargateSecurityGroup
-      EnableECSManagedTags: true
+      # EnableECSManagedTags: true
 
   FargateTaskDefinition:
     Type: AWS::ECS::TaskDefinition
@@ -289,9 +289,20 @@ Resources:
           PortMappings:
             - ContainerPort: 80
               Protocol: tcp
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-region: !Ref AWS::Region
+              awslogs-group: !Ref LogGroup
+              awslogs-stream-prefix: ecs
           Environment:
             - Name: NODE_ENV
               Value: production
+
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: '/ecs/my-site-backend-task-definition'
 
   FargateLoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
@@ -326,22 +337,22 @@ Resources:
       VpcId: !Ref VpcId
       SecurityGroupIngress:
         - IpProtocol: tcp
-          FromPort: 443
-          ToPort: 443
+          FromPort: 0
+          ToPort: 65535
           CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
-          FromPort: 80
-          ToPort: 80
-          CidrIp: 0.0.0.0/0
+        # - IpProtocol: tcp
+        #   FromPort: 0
+        #   ToPort: 65535
+        #   CidrIp: 0.0.0.0/0
       SecurityGroupEgress:
         - IpProtocol: tcp
-          FromPort: 443
-          ToPort: 443
+          FromPort: 0
+          ToPort: 65535
           CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
-          FromPort: 80
-          ToPort: 80
-          CidrIp: 0.0.0.0/0
+        # - IpProtocol: tcp
+        #   FromPort: 0
+        #   ToPort: 65535
+        #   CidrIp: 0.0.0.0/0
 
   FargateSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -350,15 +361,15 @@ Resources:
       VpcId: !Ref VpcId
       SecurityGroupIngress:
         - IpProtocol: tcp
-          FromPort: 80
-          ToPort: 80
+          FromPort: 0
+          ToPort: 65535
           CidrIp: 0.0.0.0/0
       SecurityGroupEgress:
         - IpProtocol: tcp
-          FromPort: 80
-          ToPort: 80
+          FromPort: 0
+          ToPort: 65535
           CidrIp: 0.0.0.0/0
-          # SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
+      # SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
 
   ListenerHTTPS:
     Type: AWS::ElasticLoadBalancingV2::Listener
@@ -388,12 +399,12 @@ Resources:
       Protocol: HTTP
       Port: 80
 
-  # DNSRecord:
-  #   Type: AWS::Route53::RecordSet
-  #   Properties:
-  #     HostedZoneId: Z1048063LC3J2IKH5GGI
-  #     Name: brendandagys.com
-  #     Type: A
-  #     AliasTarget:
-  #       DNSName: !GetAtt Distribution.DomainName
-  #       HostedZoneId: Z2FDTNDATAQYW2
+  DNSRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: Z1048063LC3J2IKH5GGI
+      Name: brendandagys.com
+      Type: A
+      AliasTarget:
+        DNSName: !GetAtt Distribution.DomainName
+        HostedZoneId: Z2FDTNDATAQYW2
