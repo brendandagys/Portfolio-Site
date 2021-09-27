@@ -5,7 +5,6 @@ const App = (): JSX.Element => {
   const checkHealth = async () => {
     const { data: healthStatus } = await axios.get('/api/health')
     console.log(healthStatus)
-    console.log('Hello')
   }
 
   useEffect(() => {
