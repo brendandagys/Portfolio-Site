@@ -4,7 +4,7 @@ let axiosNewBaseURL: AxiosInstance
 
 if (process.env.NODE_ENV === 'production') {
   axiosNewBaseURL = axios.create({
-    baseURL: 'https://my-site-alb-1065839461.us-east-1.elb.amazonaws.com',
+    baseURL: 'https://api.brendandagys.com',
   })
 } else {
   axiosNewBaseURL = axios
