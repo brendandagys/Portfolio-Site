@@ -2,10 +2,9 @@ import express from 'express'
 import { Request, Response } from 'express'
 
 import dotenv from 'dotenv'
-
 dotenv.config({ path: __dirname + (process.env.ENVPATH ?? '/../.env') })
 
-const PORT = 80
+const PORT = process.env.PORT ?? 80
 
 const app = express()
 
@@ -19,7 +18,7 @@ app.use((req, res, next) => {
 
 app.use(express.json())
 
-app.get('/api/health', (req: Request, res: Response) => {
+app.get('/health', (req: Request, res: Response) => {
   res.send('Healthy!')
 })
 
