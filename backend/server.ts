@@ -11,7 +11,7 @@ const app = express()
 
 app.use((req, res, next) => {
   res.set({
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin': 'https://brendandagys.com',
     Vary: 'Origin',
   })
   next()
