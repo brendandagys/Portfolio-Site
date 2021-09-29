@@ -10,7 +10,7 @@ const app = express()
 
 app.use((req, res, next) => {
   res.set({
-    'Access-Control-Allow-Origin': 'https://brendandagys.com',
+    'Access-Control-Allow-Origin': '*',
     Vary: 'Origin',
   })
   next()
@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 
 app.use(express.json())
 
-app.get('/health', (req: Request, res: Response) => {
+app.get('/api/health', (req: Request, res: Response) => {
   res.send('Healthy!')
 })
 
