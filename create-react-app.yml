@@ -8,7 +8,7 @@ Parameters:
 
   Certificate:
     Type: String
-    Default: arn:aws:acm:us-east-1:708746137251:certificate/591365e6-d7e5-456d-97df-ada13d481bc9
+    Default: arn:aws:acm:us-east-1:708746137251:certificate/32d925f9-559d-4300-b9a2-33849a09d9df
 
   Repository:
     Type: String
@@ -259,12 +259,25 @@ Resources:
 
   PipelineBucket:
     Type: 'AWS::S3::Bucket'
+    Properties:
+      # AccessControl: Private
+      BucketName: my-site-pipeline-artifacts
+      # PublicAccessBlockConfiguration:
+      #   BlockPublicAcls: true
+      #   BlockPublicPolicy: true
+      #   IgnorePublicAcls: true
+      #   RestrictPublicBuckets: true
 
   DeployBucket:
     Type: 'AWS::S3::Bucket'
     Properties:
       AccessControl: Private
-      BucketName: 'brendandagys.com'
+      BucketName: brendandagys.com
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
 
   DeployBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -274,7 +287,7 @@ Resources:
         Id: MySiteBucketPolicy
         Version: 2012-10-17
         Statement:
-          - Sid: CloudFront access only
+          - Sid: PolicyForCloudFrontPrivateContent
             Effect: Allow
             Principal:
               CanonicalUser: !GetAtt OriginAccessIdentity.S3CanonicalUserId
@@ -333,6 +346,9 @@ Resources:
             CachedMethods:
               - GET
               - HEAD
+            FunctionAssociations:
+              - EventType: viewer-response
+                FunctionARN: !Ref CloudFrontFunction
         Origins:
           - Id: !Ref DeployBucket
             DomainName: !GetAtt DeployBucket.DomainName
@@ -352,6 +368,36 @@ Resources:
         Logging:
           Bucket: my-site-cloudfront-distribution-logs.s3.amazonaws.com
           IncludeCookies: true
+
+  CloudFrontFunction:
+    Type: AWS::CloudFront::Function
+    Properties:
+      AutoPublish: true
+      FunctionCode: |
+        function handler(event) {
+          var response = event.response;
+          var headers = response.headers;
+
+          // Set HTTP security headers
+          // Since JavaScript doesn't allow for hyphens in variable names, we use the dict["key"] notation 
+          
+          headers['strict-transport-security'] = { value: 'max-age=63072000; includeSubdomains; preload'}; 
+          
+          headers['content-security-policy'] = { value: "default-src 'none'; img-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'"}; 
+          
+          headers['x-content-type-options'] = { value: 'nosniff'}; 
+          headers['x-frame-options'] = {value: 'DENY'}; 
+          headers['x-xss-protection'] = {value: '1; mode=block'}; 
+
+          // Return the response to viewers 
+          return response;
+        }
+      FunctionConfig:
+        Comment: Adds HTTP security headers to the viewer response
+        Runtime: cloudfront-js-1.0
+      # FunctionMetadata:
+      #   FunctionMetadata
+      Name: my-site-viewer-response-function
 
   OriginAccessIdentity:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
