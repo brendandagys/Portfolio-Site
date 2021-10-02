@@ -51,9 +51,6 @@ Parameters:
   DomainWWW:
     Type: String
     Default: www.brendandagys.com
-  SubDomain:
-    Type: String
-    Default: api
 
   EnvironmentName:
     Description: An environment name that is prefixed to the VPC and IGW
@@ -188,6 +185,9 @@ Resources:
         Type: CODEPIPELINE
         BuildSpec: !Sub |
           version: 0.2
+          env:
+            variables:
+              INLINE_RUNTIME_CHUNK: "false"
           phases:
             install:
               commands:
@@ -195,6 +195,7 @@ Resources:
                 - npm install
             build:
               commands:
+                - echo $INLINE_RUNTIME_CHUNK
                 - npm run build
                 - echo $CODEBUILD_SRC_DIR
             post_build:
@@ -272,11 +273,11 @@ Resources:
     Type: 'AWS::S3::Bucket'
     Properties:
       AccessControl: Private
-      BucketName: brendandagys.com
+      BucketName: !Ref Domain
       PublicAccessBlockConfiguration:
-        BlockPublicAcls: true
+        BlockPublicAcls: false
         BlockPublicPolicy: true
-        IgnorePublicAcls: true
+        IgnorePublicAcls: false
         RestrictPublicBuckets: true
 
   DeployBucketPolicy:
@@ -307,8 +308,8 @@ Resources:
         Enabled: true
         Comment: Connects to an S3 Bucket that hosts a React single-page-application
         Aliases:
-          - brendandagys.com
-          - www.brendandagys.com
+          - !Ref Domain
+          - !Ref DomainWWW
         ViewerCertificate:
           AcmCertificateArn: !Ref Certificate
           SslSupportMethod: sni-only
@@ -326,6 +327,7 @@ Resources:
           TargetOriginId: !Ref DeployBucket
           ViewerProtocolPolicy: 'redirect-to-https'
           CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          Compress: true
           AllowedMethods:
             - GET
             - HEAD
@@ -333,12 +335,16 @@ Resources:
           CachedMethods:
             - GET
             - HEAD
+          FunctionAssociations:
+            - EventType: viewer-response
+              FunctionARN: !Ref CloudFrontFunction
         CacheBehaviors:
           - PathPattern: api/*
             TargetOriginId: !Ref FargateService
             ViewerProtocolPolicy: 'redirect-to-https'
             CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad
             OriginRequestPolicyId: 216adef6-5c7f-47e4-b989-5492eafa07d3
+            Compress: true
             AllowedMethods:
               - GET
               - HEAD
@@ -349,6 +355,21 @@ Resources:
             FunctionAssociations:
               - EventType: viewer-response
                 FunctionARN: !Ref CloudFrontFunction
+          # - PathPattern: /*
+          #   TargetOriginId: !Ref DeployBucket
+          #   ViewerProtocolPolicy: 'redirect-to-https'
+          #   CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          #   Compress: true
+          #   AllowedMethods:
+          #     - GET
+          #     - HEAD
+          #     - OPTIONS
+          #   CachedMethods:
+          #     - GET
+          #     - HEAD
+          # FunctionAssociations:
+          #   - EventType: viewer-response
+          #     FunctionARN: !Ref CloudFrontFunction
         Origins:
           - Id: !Ref DeployBucket
             DomainName: !GetAtt DeployBucket.DomainName
@@ -365,6 +386,8 @@ Resources:
             DomainName: !GetAtt FargateServiceLoadBalancer.DNSName
             CustomOriginConfig:
               OriginProtocolPolicy: https-only
+              OriginSSLProtocols:
+                - TLSv1.2
         Logging:
           Bucket: my-site-cloudfront-distribution-logs.s3.amazonaws.com
           IncludeCookies: true
