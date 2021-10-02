@@ -195,7 +195,6 @@ Resources:
                 - npm install
             build:
               commands:
-                - echo $INLINE_RUNTIME_CHUNK
                 - npm run build
                 - echo $CODEBUILD_SRC_DIR
             post_build:
@@ -315,6 +314,10 @@ Resources:
           SslSupportMethod: sni-only
           MinimumProtocolVersion: TLSv1.2_2021
         CustomErrorResponses:
+          - ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+            ErrorCachingMinTTL: 10
           - ErrorCode: 404
             ResponseCode: 200
             ResponsePagePath: /index.html
@@ -355,21 +358,6 @@ Resources:
             FunctionAssociations:
               - EventType: viewer-response
                 FunctionARN: !Ref CloudFrontFunction
-          # - PathPattern: /*
-          #   TargetOriginId: !Ref DeployBucket
-          #   ViewerProtocolPolicy: 'redirect-to-https'
-          #   CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
-          #   Compress: true
-          #   AllowedMethods:
-          #     - GET
-          #     - HEAD
-          #     - OPTIONS
-          #   CachedMethods:
-          #     - GET
-          #     - HEAD
-          # FunctionAssociations:
-          #   - EventType: viewer-response
-          #     FunctionARN: !Ref CloudFrontFunction
         Origins:
           - Id: !Ref DeployBucket
             DomainName: !GetAtt DeployBucket.DomainName
@@ -395,6 +383,10 @@ Resources:
   CloudFrontFunction:
     Type: AWS::CloudFront::Function
     Properties:
+      Name: my-site-viewer-response-function
+      FunctionConfig:
+        Comment: Adds HTTP security headers to the viewer response
+        Runtime: cloudfront-js-1.0
       AutoPublish: true
       FunctionCode: |
         function handler(event) {
@@ -406,7 +398,7 @@ Resources:
           
           headers['strict-transport-security'] = { value: 'max-age=63072000; includeSubdomains; preload'}; 
           
-          headers['content-security-policy'] = { value: "default-src 'none'; img-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'"}; 
+          headers['content-security-policy'] = { value: "default-src 'none'; img-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; connect-src 'self'; manifest-src 'self'"}; 
           
           headers['x-content-type-options'] = { value: 'nosniff'}; 
           headers['x-frame-options'] = {value: 'DENY'}; 
@@ -415,12 +407,6 @@ Resources:
           // Return the response to viewers 
           return response;
         }
-      FunctionConfig:
-        Comment: Adds HTTP security headers to the viewer response
-        Runtime: cloudfront-js-1.0
-      # FunctionMetadata:
-      #   FunctionMetadata
-      Name: my-site-viewer-response-function
 
   OriginAccessIdentity:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
