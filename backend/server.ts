@@ -18,16 +18,18 @@ app.use((req, res, next) => {
 app.use(express.json())
 
 app.get('/api/health', (req: Request, res: Response) => {
-  res.send('API server is healthy!')
+  res.send('API server for site is healthy!')
 })
 
 app.get('*', (req: Request, res: Response) => {
-  res.send(`API server running in ${process.env.NODE_ENV}...`)
+  res.send(
+    `API server for site running in ${process.env.NODE_ENV} on port ${PORT}...`
+  )
 })
 
 app.listen(PORT, () =>
   console.log(
-    `API server running in ${process.env.NODE_ENV} on port ${PORT}...`
+    `API server for site running in ${process.env.NODE_ENV} on port ${PORT}...`
   )
 )
 
