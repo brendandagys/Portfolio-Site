@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 app.use(express.json())
 
 app.get('/api/health', (req: Request, res: Response) => {
-  res.send('Healthy!')
+  res.send('API server is healthy!')
 })
 
 app.get('*', (req: Request, res: Response) => {
