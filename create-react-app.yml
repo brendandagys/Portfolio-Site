@@ -195,8 +195,9 @@ Resources:
                 - npm install
             build:
               commands:
-                - npm run build
-                - echo $CODEBUILD_SRC_DIR
+                - npm build
+                # - npm test
+                # - echo $CODEBUILD_SRC_DIR
             post_build:
               on-failure: CONTINUE
               commands:
