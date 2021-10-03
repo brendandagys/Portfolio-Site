@@ -1,5 +1,4 @@
-import express from 'express'
-import { Request, Response } from 'express'
+import express, { Request, Response } from 'express'
 
 import dotenv from 'dotenv'
 dotenv.config({ path: __dirname + (process.env.ENVPATH ?? '/../.env') })
