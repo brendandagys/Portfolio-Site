@@ -15,8 +15,7 @@ dist/
 *.pem
 
 # AWS
-my-site-infrastructure.yml
-finances-app-infrastructure.yml
+*-infrastructure.yml
 
 npm-debug.log*
 yarn-debug.log*
