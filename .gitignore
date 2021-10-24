@@ -15,6 +15,7 @@ dist/
 *.pem
 
 # AWS
+AWS/
 *-infrastructure.yml
 
 npm-debug.log*
