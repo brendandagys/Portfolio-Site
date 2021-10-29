@@ -15,7 +15,7 @@ const HomepageTitles = (): React.ReactElement => {
         px='35px'
         sx={{ color: 'common.black', fontWeight: 'bold' }}
       >
-        Full-stack JavaScript and Python developer
+        JavaScript and Python developer
       </StyledTypography>
       <StyledTypography
         align='center'

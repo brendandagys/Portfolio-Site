@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+import { ImageListImage } from '../data/images'
+
 import {
   ImageList,
   ImageListItem,
@@ -17,13 +19,6 @@ const StyledImageList = styled(({ variant, ...rest }: ImageListProps) => (
   height: auto;
   border-radius: 22px;
 `
-
-type ImageListImage = {
-  img: string
-  title: string
-  cols: number
-  rows?: number
-}
 
 type MyImageListProps = {
   variant?: 'masonry' | 'quilted' | 'standard' | 'woven'
@@ -45,8 +40,9 @@ const MyImageList = ({
 }: MyImageListProps): React.ReactElement => {
   return (
     <StyledImageList variant={variant} cols={4} rowHeight={221}>
-      {imageListImages.map((item) => (
+      {imageListImages.map((item, index) => (
         <Tooltip
+          key={index}
           title={
             <>
               <Typography color='inherit'>{item.title}</Typography>

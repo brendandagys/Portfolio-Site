@@ -68,7 +68,9 @@ export default function CustomizedAccordions(): React.ReactElement {
         onChange={handleChange('panel1')}
       >
         <AccordionSummary aria-controls='panel1d-content' id='panel1d-header'>
-          <StyledTypography>About myself</StyledTypography>
+          <StyledTypography style={{ fontSize: '1.3rem' }}>
+            About myself
+          </StyledTypography>
         </AccordionSummary>
         <AccordionDetails>
           <StyledTypography>
@@ -85,15 +87,15 @@ export default function CustomizedAccordions(): React.ReactElement {
             involved the automation of numerous tasks, such as data retrieval,
             data cleaning, and data dissemination. This skillset improved how
             the organizations utilized dashboards and other reports/data that
-            comes from multifarious internal and external systems.
+            come from multifarious internal and external systems.
           </StyledTypography>
           <StyledTypography>
             In 2018, I became very interested not just in analytical
             programming, but in the development of applications and Websites. I
             created a few tools for work and numerous Websites for personal
-            projects. I designed these projects not only to solve a real
-            problem, but also to work on specific areas of software development
-            with the goal of becoming a well-rounded full-stack developer.
+            projects. I designed these projects not only to solve real problems,
+            but also to work on specific areas of software development with the
+            goal of becoming a well-rounded full-stack developer.
           </StyledTypography>
         </AccordionDetails>
       </Accordion>
@@ -102,7 +104,7 @@ export default function CustomizedAccordions(): React.ReactElement {
         onChange={handleChange('panel2')}
       >
         <AccordionSummary aria-controls='panel2d-content' id='panel2d-header'>
-          <StyledTypography>
+          <StyledTypography style={{ fontSize: '1.3rem' }}>
             My most-used technologies and skills
           </StyledTypography>
         </AccordionSummary>
@@ -148,7 +150,9 @@ export default function CustomizedAccordions(): React.ReactElement {
         onChange={handleChange('panel3')}
       >
         <AccordionSummary aria-controls='panel3d-content' id='panel3d-header'>
-          <StyledTypography>How I built this Website</StyledTypography>
+          <StyledTypography style={{ fontSize: '1.3rem' }}>
+            How I built this Website
+          </StyledTypography>
         </AccordionSummary>
         <AccordionDetails>
           <StyledTypography>
@@ -184,8 +188,8 @@ export default function CustomizedAccordions(): React.ReactElement {
             week designing a CloudFormation template that built everything from
             the security groups to the CloudFront distributions.
           </StyledTypography>
-          <StyledTypography>
-            Some other components:
+          <StyledTypography>Some other components:</StyledTypography>
+          <div>
             <ul>
               <li>
                 <StyledTypography>These</StyledTypography>
@@ -197,7 +201,7 @@ export default function CustomizedAccordions(): React.ReactElement {
                 <StyledTypography>components</StyledTypography>
               </li>
             </ul>
-          </StyledTypography>
+          </div>
         </AccordionDetails>
       </Accordion>
     </div>

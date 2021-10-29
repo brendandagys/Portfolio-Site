@@ -1,6 +1,9 @@
 import styled from 'styled-components'
 
 import Image from 'material-ui-image'
+import { Typography } from '@mui/material'
+
+import { Avatar } from '../data/avatarLinks'
 
 const ImageDiv = styled.div`
   // display: inline;
@@ -14,7 +17,7 @@ const ImageDiv = styled.div`
   color: black;
 `
 
-const ContactItemsRowDiv = styled.div`
+export const ContactItemsRowDiv = styled.div`
   border-radius: 30px 30px 0 0;
   text-align: center;
   background-color: ${({ theme }) => theme.palette.secondary.main};
@@ -24,13 +27,6 @@ const StyledLink = styled.a`
   display: inline-flex;
 `
 
-type Avatar = {
-  href: string
-  src: string
-  color: string
-  style: React.CSSProperties
-}
-
 type AvatarLinksProps = {
   avatars: Avatar[]
 }
@@ -38,16 +34,19 @@ type AvatarLinksProps = {
 const AvatarLinks = ({ avatars }: AvatarLinksProps): React.ReactElement => {
   return (
     <ContactItemsRowDiv>
-      {avatars.map(({ href, src, color, style }) => {
+      {avatars.map(({ href, src, color, style }, index) => {
         return (
-          <StyledLink href={href} target='_blank' rel='noreferrer'>
-            <ImageDiv>
+          <StyledLink key={index} href={href} target='_blank' rel='noreferrer'>
+            <ImageDiv className='hvr-grow'>
               <Image color={color} src={src} style={style} />{' '}
               {/* This `style` prop is from the Image component */}
             </ImageDiv>
           </StyledLink>
         )
       })}
+      <Typography paragraph sx={{ my: 0, pb: 1 }}>
+        &copy; 2021 by Brendan Dagys
+      </Typography>
     </ContactItemsRowDiv>
   )
 }

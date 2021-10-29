@@ -2,19 +2,15 @@ import { Grid, Typography, Box } from '@mui/material'
 import styled from 'styled-components'
 import MyCard from './MyCard'
 
+import { CardData } from '../data/cards'
+
+const Fade = require('react-reveal/Fade')
+
 const StyledBox = styled(Box)`
   margin: auto;
   text-align: center;
   color: ${({ theme }) => theme.palette.text.primary};
 `
-
-type CardData = {
-  image: string
-  title: string
-  alt: string
-  link: string
-  text: string
-}
 
 type CardGalleryProps = {
   cards: CardData[]
@@ -22,7 +18,7 @@ type CardGalleryProps = {
 
 const CardGallery = ({ cards }: CardGalleryProps): React.ReactElement => {
   return (
-    <>
+    <Fade right>
       <StyledBox>
         <Typography
           variant='h3'
@@ -30,7 +26,7 @@ const CardGallery = ({ cards }: CardGalleryProps): React.ReactElement => {
         >
           My Work
         </Typography>
-        <Typography m='10px 5% 40px' sx={{ fontWeight: 'light' }} variant='h6'>
+        <Typography m='10px 5% 50px' sx={{ fontWeight: 'light' }} variant='h6'>
           Below are some examples of past projects that I've worked on. I hope
           you find them interesting!
         </Typography>
@@ -42,9 +38,9 @@ const CardGallery = ({ cards }: CardGalleryProps): React.ReactElement => {
         // alignItems='stretch'
         px={2}
       >
-        {cards.map(({ image, title, alt, link, text }) => {
+        {cards.map(({ image, title, alt, link, text }, index) => {
           return (
-            <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+            <Grid item key={index} xs={12} sm={6} md={4} lg={3} xl={2}>
               <MyCard image={image} title={title} alt={alt} link={link}>
                 {text}
               </MyCard>
@@ -52,7 +48,7 @@ const CardGallery = ({ cards }: CardGalleryProps): React.ReactElement => {
           )
         })}
       </Grid>
-    </>
+    </Fade>
   )
 }
 

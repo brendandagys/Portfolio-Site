@@ -7,7 +7,7 @@ import AvatarLinks from './AvatarLinks'
 
 import SendIcon from '@mui/icons-material/Send'
 
-import { contactAvatarLinks } from '../data/contactAvatarLinks'
+import { contactAvatarLinks } from '../data/avatarLinks'
 
 const StyledBox = styled(Box)`
   margin: auto auto 2.7rem auto;
@@ -76,7 +76,12 @@ const ContactForm = (): React.ReactElement => {
             />
           </div>
           <StyledSendButtonDiv>
-            <Button type='submit' variant='contained' endIcon={<SendIcon />}>
+            <Button
+              type='submit'
+              variant='contained'
+              className='hvr-underline-from-left'
+              endIcon={<SendIcon />}
+            >
               Send
             </Button>
           </StyledSendButtonDiv>

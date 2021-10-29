@@ -4,6 +4,13 @@ import boston from '../images/boston.jpg'
 import algonquinPanoramic from '../images/algonquin-canoeing.jpg'
 import ibanezGuitar from '../images/ibanez-artcore-ag95-guitar.jpg'
 
+export type ImageListImage = {
+  img: string
+  title: string
+  cols: number
+  rows?: number
+}
+
 export const imageQuiltImages = [
   {
     img: neighborhoodPortrait,

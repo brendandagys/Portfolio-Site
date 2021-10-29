@@ -36,7 +36,7 @@ const IconGallery = ({
   title,
   variant,
   align = 'center',
-  width = '50px',
+  width = '65px',
 }: IconGalleryProps): React.ReactElement => {
   return (
     <>
@@ -44,8 +44,8 @@ const IconGallery = ({
         {title}
       </StyledTypography>
       <StyledDiv>
-        {icons.map((icon) => (
-          <StyledImageDiv width={width}>
+        {icons.map((icon, index) => (
+          <StyledImageDiv width={width} key={index}>
             <Image color='transparent' src={icon} />
           </StyledImageDiv>
         ))}

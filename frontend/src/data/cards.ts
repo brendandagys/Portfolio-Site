@@ -1,6 +1,14 @@
 import boston from '../images/boston.jpg'
 
-const cards = [
+export type CardData = {
+  image: string
+  title: string
+  alt: string
+  link: string
+  text: string
+}
+
+const portfolioCards = [
   {
     image: boston,
     title: 'Vocabulary Trainer',
@@ -66,4 +74,4 @@ const cards = [
   },
 ]
 
-export default cards
+export default portfolioCards

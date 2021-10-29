@@ -1,18 +1,71 @@
-import { useState } from 'react'
-import Box from '@mui/material/Box'
-import { Drawer, Fab } from '@mui/material'
-// import Button from '@mui/material/Button'
-import List from '@mui/material/List'
-import Divider from '@mui/material/Divider'
-import ListItem from '@mui/material/ListItem'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
+import { Fragment, useState } from 'react'
+import { scroller } from 'react-scroll'
+import styled from 'styled-components'
 
-import MenuIcon from '@mui/icons-material/Menu'
+import {
+  Box,
+  Drawer,
+  Fab,
+  List,
+  Divider,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListItemButton,
+} from '@mui/material'
+
+import drawerIcons from '../data/drawerIcons'
+
+const {
+  HomeIcon,
+  WorkIcon,
+  EmailIcon,
+  GitHubIcon,
+  MenuBookIcon,
+  DescriptionIcon,
+  MenuIcon,
+  OpenInNewIcon,
+  FileDownloadIcon,
+  HelpIcon,
+} = drawerIcons
+
+const StyledFab = styled(Fab)`
+  box-shadow: 2.5px 2.5px 5px grey;
+`
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right'
+
+type DrawerItem = {
+  text: string
+  scrollTo?: string
+  icon: React.ReactElement
+  href?: string
+  download?: boolean
+}
+
+const drawerItems1: DrawerItem[] = [
+  { text: 'Home', scrollTo: 'home-section', icon: <HomeIcon /> },
+  { text: 'About', scrollTo: 'about-section', icon: <HelpIcon /> },
+  { text: 'Portfolio', scrollTo: 'portfolio-section', icon: <WorkIcon /> },
+  { text: 'Contact', scrollTo: 'contact-section', icon: <EmailIcon /> },
+]
+const drawerItems2: DrawerItem[] = [
+  {
+    text: 'GitHub',
+    icon: <GitHubIcon />,
+    href: 'https://github.com/brendandagys',
+  },
+  {
+    text: 'Blog',
+    icon: <MenuBookIcon />,
+    href: 'https://brendandagys.com',
+  },
+  {
+    text: 'Resume',
+    icon: <DescriptionIcon />,
+    download: true,
+  },
+]
 
 export default function TemporaryDrawer({
   anchor,
@@ -40,6 +93,61 @@ export default function TemporaryDrawer({
       setState({ ...state, [anchor]: open })
     }
 
+  const handleScroll = (to?: string) => {
+    to &&
+      scroller.scrollTo(to, {
+        smooth: true,
+        spy: true,
+        offset: -50,
+      })
+  }
+
+  const listItem = (
+    text: string,
+    icon: React.ReactElement,
+    scrollTo?: string,
+    href?: string,
+    download?: boolean
+  ) => {
+    const listItemContent = (
+      <>
+        <ListItemIcon>{icon}</ListItemIcon>
+        <ListItemText primary={text} />
+        {href ? (
+          <ListItemIcon>
+            <OpenInNewIcon fontSize='small' />
+          </ListItemIcon>
+        ) : download ? (
+          <ListItemIcon>
+            <FileDownloadIcon fontSize='small' />
+          </ListItemIcon>
+        ) : null}
+      </>
+    )
+
+    return href || download ? (
+      <ListItemButton
+        dense={false}
+        component='a'
+        href={href}
+        target='_blank'
+        rel='noreferrer'
+        sx={{ my: 0 }}
+      >
+        {listItemContent}
+      </ListItemButton>
+    ) : (
+      <ListItem
+        className='hvr-overline-from-center'
+        button
+        key={text}
+        onClick={() => handleScroll(scrollTo)}
+      >
+        {listItemContent}
+      </ListItem>
+    )
+  }
+
   const list = (anchor: Anchor) => (
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
@@ -48,44 +156,44 @@ export default function TemporaryDrawer({
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['About', 'Portfolio', 'Blog', 'Contact'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        {drawerItems1.map(({ text, scrollTo, icon }, index) =>
+          scrollTo ? (
+            <Fragment key={index}>{listItem(text, icon, scrollTo)}</Fragment>
+          ) : (
+            <Fragment key={index}>{listItem(text, icon)}</Fragment>
+          )
+        )}
       </List>
       <Divider />
       <List>
-        {['Resume', 'GitHub', 'Humor'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        {drawerItems2.map(({ text, scrollTo, icon, href, download }, index) =>
+          scrollTo ? (
+            <Fragment key={index}>{listItem(text, icon)}</Fragment>
+          ) : (
+            <Fragment key={index}>
+              {listItem(text, icon, undefined, href, download)}
+            </Fragment>
+          )
+        )}
       </List>
     </Box>
   )
 
   return (
     <div>
-      <Fab
+      <StyledFab
         color='primary'
         aria-label='menu'
         onClick={toggleDrawer(anchor, true)}
         sx={{ position: 'fixed', right: '2rem', top: '2rem', zIndex: 999 }}
       >
         <MenuIcon />
-      </Fab>
+      </StyledFab>
       <Drawer
-        // transitionDuration={100}
         anchor={anchor}
         open={state[anchor]}
         onClose={toggleDrawer(anchor, false)}
+        // transitionDuration={100}
       >
         {list(anchor)}
       </Drawer>

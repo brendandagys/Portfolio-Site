@@ -2,6 +2,13 @@ import githubIcon from '../images/github-icon.svg'
 import linkedInIcon from '../images/linkedin-icon.svg'
 import emailIcon from '../images/email-icon-3.svg'
 
+export type Avatar = {
+  href: string
+  src: string
+  color: string
+  style: React.CSSProperties
+}
+
 export const contactAvatarLinks = [
   {
     href: 'https://github.com/brendandagys',
