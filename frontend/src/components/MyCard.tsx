@@ -75,6 +75,7 @@ const MyCard = ({
         <CardActions>
           <StyledAnchor href={link} target='_blank' rel='noreferrer'>
             <Button
+              className='hvr-underline-from-left-thin'
               size='small'
               color='primary'
               variant='contained'

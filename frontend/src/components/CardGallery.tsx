@@ -27,8 +27,8 @@ const CardGallery = ({ cards }: CardGalleryProps): React.ReactElement => {
           My Work
         </Typography>
         <Typography m='10px 5% 50px' sx={{ fontWeight: 'light' }} variant='h6'>
-          Below are some examples of past projects that I've worked on. I hope
-          you find them interesting!
+          Some past projects of mine, with links to the GitHub repository and a
+          demo of the application!
         </Typography>
       </StyledBox>
       <Grid
