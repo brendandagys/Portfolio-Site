@@ -1,5 +1,7 @@
 import express, { Request, Response } from 'express'
 
+import contactRoutes from './routes/contactRoutes'
+
 import dotenv from 'dotenv'
 dotenv.config({ path: __dirname + (process.env.ENVPATH ?? '/../.env') })
 
@@ -20,6 +22,8 @@ app.use(express.json())
 app.get('/api/health', (req: Request, res: Response) => {
   res.send('API server for site is healthy!')
 })
+
+app.use('/api/contact', contactRoutes)
 
 app.get('*', (req: Request, res: Response) => {
   res.send(
