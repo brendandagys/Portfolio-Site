@@ -4,7 +4,7 @@ import MyCard from './MyCard'
 
 import { CardData } from '../data/cards'
 
-const Fade = require('react-reveal/Fade')
+import { Fade } from 'react-awesome-reveal'
 
 const StyledBox = styled(Box)`
   margin: auto;
