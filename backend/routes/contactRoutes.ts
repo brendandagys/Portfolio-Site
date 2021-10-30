@@ -1,8 +1,8 @@
 import { Router } from 'express'
 const router = Router()
 
-import { sendEmail } from '../controllers/contactFormController'
+import { sendContactEmail } from '../controllers/contactFormController'
 
-router.route('/').post(sendEmail)
+router.route('/').post(sendContactEmail)
 
 export default router

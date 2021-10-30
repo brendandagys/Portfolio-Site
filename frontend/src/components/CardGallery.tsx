@@ -18,7 +18,7 @@ type CardGalleryProps = {
 
 const CardGallery = ({ cards }: CardGalleryProps): React.ReactElement => {
   return (
-    <Fade right>
+    <Fade>
       <StyledBox>
         <Typography
           variant='h3'

@@ -37,8 +37,8 @@ const StyledContactItemsRowDiv = styled(ContactItemsRowDiv)`
 
 const App = (): JSX.Element => {
   const checkHealth = async () => {
-    // const { data: healthStatus } = await axios.get('/api/health')
-    // console.log(healthStatus)
+    const { data: healthStatus } = await axios.get('/api/health')
+    console.log(healthStatus)
   }
 
   useEffect(() => {

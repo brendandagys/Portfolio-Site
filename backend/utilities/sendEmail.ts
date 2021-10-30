@@ -1,39 +1,54 @@
-var nodemailer = require('nodemailer')
+const nodemailer = require('nodemailer')
+const { google } = require('googleapis')
 
-export const sendEmail = async (
+const sendEmail = async (
   name: string,
+  email: string,
   subject: string,
   message: string
 ) => {
-  let smtpTransport = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true, // true for 465, false for other ports
+  const emailOptions = {
+    to: `${process.env.CLIENT_EMAIL}`,
+    subject: `${subject}`,
+    html: `
+      <div>
+        Name: ${name}
+        Email: ${email}
+      </div>
+
+      <br />
+
+      <div>
+        ${message}
+      </div>
+      `,
+  }
+
+  const oauth2Client = new google.auth.OAuth2(
+    process.env.CLIENT_ID,
+    process.env.CLIENT_SECRET,
+    'https://developers.google.com/oauthplayground'
+  )
+
+  oauth2Client.setCredentials({
+    refresh_token: process.env.REFRESH_TOKEN,
+  })
+
+  const accessToken = oauth2Client.getAccessToken()
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
     auth: {
-      user: process.env.GMAIL_USERNAME,
-      pass: process.env.GMAIL_PASSWORD,
+      type: 'OAuth2',
+      user: process.env.CLIENT_EMAIL,
+      clientId: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      refreshToken: process.env.REFRESH_TOKEN,
+      accessToken,
     },
   })
 
-  let mailOptions = {
-    from: `'${name}' <brendandagys@gmail.com>`,
-    to: 'brendandagys@gmail.com',
-    subject: `${subject}`,
-    html: `
-    <div>
-      ${message.replace('\n', '<br />')}
-    </div>
-    `,
-  }
-
-  await smtpTransport.sendMail(
-    mailOptions,
-    (err: any, res: { response: string }) => {
-      if (err) {
-        console.log(err)
-      } else {
-        console.log('Mail response: ' + res.response)
-      }
-    }
-  )
+  await transporter.sendMail(emailOptions)
 }
+
+export default sendEmail
