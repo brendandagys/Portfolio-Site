@@ -17,10 +17,11 @@ const ImageDiv = styled.div`
   color: black;
 `
 
-export const ContactItemsRowDiv = styled.div`
+const ContactItemsRowDiv = styled.div`
   border-radius: 30px 30px 0 0;
   text-align: center;
   background-color: ${({ theme }) => theme.palette.secondary.main};
+  box-shadow: 0px -1.5px 5px #d3d3d3;
 `
 
 const StyledLink = styled.a`
@@ -44,7 +45,7 @@ const AvatarLinks = ({ avatars }: AvatarLinksProps): React.ReactElement => {
           </StyledLink>
         )
       })}
-      <Typography paragraph sx={{ my: 0, pb: 1 }}>
+      <Typography paragraph sx={{ fontSize: '0.9rem', my: 0, pb: 1 }}>
         &copy; 2021 by Brendan Dagys
       </Typography>
     </ContactItemsRowDiv>

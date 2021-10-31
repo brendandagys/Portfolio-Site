@@ -74,7 +74,7 @@ const ContactForm = (): React.ReactElement => {
     })
     setFormValues(defaultValues)
 
-    console.log("Thanks! I'll be in touch soon! :)")
+    console.log("Thanks! I'll be in touch very soon! :)")
   }
 
   return (

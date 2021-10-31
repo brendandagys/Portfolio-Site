@@ -15,7 +15,6 @@ import MyImageList from './components/MyImageList'
 import IconGallery from './components/IconGallery'
 import CardGallery from './components/CardGallery'
 import HomepageDescription from './components/HomepageDescription'
-import { ContactItemsRowDiv } from './components/AvatarLinks'
 
 import { imageQuiltImages } from './data/images'
 import { technologyIcons, awsIcons } from './images/images'
@@ -31,8 +30,11 @@ const StyledBackgroundColor = styled(BackgroundColor)`
   padding-bottom: 2rem;
 `
 
-const StyledContactItemsRowDiv = styled(ContactItemsRowDiv)`
+const StyledTopBorderDiv = styled.div`
   height: 3px;
+  border-radius: 30px 30px 0 0;
+  text-align: center;
+  background-color: ${({ theme }) => theme.palette.secondary.main};
 `
 
 const App = (): JSX.Element => {
@@ -55,7 +57,7 @@ const App = (): JSX.Element => {
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
       >
         <Grid item xs={12}>
-          <StyledContactItemsRowDiv />
+          <StyledTopBorderDiv />
         </Grid>
         <Grid item>
           <Drawer anchor='right' />
@@ -100,7 +102,13 @@ const App = (): JSX.Element => {
           </StyledBackgroundColor>
         </Grid>
 
-        <Grid item xs={12} mt={13} id='contact-section'>
+        <Grid
+          item
+          xs={12}
+          pt={13}
+          id='contact-section'
+          sx={{ boxShadow: '0px -2.5px 10px #e7b9ff' }}
+        >
           <ContactForm />
         </Grid>
       </Grid>
