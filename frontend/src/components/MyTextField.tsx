@@ -1,9 +1,9 @@
-import { TextField } from '@mui/material'
-import { TextFieldProps } from '@mui/material'
+import { TextField, Theme, TextFieldProps } from '@mui/material'
 import React from 'react'
 
 const MyTextField = ({
   className,
+  theme,
   variant = 'standard',
   required = true,
   id,
@@ -18,6 +18,7 @@ const MyTextField = ({
   onChange,
 }: TextFieldProps & {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  theme: Theme
 }): React.ReactElement => {
   return (
     <TextField
@@ -34,6 +35,10 @@ const MyTextField = ({
       minRows={minRows}
       value={value}
       onChange={onChange}
+      style={{ backgroundColor: 'transparent' }}
+      InputLabelProps={{ style: { color: theme.palette.text.secondary } }}
+      FormHelperTextProps={{ style: { color: theme.palette.text.secondary } }}
+      autoComplete='off'
     ></TextField>
   )
 }

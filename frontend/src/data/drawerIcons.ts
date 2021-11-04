@@ -9,6 +9,9 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import FileDownloadIcon from '@mui/icons-material/FileDownload'
 import HelpIcon from '@mui/icons-material/Help'
 
+import Brightness4Icon from '@mui/icons-material/Brightness4'
+import Brightness7Icon from '@mui/icons-material/Brightness7'
+
 export const icons = {
   HomeIcon,
   WorkIcon,
@@ -20,6 +23,8 @@ export const icons = {
   OpenInNewIcon,
   FileDownloadIcon,
   HelpIcon,
+  Brightness4Icon,
+  Brightness7Icon,
 }
 
 export default icons

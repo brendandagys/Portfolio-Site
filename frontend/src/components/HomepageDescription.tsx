@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Typography } from '@mui/material'
 
 const StyledDiv = styled.div`
-  color: ${({ theme }) => theme.palette.text.secondary};
+  color: ${({ theme }) => theme.palette.fontColor.primary};
   text-align: center;
   // margin-bottom: 1rem;
 `

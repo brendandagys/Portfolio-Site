@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, SyntheticEvent, useState } from 'react'
 import { scroller } from 'react-scroll'
 import styled from 'styled-components'
 
@@ -12,6 +12,9 @@ import {
   ListItemIcon,
   ListItemText,
   ListItemButton,
+  Theme,
+  IconButton,
+  Typography,
 } from '@mui/material'
 
 import drawerIcons from '../data/drawerIcons'
@@ -27,10 +30,12 @@ const {
   OpenInNewIcon,
   FileDownloadIcon,
   HelpIcon,
+  Brightness4Icon,
+  Brightness7Icon,
 } = drawerIcons
 
 const StyledFab = styled(Fab)`
-  box-shadow: 2.5px 2.5px 5px grey;
+  box-shadow: 1.7px 1.7px 5px grey;
 `
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right'
@@ -69,8 +74,12 @@ const drawerItems2: DrawerItem[] = [
 
 export default function TemporaryDrawer({
   anchor,
+  theme,
+  toggleMode,
 }: {
   anchor: Anchor
+  theme: Theme
+  toggleMode: (e: SyntheticEvent) => void
 }): React.ReactElement {
   const [state, setState] = useState({
     top: false,
@@ -196,6 +205,34 @@ export default function TemporaryDrawer({
         // transitionDuration={100}
       >
         {list(anchor)}
+
+        <Box
+          onClick={toggleMode}
+          sx={{
+            cursor: 'pointer',
+            display: 'flex',
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+            bgcolor: `${theme.palette.background.default}`,
+            color: `${theme.palette.text.primary}`,
+            mt: 1,
+            p: 1,
+          }}
+        >
+          <Typography variant='overline'>
+            {theme.palette.mode[0].toUpperCase() +
+              theme.palette.mode.substring(1)}{' '}
+            mode enabled
+          </Typography>
+          <IconButton sx={{ ml: 1 }} color='inherit'>
+            {theme.palette.mode === 'dark' ? (
+              <Brightness4Icon />
+            ) : (
+              <Brightness7Icon />
+            )}
+          </IconButton>
+        </Box>
       </Drawer>
     </div>
   )

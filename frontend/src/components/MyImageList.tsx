@@ -14,10 +14,11 @@ const StyledImageList = styled(({ variant, ...rest }: ImageListProps) => (
   <ImageList variant={variant} {...rest}></ImageList>
 ))`
   margin: 1rem auto auto;
-  padding: 0 3px;
+  padding: 5px;
   max-width: 600px;
   height: auto;
-  border-radius: 22px;
+  border-radius: 8px;
+  background-color: white;
 `
 
 type MyImageListProps = {

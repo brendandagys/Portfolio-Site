@@ -10,6 +10,7 @@ import {
   CardContent,
   CardMedia,
   Typography,
+  Theme,
 } from '@mui/material'
 import GitHubIcon from '@mui/icons-material/GitHub'
 
@@ -19,17 +20,19 @@ type MyCardProps = {
   title: string
   alt: string
   link: string
+  theme: Theme
 } & CardProps
 
-const StyledCard = styled(
-  ({ style, ...rest }) => <Card style={style} {...rest} />
-  // animated(({ style, ...rest }) => <Card style={style} {...rest} />)
-)`
+const StyledCard = styled(({ style, ...rest }) => (
+  <Card style={style} {...rest} />
+))`
   margin: auto;
   max-width: 345px;
   text-align: center;
   border-radius: 20px;
-  border: 3px solid ${({ theme }) => theme.palette.primary.main};
+  border: 3px solid black;
+  // border: 3px solid ${({ theme }) => theme.palette.primary.dark};
+  background-color: ${({ theme }) => theme.palette.colorMode.s0};
 `
 
 const StyledAnchor = styled.a`
@@ -43,6 +46,7 @@ const MyCard = ({
   title,
   alt,
   link,
+  theme,
 }: MyCardProps): React.ReactElement => {
   // const springProps = useSpring({
   //   config: config.slow,
@@ -57,7 +61,7 @@ const MyCard = ({
     <div>
       <StyledCard
         raised
-        elevation={selected ? 7 : 3}
+        elevation={selected ? 24 : 3}
         onMouseOver={() => setSelected(true)}
         onMouseLeave={() => setSelected(false)}
       >
@@ -77,7 +81,9 @@ const MyCard = ({
             <Button
               className='hvr-underline-from-left-thin'
               size='small'
-              color='primary'
+              // color='secondary'
+              style={{ backgroundColor: '#3d3d3d' }}
+              // style={{ backgroundColor: theme.palette.secondary.main }}
               variant='contained'
               startIcon={<GitHubIcon sx={{ mb: '2px' }} />}
             >

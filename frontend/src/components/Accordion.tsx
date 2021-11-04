@@ -7,16 +7,16 @@ import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from '@mui/material/AccordionSummary'
 import MuiAccordionDetails from '@mui/material/AccordionDetails'
-import { Typography } from '@mui/material'
+import { Theme, Typography } from '@mui/material'
 
 const StyledTypography = scStyled(Typography)`
   margin: 1rem 0;
   text-indent: 12px;
 `
 
-const Accordion = styled((props: AccordionProps) => (
+const Accordion = styled((props: AccordionProps & { myTheme: Theme }) => (
   <MuiAccordion disableGutters elevation={3} {...props} />
-))(({ theme }) => ({
+))(({ theme, myTheme }) => ({
   border: `1px solid ${theme.palette.divider}`,
   '&:not(:last-child)': {
     borderBottom: 0,
@@ -27,6 +27,8 @@ const Accordion = styled((props: AccordionProps) => (
   width: '85%',
   minWidth: '350px',
   margin: '0 auto 0 auto',
+  backgroundColor: myTheme.palette.colorMode.s3,
+  color: myTheme.palette.text.primary,
 }))
 
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
@@ -53,7 +55,11 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: '1px solid rgba(0, 0, 0, .125)',
 }))
 
-export default function CustomizedAccordions(): React.ReactElement {
+export default function CustomizedAccordions({
+  theme,
+}: {
+  theme: Theme
+}): React.ReactElement {
   const [expanded, setExpanded] = useState<string | false>('panel1')
 
   const handleChange =
@@ -64,6 +70,7 @@ export default function CustomizedAccordions(): React.ReactElement {
   return (
     <div>
       <Accordion
+        myTheme={theme}
         expanded={expanded === 'panel1'}
         onChange={handleChange('panel1')}
       >
@@ -72,7 +79,7 @@ export default function CustomizedAccordions(): React.ReactElement {
             About myself
           </StyledTypography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{ backgroundColor: theme.palette.colorMode.sm1 }}>
           <StyledTypography>
             I live in Toronto, Ontario, Canada and graduated in 2016 from
             Ryerson University with a Bachelor’s degree in Biomedical
@@ -100,6 +107,7 @@ export default function CustomizedAccordions(): React.ReactElement {
         </AccordionDetails>
       </Accordion>
       <Accordion
+        myTheme={theme}
         expanded={expanded === 'panel2'}
         onChange={handleChange('panel2')}
       >
@@ -108,7 +116,7 @@ export default function CustomizedAccordions(): React.ReactElement {
             My most-used technologies and skills
           </StyledTypography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{ backgroundColor: theme.palette.colorMode.sm1 }}>
           <StyledTypography>
             Python is the first programming language that I dove deep into, and
             because of this, I began my Web development journey with Django, a
@@ -146,6 +154,7 @@ export default function CustomizedAccordions(): React.ReactElement {
         </AccordionDetails>
       </Accordion>
       <Accordion
+        myTheme={theme}
         expanded={expanded === 'panel3'}
         onChange={handleChange('panel3')}
       >
@@ -154,7 +163,7 @@ export default function CustomizedAccordions(): React.ReactElement {
             How I built this Website
           </StyledTypography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{ backgroundColor: theme.palette.colorMode.sm1 }}>
           <StyledTypography>
             When I began developing in Django, I used Heroku and similar
             services to deploy my applications. I felt that I did not have as

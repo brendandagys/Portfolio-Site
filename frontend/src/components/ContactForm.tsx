@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import axios from 'axios'
 
-import { useState } from 'react'
+import { useState, Fragment } from 'react'
 
 import { Box, FormControl, Typography, Button } from '@mui/material'
 
@@ -13,6 +13,8 @@ import SendIcon from '@mui/icons-material/Send'
 
 import { contactAvatarLinks } from '../data/avatarLinks'
 import React from 'react'
+
+import { Theme } from '@mui/material'
 
 const StyledBox = styled(Box)`
   margin: auto auto 2.7rem auto;
@@ -41,7 +43,7 @@ const StyledSendButtonDiv = styled.div`
   margin-top: 2rem;
 `
 
-const ContactForm = (): React.ReactElement => {
+const ContactForm = ({ theme }: { theme: Theme }): React.ReactElement => {
   const defaultValues = {
     name: '',
     email: '',
@@ -79,14 +81,47 @@ const ContactForm = (): React.ReactElement => {
 
   return (
     <>
-      <StyledBox component='form' onSubmit={handleSubmit}>
+      <StyledBox
+        component='form'
+        sx={{
+          '& .MuiInputBase-root': { color: theme.palette.text.primary },
+          // '& label.Mui-focused': {
+          //   color: 'white',
+          // },
+          '& .MuiInput-underline:after': {
+            borderBottomColor: `${theme.palette.secondary.main}`,
+          },
+          '& .MuiOutlinedInput-root': {
+            // '& fieldset': {
+            //   borderColor: `${theme.palette.text.primary}`,
+            // },
+            '&:hover fieldset': {
+              borderColor: `${theme.palette.secondary.main}`,
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: `${theme.palette.secondary.main}`,
+            },
+          },
+        }}
+        onSubmit={handleSubmit}
+      >
         <Typography
           variant='h3'
-          sx={{ fontWeight: 'bold', color: 'common.black' }}
+          sx={{
+            fontWeight: 'bold',
+            color: theme.palette.text.primary,
+          }}
         >
           Contact Me
         </Typography>
-        <Typography m='10px 0' sx={{ fontWeight: 'light' }} variant='h6'>
+        <Typography
+          m='10px 0'
+          sx={{
+            fontWeight: 'light',
+            color: theme.palette.text.secondary,
+          }}
+          variant='h6'
+        >
           If you’d like to chat about a project, please complete the form below.
           I'll get back to you soon!
         </Typography>
@@ -99,6 +134,7 @@ const ContactForm = (): React.ReactElement => {
               helperText='Please provide your full name.'
               value={formValues.name}
               onChange={handleInputChange}
+              theme={theme}
             />
             <StyledMyTextField
               id='email-input'
@@ -107,6 +143,7 @@ const ContactForm = (): React.ReactElement => {
               helperText='Your email will never be shared.'
               value={formValues.email}
               onChange={handleInputChange}
+              theme={theme}
             />
           </div>
           <div>
@@ -116,6 +153,7 @@ const ContactForm = (): React.ReactElement => {
               label='Subject'
               value={formValues.subject}
               onChange={handleInputChange}
+              theme={theme}
             />
           </div>
           <div>
@@ -128,6 +166,7 @@ const ContactForm = (): React.ReactElement => {
               variant='outlined'
               value={formValues.message}
               onChange={handleInputChange}
+              theme={theme}
             />
           </div>
           <StyledSendButtonDiv>

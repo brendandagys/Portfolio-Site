@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { Typography, TypographyProps } from '@mui/material'
+import { Theme, Typography, TypographyProps } from '@mui/material'
 import ImageDiv from './ImageDiv'
 import Image from 'material-ui-image'
 
@@ -21,7 +21,7 @@ const StyledImageDiv = styled(({ width, ...rest }) => {
 `
 
 const StyledTypography = styled(Typography)`
-  color: #202020;
+  color: ${({ theme }) => theme.palette.text.primary};
   margin-top: 3rem;
 `
 
@@ -29,6 +29,8 @@ type IconGalleryProps = {
   icons: string[]
   title: string
   width?: string
+  customStyle?: React.CSSProperties
+  theme: Theme
 } & TypographyProps
 
 const IconGallery = ({
@@ -37,12 +39,21 @@ const IconGallery = ({
   variant,
   align = 'center',
   width = '65px',
+  customStyle,
+  theme,
 }: IconGalleryProps): React.ReactElement => {
   return (
     <>
-      <StyledTypography variant={variant} align={align}>
-        {title}
-      </StyledTypography>
+      <div style={customStyle}>
+        <StyledTypography
+          variant={variant}
+          fontWeight='light'
+          align={align}
+          sx={{ color: theme.palette.fontColor.slate }}
+        >
+          {title}
+        </StyledTypography>
+      </div>
       <StyledDiv>
         {icons.map((icon, index) => (
           <StyledImageDiv width={width} key={index}>
