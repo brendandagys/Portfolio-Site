@@ -34,9 +34,9 @@ const {
   Brightness7Icon,
 } = drawerIcons
 
-const StyledFab = styled(Fab)`
-  box-shadow: 1.7px 1.7px 5px grey;
-`
+// const StyledFab = styled(Fab)`
+//   box-shadow: 1.7px 1.7px 5px grey;
+// `
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right'
 
@@ -190,14 +190,20 @@ export default function TemporaryDrawer({
 
   return (
     <div>
-      <StyledFab
+      <Fab
         color='primary'
         aria-label='menu'
         onClick={toggleDrawer(anchor, true)}
-        sx={{ position: 'fixed', right: '2rem', top: '2rem', zIndex: 999 }}
+        sx={{
+          position: 'fixed',
+          right: '2rem',
+          top: '2rem',
+          zIndex: 999,
+          boxShadow: 10,
+        }}
       >
         <MenuIcon />
-      </StyledFab>
+      </Fab>
       <Drawer
         anchor={anchor}
         open={state[anchor]}
@@ -233,6 +239,14 @@ export default function TemporaryDrawer({
             )}
           </IconButton>
         </Box>
+        <Typography
+          variant='caption'
+          align='center'
+          mt={1}
+          sx={{ color: theme.palette.fontColor.gray }}
+        >
+          ^ Click to change
+        </Typography>
       </Drawer>
     </div>
   )

@@ -22,14 +22,14 @@ import portfolioCards from './data/cards'
 
 import './css/my-css.css'
 import { hexPattern } from './css/hex-pattern'
+import { hexPatternLight } from './css/hex-pattern-light'
 
 import styled from 'styled-components'
 
 const StyledBackgroundColor = styled(BackgroundColor)`
   border-radius: 30px 30px 0 0;
-  // background-color: ${({ theme }) =>
-    theme.palette.colorMode.s3}; //rgba(1, 1, 1, 0.09);
-  ${hexPattern}
+  ${({ theme }) =>
+    theme.palette.mode === 'dark' ? hexPattern : hexPatternLight}
 `
 
 const StyledTopBorderDiv = styled.div`
@@ -103,12 +103,12 @@ const App = (): JSX.Element => {
 
         <Grid item xs={12}>
           <BackgroundColor>
-            <Grid item xs={12} pb={'8rem'} id='about-section'>
+            <Grid item xs={12} pb={'10rem'} id='about-section'>
               <HomepageDescription />
               <IconGallery
                 icons={technologyIcons}
                 variant='overline'
-                title='Some of my favorite technologies:'
+                title='Just a few of my favorite technologies...'
                 customStyle={{ marginTop: '50px', textAlign: 'center' }}
                 // theme={theme}
               />
@@ -128,7 +128,7 @@ const App = (): JSX.Element => {
           <Accordion theme={theme} />
         </Grid>
 
-        <Grid item xs={12} mt={39}>
+        <Grid item xs={12} mt={41}>
           <StyledBackgroundColor>
             <Grid item xs={12} mt={-30} id='portfolio-section'>
               <CardGallery cards={portfolioCards} theme={theme} />

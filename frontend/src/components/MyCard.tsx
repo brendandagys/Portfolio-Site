@@ -30,8 +30,8 @@ const StyledCard = styled(({ style, ...rest }) => (
   max-width: 345px;
   text-align: center;
   border-radius: 20px;
-  border: 3px solid black;
-  // border: 3px solid ${({ theme }) => theme.palette.primary.dark};
+  // border: 3px solid black;
+  border: 3px solid ${({ theme }) => theme.palette.colorMode.cardOutlineColor};
   background-color: ${({ theme }) => theme.palette.colorMode.s0};
 `
 
@@ -79,10 +79,16 @@ const MyCard = ({
         <CardActions>
           <StyledAnchor href={link} target='_blank' rel='noreferrer'>
             <Button
-              className='hvr-underline-from-left-thin'
+              className={
+                theme.palette.mode === 'dark'
+                  ? 'hvr-underline-from-left-thin-dark'
+                  : 'hvr-underline-from-left-thin-light'
+              }
               size='small'
               // color='secondary'
-              style={{ backgroundColor: '#3d3d3d' }}
+              style={{
+                backgroundColor: theme.palette.colorMode.gitHubButtonColor,
+              }}
               // style={{ backgroundColor: theme.palette.secondary.main }}
               variant='contained'
               startIcon={<GitHubIcon sx={{ mb: '2px' }} />}

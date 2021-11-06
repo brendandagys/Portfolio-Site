@@ -21,6 +21,11 @@ declare module '@mui/material/styles/createPalette' {
       accordionContentTextColor: string
       contactFormBackgroundColor: string
       copyrightColor: string
+      contactFormTextFieldColor: string
+      cardOutlineColor: string
+      imageListBackgroundColor: string
+      gitHubButtonColor: string
+      accordionHeaderBackgroundColor: string
     }
     fontColor: {
       primary: string
@@ -50,6 +55,11 @@ declare module '@mui/material/styles/createPalette' {
       accordionContentTextColor: string
       contactFormBackgroundColor: string
       copyrightColor: string
+      contactFormTextFieldColor: string
+      cardOutlineColor: string
+      imageListBackgroundColor: string
+      gitHubButtonColor: string
+      accordionHeaderBackgroundColor: string
     }
     fontColor: {
       primary: string
@@ -61,28 +71,7 @@ declare module '@mui/material/styles/createPalette' {
       black: string
     }
   }
-  //   interface TypeText {
-  //     third: string
-  //   }
 }
-
-// declare module '@mui/material/styles' {
-//   interface TypographyVariants {
-//     abc: React.CSSProperties
-//   }
-
-//   // allow configuration using `createTheme`
-//   interface TypographyVariantsOptions {
-//     abc?: React.CSSProperties
-//   }
-// }
-
-// // Update the Typography's variant prop options
-// declare module '@mui/material/Typography' {
-//   interface TypographyPropsVariantOverrides {
-//     abc: true
-//   }
-// }
 
 export const getTheme = (mode: PaletteMode) => {
   const customTheme = createTheme({
@@ -101,14 +90,14 @@ export const getTheme = (mode: PaletteMode) => {
           ? {
               light: '#e7b9ff',
               main: '#b388ff',
-              dark: '#7510F7',
+              dark: '#7510f7',
             }
-          : { light: '#e7b9ff', main: '#7510F7', dark: '#7510F7' },
+          : { light: '#e7b9ff', main: '#7510F7', dark: '#7510f7' },
       text:
         mode === 'light'
-          ? { primary: '#000000', secondary: 'rgba(10,10,10,0.9)' }
+          ? { primary: '#000', secondary: 'rgba(10,10,10,0.9)' }
           : {
-              primary: '#ffffff',
+              primary: '#fff',
               secondary: '#808080',
               disabled: 'rgba(255,255,255,0.5)',
             },
@@ -116,6 +105,55 @@ export const getTheme = (mode: PaletteMode) => {
         mode === 'light'
           ? { default: '#fff' }
           : { default: 'linear-gradient(260deg, #efd5ff 0%, #515ada 100%)' },
+
+      colorMode:
+        mode === 'light'
+          ? {
+              sm1: '#d3d3d3',
+              s0: '#fff',
+              s1: '#f6f6f6',
+              s2: '#fff',
+              s3: '#fff',
+              s4: '#fff',
+              s5: '#fff',
+              s6: '#181818',
+              modeButtonBackground: '#1e88e5',
+              modeButtonTextColor: '#fff',
+              titleTextColor: '#000',
+              iconGalleryTitleTextColor: '#000',
+              accordionHeaderBackgroundColor: '#fff',
+              accordionHeaderTextColor: '#000',
+              accordionContentTextColor: 'rgba(10,10,10,0.7)',
+              contactFormBackgroundColor: '#fff',
+              copyrightColor: 'rgba(10,10,10,0.8)',
+              contactFormTextFieldColor: '#7510f7',
+              cardOutlineColor: '#1e88e5',
+              imageListBackgroundColor: '#6ab7ff',
+              gitHubButtonColor: '#1e88e5',
+            }
+          : {
+              sm1: '#7b7b7b',
+              s0: '#f0f0f0',
+              s1: '#cccccc',
+              s2: '#808080',
+              s3: '#595959',
+              s4: '#404040',
+              s5: '#303030',
+              s6: '#181818',
+              modeButtonBackground: '#000',
+              modeButtonTextColor: '#fff',
+              titleTextColor: '#000',
+              iconGalleryTitleTextColor: '#000',
+              accordionHeaderBackgroundColor: '#4d4d4d',
+              accordionHeaderTextColor: '#fff',
+              accordionContentTextColor: '#f2f2f2',
+              contactFormBackgroundColor: '#262626',
+              copyrightColor: '#f2f2f2',
+              contactFormTextFieldColor: '#fff',
+              cardOutlineColor: '#000',
+              imageListBackgroundColor: '#303030',
+              gitHubButtonColor: '#3d3d3d',
+            },
       fontColor:
         mode === 'light'
           ? {
@@ -135,45 +173,6 @@ export const getTheme = (mode: PaletteMode) => {
               white: '#fff',
               gray: '#888888',
               black: '#000',
-            },
-
-      colorMode:
-        mode === 'light'
-          ? {
-              sm1: '#d3d3d3',
-              s0: '#ffffff',
-              s1: '#f6f6f6',
-              s2: '#ffffff',
-              s3: '#ffffff',
-              s4: '#ffffff',
-              s5: '#ffffff',
-              s6: '#181818',
-              modeButtonBackground: '#1e88e5',
-              modeButtonTextColor: '#fff',
-              titleTextColor: '#000',
-              iconGalleryTitleTextColor: '#000',
-              accordionHeaderTextColor: '#000',
-              accordionContentTextColor: 'rgba(10,10,10,0.7)',
-              contactFormBackgroundColor: '#fff',
-              copyrightColor: 'rgba(10,10,10,0.8)',
-            }
-          : {
-              sm1: '#7b7b7b',
-              s0: '#f0f0f0',
-              s1: '#cccccc',
-              s2: '#808080',
-              s3: '#595959',
-              s4: '#404040',
-              s5: '#303030',
-              s6: '#181818',
-              modeButtonBackground: '#000',
-              modeButtonTextColor: '#fff',
-              titleTextColor: '#000',
-              iconGalleryTitleTextColor: '#000',
-              accordionHeaderTextColor: '#fff',
-              accordionContentTextColor: '#f2f2f2',
-              contactFormBackgroundColor: '#262626',
-              copyrightColor: '#f2f2f2',
             },
     },
   })
@@ -199,3 +198,21 @@ export const getTheme = (mode: PaletteMode) => {
 // allVariants: { color: 'rgba(10, 10, 10, 0.9)' },
 // },
 // )
+
+// declare module '@mui/material/styles' {
+//   interface TypographyVariants {
+//     abc: React.CSSProperties
+//   }
+
+//   // allow configuration using `createTheme`
+//   interface TypographyVariantsOptions {
+//     abc?: React.CSSProperties
+//   }
+// }
+
+// // Update the Typography's variant prop options
+// declare module '@mui/material/Typography' {
+//   interface TypographyPropsVariantOverrides {
+//     abc: true
+//   }
+// }

@@ -20,7 +20,8 @@ const StyledImageList = styled(({ variant, ...rest }: ImageListProps) => (
   height: auto;
   border-radius: ${({ theme }) =>
     theme.palette.mode === 'dark' ? '8px' : '8px'};
-  background-color: ${({ theme }) => theme.palette.fontColor.secondary};
+  background-color: ${({ theme }) =>
+    theme.palette.colorMode.imageListBackgroundColor};
 `
 
 type MyImageListProps = {
@@ -43,7 +44,12 @@ const MyImageList = ({
   imageListImages,
 }: MyImageListProps): React.ReactElement => {
   return (
-    <StyledImageList variant={variant} cols={4} rowHeight={221}>
+    <StyledImageList
+      variant={variant}
+      cols={4}
+      rowHeight={221}
+      sx={{ boxShadow: 10 }}
+    >
       {imageListImages.map((item, index) => (
         <Tooltip
           key={index}

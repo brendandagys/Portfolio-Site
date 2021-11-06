@@ -83,7 +83,9 @@ const ContactForm = ({ theme }: { theme: Theme }): React.ReactElement => {
       <StyledBox
         component='form'
         sx={{
-          '& .MuiInputBase-root': { color: theme.palette.text.primary },
+          '& .MuiInputBase-root': {
+            color: theme.palette.colorMode.contactFormTextFieldColor,
+          },
           // '& label.Mui-focused': {
           //   color: 'white',
           // },

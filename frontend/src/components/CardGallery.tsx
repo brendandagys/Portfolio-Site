@@ -5,15 +5,15 @@ import MyCard from './MyCard'
 import { CardData } from '../data/cards'
 
 import {
-  Fade,
-  Bounce,
-  Flip,
-  Hinge,
-  JackInTheBox,
-  Roll,
-  Rotate,
+  // Fade,
+  // Bounce,
+  // Flip,
+  // Hinge,
+  // JackInTheBox,
+  // Roll,
+  // Rotate,
   Slide,
-  Zoom,
+  // Zoom,
 } from 'react-awesome-reveal'
 
 const StyledBox = styled(Box)`

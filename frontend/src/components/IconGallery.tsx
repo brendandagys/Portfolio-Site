@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { Theme, Typography, TypographyProps } from '@mui/material'
+import { Typography, TypographyProps } from '@mui/material'
 import ImageDiv from './ImageDiv'
 import Image from 'material-ui-image'
 
@@ -9,7 +9,7 @@ const StyledDiv = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 1rem;
-  padding: 0 15px;
+  padding: 0 30px;
   background-color: ${({ theme }) => theme.palette.secondary.main};
 `
 
@@ -45,7 +45,7 @@ IconGalleryProps): React.ReactElement => {
   return (
     <>
       <div style={customStyle}>
-        <StyledTypography variant={variant} fontWeight='light' align={align}>
+        <StyledTypography variant={variant} fontWeight='bold' align={align}>
           {title}
         </StyledTypography>
       </div>

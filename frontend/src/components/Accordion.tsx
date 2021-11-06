@@ -27,7 +27,7 @@ const Accordion = styled((props: AccordionProps & { myTheme: Theme }) => (
   width: '85%',
   minWidth: '350px',
   margin: '0 auto 0 auto',
-  backgroundColor: myTheme.palette.colorMode.s5,
+  backgroundColor: myTheme.palette.colorMode.s4,
   color: myTheme.palette.colorMode.accordionHeaderTextColor,
 }))
 
@@ -71,15 +71,17 @@ export default function CustomizedAccordions({
         myTheme={theme}
         expanded={expanded === 'panel1'}
         onChange={handleChange('panel1')}
+        sx={{ boxShadow: 20 }}
       >
         <AccordionSummary aria-controls='panel1d-content' id='panel1d-header'>
           <StyledTypography style={{ fontSize: '1.3rem' }}>
-            About myself
+            My background
           </StyledTypography>
         </AccordionSummary>
         <AccordionDetails
           sx={{
-            backgroundColor: theme.palette.colorMode.s4,
+            backgroundColor:
+              theme.palette.colorMode.accordionHeaderBackgroundColor,
             color: theme.palette.colorMode.accordionContentTextColor,
           }}
         >
@@ -121,7 +123,8 @@ export default function CustomizedAccordions({
         </AccordionSummary>
         <AccordionDetails
           sx={{
-            backgroundColor: theme.palette.colorMode.s4,
+            backgroundColor:
+              theme.palette.colorMode.accordionHeaderBackgroundColor,
             color: theme.palette.colorMode.accordionContentTextColor,
           }}
         >
@@ -173,7 +176,8 @@ export default function CustomizedAccordions({
         </AccordionSummary>
         <AccordionDetails
           sx={{
-            backgroundColor: theme.palette.colorMode.s4,
+            backgroundColor:
+              theme.palette.colorMode.accordionHeaderBackgroundColor,
             color: theme.palette.colorMode.accordionContentTextColor,
           }}
         >

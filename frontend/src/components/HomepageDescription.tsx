@@ -8,13 +8,29 @@ const StyledDiv = styled.div`
 `
 
 const StyledTypography = styled(Typography)`
-  padding-left: clamp(20px, 13%, 30%);
-  padding-right: clamp(20px, 13%, 30%);
+  // padding-left: clamp(20px, 8%, 30%);
+  // padding-right: clamp(20px, 8%, 30%);
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 850px;
 `
 
 const HomepageDescription = (): React.ReactElement => {
   return (
     <StyledDiv>
+      <StyledTypography
+        px={6}
+        variant='h3'
+        fontWeight='light'
+        mb={5}
+        sx={{
+          fontFamily: 'Courier New',
+          // textDecoration: 'underline 2.25px',
+          textShadow: '3px 3px 2px gray',
+        }}
+      >
+        Who I am
+      </StyledTypography>
       <StyledTypography px={6} fontWeight='light' variant='subtitle1' paragraph>
         I am a passionate software and Web developer with a strong interest in
         Python, JavaScript, and other Web technologies (see below).
