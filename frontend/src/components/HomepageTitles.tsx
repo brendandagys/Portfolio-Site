@@ -16,7 +16,7 @@ const HomepageTitles = ({ theme }: { theme: Theme }): React.ReactElement => {
         mt='3.5rem'
         px='35px'
         sx={{
-          color: theme.palette.fontColor.tertiary,
+          color: theme.palette.colorMode.titleTextColor,
           // background: '-webkit-linear-gradient(45deg, #09009f, #999 95%)',
           // background:
           // '-webkit-linear-gradient(-70deg, #a2facf 0%, #64acff 100%)',

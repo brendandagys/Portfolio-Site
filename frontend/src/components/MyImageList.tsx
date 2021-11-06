@@ -6,6 +6,7 @@ import {
   ImageList,
   ImageListItem,
   ImageListProps,
+  Theme,
   Tooltip,
   Typography,
 } from '@mui/material'
@@ -17,13 +18,15 @@ const StyledImageList = styled(({ variant, ...rest }: ImageListProps) => (
   padding: 5px;
   max-width: 600px;
   height: auto;
-  border-radius: 8px;
-  background-color: white;
+  border-radius: ${({ theme }) =>
+    theme.palette.mode === 'dark' ? '8px' : '8px'};
+  background-color: ${({ theme }) => theme.palette.fontColor.secondary};
 `
 
 type MyImageListProps = {
   variant?: 'masonry' | 'quilted' | 'standard' | 'woven'
   imageListImages: ImageListImage[]
+  theme: Theme
 }
 
 function srcset(image: string, size: number, rows = 1, cols = 1) {

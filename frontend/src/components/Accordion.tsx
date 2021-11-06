@@ -27,8 +27,8 @@ const Accordion = styled((props: AccordionProps & { myTheme: Theme }) => (
   width: '85%',
   minWidth: '350px',
   margin: '0 auto 0 auto',
-  backgroundColor: myTheme.palette.colorMode.s3,
-  color: myTheme.palette.text.primary,
+  backgroundColor: myTheme.palette.colorMode.s5,
+  color: myTheme.palette.colorMode.accordionHeaderTextColor,
 }))
 
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
@@ -38,9 +38,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   />
 ))(({ theme }) => ({
   backgroundColor:
-    theme.palette.mode === 'dark'
-      ? 'rgba(255, 255, 255, .05)'
-      : 'rgba(0, 0, 0, .03)',
+    theme.palette.mode === 'dark' ? '#181818' : 'rgba(0, 0, 0, .03)',
   flexDirection: 'row-reverse',
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
     transform: 'rotate(90deg)',
@@ -79,7 +77,12 @@ export default function CustomizedAccordions({
             About myself
           </StyledTypography>
         </AccordionSummary>
-        <AccordionDetails sx={{ backgroundColor: theme.palette.colorMode.sm1 }}>
+        <AccordionDetails
+          sx={{
+            backgroundColor: theme.palette.colorMode.s4,
+            color: theme.palette.colorMode.accordionContentTextColor,
+          }}
+        >
           <StyledTypography>
             I live in Toronto, Ontario, Canada and graduated in 2016 from
             Ryerson University with a Bachelor’s degree in Biomedical
@@ -116,7 +119,12 @@ export default function CustomizedAccordions({
             My most-used technologies and skills
           </StyledTypography>
         </AccordionSummary>
-        <AccordionDetails sx={{ backgroundColor: theme.palette.colorMode.sm1 }}>
+        <AccordionDetails
+          sx={{
+            backgroundColor: theme.palette.colorMode.s4,
+            color: theme.palette.colorMode.accordionContentTextColor,
+          }}
+        >
           <StyledTypography>
             Python is the first programming language that I dove deep into, and
             because of this, I began my Web development journey with Django, a
@@ -163,7 +171,12 @@ export default function CustomizedAccordions({
             How I built this Website
           </StyledTypography>
         </AccordionSummary>
-        <AccordionDetails sx={{ backgroundColor: theme.palette.colorMode.sm1 }}>
+        <AccordionDetails
+          sx={{
+            backgroundColor: theme.palette.colorMode.s4,
+            color: theme.palette.colorMode.accordionContentTextColor,
+          }}
+        >
           <StyledTypography>
             When I began developing in Django, I used Heroku and similar
             services to deploy my applications. I felt that I did not have as

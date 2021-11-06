@@ -12,12 +12,24 @@ declare module '@mui/material/styles/createPalette' {
       s3: string
       s4: string
       s5: string
+      s6: string
+      modeButtonBackground: string
+      modeButtonTextColor: string
+      titleTextColor: string
+      iconGalleryTitleTextColor: string
+      accordionHeaderTextColor: string
+      accordionContentTextColor: string
+      contactFormBackgroundColor: string
+      copyrightColor: string
     }
     fontColor: {
       primary: string
       secondary: string
       tertiary: string
       slate: string
+      white: string
+      gray: string
+      black: string
     }
   }
   interface PaletteOptions {
@@ -29,12 +41,24 @@ declare module '@mui/material/styles/createPalette' {
       s3: string
       s4: string
       s5: string
+      s6: string
+      modeButtonBackground: string
+      modeButtonTextColor: string
+      titleTextColor: string
+      iconGalleryTitleTextColor: string
+      accordionHeaderTextColor: string
+      accordionContentTextColor: string
+      contactFormBackgroundColor: string
+      copyrightColor: string
     }
     fontColor: {
       primary: string
       secondary: string
       tertiary: string
       slate: string
+      white: string
+      gray: string
+      black: string
     }
   }
   //   interface TypeText {
@@ -86,23 +110,31 @@ export const getTheme = (mode: PaletteMode) => {
           : {
               primary: '#ffffff',
               secondary: '#808080',
-              disabled: 'rgba(255,255,255,0.5',
+              disabled: 'rgba(255,255,255,0.5)',
             },
       background:
-        mode === 'light' ? { default: '#1e88e5' } : { default: '#000' },
+        mode === 'light'
+          ? { default: '#fff' }
+          : { default: 'linear-gradient(260deg, #efd5ff 0%, #515ada 100%)' },
       fontColor:
         mode === 'light'
           ? {
-              primary: '#000000',
-              secondary: 'rgba(10,10,10,0.9',
+              primary: '#000',
+              secondary: 'rgba(10,10,10,0.9)',
               tertiary: '#fff',
               slate: '#f2f2f2',
+              white: '#fff',
+              gray: '#888888',
+              black: '#000',
             }
           : {
               primary: '#fff',
-              secondary: '#rgba(10,10,10,0.9)',
-              tertiary: '#000000',
+              secondary: 'rgba(10,10,10,0.9)',
+              tertiary: '#000',
               slate: '#f2f2f2',
+              white: '#fff',
+              gray: '#888888',
+              black: '#000',
             },
 
       colorMode:
@@ -115,6 +147,15 @@ export const getTheme = (mode: PaletteMode) => {
               s3: '#ffffff',
               s4: '#ffffff',
               s5: '#ffffff',
+              s6: '#181818',
+              modeButtonBackground: '#1e88e5',
+              modeButtonTextColor: '#fff',
+              titleTextColor: '#000',
+              iconGalleryTitleTextColor: '#000',
+              accordionHeaderTextColor: '#000',
+              accordionContentTextColor: 'rgba(10,10,10,0.7)',
+              contactFormBackgroundColor: '#fff',
+              copyrightColor: 'rgba(10,10,10,0.8)',
             }
           : {
               sm1: '#7b7b7b',
@@ -122,8 +163,17 @@ export const getTheme = (mode: PaletteMode) => {
               s1: '#cccccc',
               s2: '#808080',
               s3: '#595959',
-              s4: '#4d4d4d',
-              s5: '#333333',
+              s4: '#404040',
+              s5: '#303030',
+              s6: '#181818',
+              modeButtonBackground: '#000',
+              modeButtonTextColor: '#fff',
+              titleTextColor: '#000',
+              iconGalleryTitleTextColor: '#000',
+              accordionHeaderTextColor: '#fff',
+              accordionContentTextColor: '#f2f2f2',
+              contactFormBackgroundColor: '#262626',
+              copyrightColor: '#f2f2f2',
             },
     },
   })

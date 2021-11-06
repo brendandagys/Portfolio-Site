@@ -21,7 +21,6 @@ const StyledBox = styled(Box)`
   text-align: center;
   width: 90%;
   maxwidth: 800px;
-  // color: ${({ theme }) => theme.palette.text.primary};
   // padding-bottom: 3rem;
 `
 
@@ -181,7 +180,7 @@ const ContactForm = ({ theme }: { theme: Theme }): React.ReactElement => {
           </StyledSendButtonDiv>
         </FormControl>
       </StyledBox>
-      <AvatarLinks avatars={contactAvatarLinks} />
+      <AvatarLinks avatars={contactAvatarLinks} theme={theme} />
       <MyModal open={open} handleClose={handleClose} />
     </>
   )

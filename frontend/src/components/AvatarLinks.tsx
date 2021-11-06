@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import Image from 'material-ui-image'
-import { Typography } from '@mui/material'
+import { Theme, Typography } from '@mui/material'
 
 import { Avatar } from '../data/avatarLinks'
 
@@ -30,9 +30,13 @@ const StyledLink = styled.a`
 
 type AvatarLinksProps = {
   avatars: Avatar[]
+  theme: Theme
 }
 
-const AvatarLinks = ({ avatars }: AvatarLinksProps): React.ReactElement => {
+const AvatarLinks = ({
+  avatars,
+  theme,
+}: AvatarLinksProps): React.ReactElement => {
   return (
     <ContactItemsRowDiv>
       {avatars.map(({ href, src, color, style }, index) => {
@@ -47,7 +51,12 @@ const AvatarLinks = ({ avatars }: AvatarLinksProps): React.ReactElement => {
       })}
       <Typography
         paragraph
-        sx={{ color: 'text.primary', fontSize: '0.9rem', my: 0, pb: 1 }}
+        sx={{
+          color: theme.palette.colorMode.copyrightColor,
+          fontSize: '0.9rem',
+          my: 0,
+          pb: 1,
+        }}
       >
         &copy; 2021 by Brendan Dagys
       </Typography>

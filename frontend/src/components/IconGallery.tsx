@@ -21,7 +21,7 @@ const StyledImageDiv = styled(({ width, ...rest }) => {
 `
 
 const StyledTypography = styled(Typography)`
-  color: ${({ theme }) => theme.palette.text.primary};
+  color: ${({ theme }) => theme.palette.colorMode.iconGalleryTitleTextColor};
   margin-top: 3rem;
 `
 
@@ -30,7 +30,7 @@ type IconGalleryProps = {
   title: string
   width?: string
   customStyle?: React.CSSProperties
-  theme: Theme
+  // theme: Theme
 } & TypographyProps
 
 const IconGallery = ({
@@ -40,17 +40,12 @@ const IconGallery = ({
   align = 'center',
   width = '65px',
   customStyle,
-  theme,
-}: IconGalleryProps): React.ReactElement => {
+}: // theme,
+IconGalleryProps): React.ReactElement => {
   return (
     <>
       <div style={customStyle}>
-        <StyledTypography
-          variant={variant}
-          fontWeight='light'
-          align={align}
-          sx={{ color: theme.palette.fontColor.slate }}
-        >
+        <StyledTypography variant={variant} fontWeight='light' align={align}>
           {title}
         </StyledTypography>
       </div>

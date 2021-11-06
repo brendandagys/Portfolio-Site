@@ -214,8 +214,8 @@ export default function TemporaryDrawer({
             width: '100%',
             alignItems: 'center',
             justifyContent: 'center',
-            bgcolor: `${theme.palette.background.default}`,
-            color: `${theme.palette.text.primary}`,
+            bgcolor: `${theme.palette.colorMode.modeButtonBackground}`,
+            color: `${theme.palette.colorMode.modeButtonTextColor}`,
             mt: 1,
             p: 1,
           }}

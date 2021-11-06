@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import { ThemeProvider } from 'styled-components'
@@ -48,7 +48,7 @@ const App = (): JSX.Element => {
   const toggleMode = () =>
     setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
 
-  const [mode, setMode] = useState<PaletteMode>('dark')
+  const [mode, setMode] = useState<PaletteMode>('light')
   const [theme, setTheme] = useState<Theme>(getTheme(mode))
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const App = (): JSX.Element => {
           // backgroundColor: '#af8c9d',
           // backgroundImage:
           //   'linear-gradient(to top left, #6ab7ff, #1e88e5, #005cb2)',
-          background: 'linear-gradient(260deg, #efd5ff 0%, #515ada 100%)',
+          background: theme.palette.background.default,
         }}
       >
         <Grid item xs={12}>
@@ -93,7 +93,11 @@ const App = (): JSX.Element => {
           </Grid>
 
           <Grid item xs={12} mb={5}>
-            <MyImageList variant='quilted' imageListImages={imageQuiltImages} />
+            <MyImageList
+              variant='quilted'
+              imageListImages={imageQuiltImages}
+              theme={theme}
+            />
           </Grid>
         </Grid>
 
@@ -104,17 +108,17 @@ const App = (): JSX.Element => {
               <IconGallery
                 icons={technologyIcons}
                 variant='overline'
-                title='Some of my favorite technologies...'
+                title='Some of my favorite technologies:'
                 customStyle={{ marginTop: '50px', textAlign: 'center' }}
-                theme={theme}
+                // theme={theme}
               />
               <IconGallery
                 icons={awsIcons}
                 width='145px'
                 variant='overline'
-                title='I also possess the following AWS certifications...'
+                title='I also possess the following AWS certifications:'
                 customStyle={{ marginTop: '50px', textAlign: 'center' }}
-                theme={theme}
+                // theme={theme}
               />
             </Grid>
           </BackgroundColor>
@@ -139,7 +143,7 @@ const App = (): JSX.Element => {
           id='contact-section'
           sx={{
             boxShadow: `0px -2.5px 10px #d3d3d3`,
-            backgroundColor: `${theme.palette.colorMode.s5}`,
+            backgroundColor: `${theme.palette.colorMode.contactFormBackgroundColor}`,
           }}
         >
           <ContactForm theme={theme} />
