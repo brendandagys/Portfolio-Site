@@ -116,7 +116,7 @@ const App = (): JSX.Element => {
                 icons={awsIcons}
                 width='145px'
                 variant='overline'
-                title='I also possess the following AWS certifications:'
+                title='I also am an:'
                 customStyle={{ marginTop: '50px', textAlign: 'center' }}
                 // theme={theme}
               />

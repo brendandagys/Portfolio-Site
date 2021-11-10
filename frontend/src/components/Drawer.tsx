@@ -1,10 +1,9 @@
 import { Fragment, SyntheticEvent, useState } from 'react'
 import { scroller } from 'react-scroll'
-import styled from 'styled-components'
 
 import {
   Box,
-  Drawer,
+  SwipeableDrawer,
   Fab,
   List,
   Divider,
@@ -49,10 +48,26 @@ type DrawerItem = {
 }
 
 const drawerItems1: DrawerItem[] = [
-  { text: 'Home', scrollTo: 'home-section', icon: <HomeIcon /> },
-  { text: 'About', scrollTo: 'about-section', icon: <HelpIcon /> },
-  { text: 'Portfolio', scrollTo: 'portfolio-section', icon: <WorkIcon /> },
-  { text: 'Contact', scrollTo: 'contact-section', icon: <EmailIcon /> },
+  {
+    text: 'Home',
+    scrollTo: 'home-section',
+    icon: <HomeIcon />,
+  },
+  {
+    text: 'About',
+    scrollTo: 'about-section',
+    icon: <HelpIcon />,
+  },
+  {
+    text: 'Portfolio',
+    scrollTo: 'portfolio-section',
+    icon: <WorkIcon />,
+  },
+  {
+    text: 'Contact',
+    scrollTo: 'contact-section',
+    icon: <EmailIcon />,
+  },
 ]
 const drawerItems2: DrawerItem[] = [
   {
@@ -120,14 +135,16 @@ export default function TemporaryDrawer({
   ) => {
     const listItemContent = (
       <>
-        <ListItemIcon>{icon}</ListItemIcon>
+        <ListItemIcon style={{ color: theme.palette.text.secondary }}>
+          {icon}
+        </ListItemIcon>
         <ListItemText primary={text} />
         {href ? (
-          <ListItemIcon>
+          <ListItemIcon style={{ color: theme.palette.text.secondary }}>
             <OpenInNewIcon fontSize='small' />
           </ListItemIcon>
         ) : download ? (
-          <ListItemIcon>
+          <ListItemIcon style={{ color: theme.palette.text.secondary }}>
             <FileDownloadIcon fontSize='small' />
           </ListItemIcon>
         ) : null}
@@ -141,16 +158,30 @@ export default function TemporaryDrawer({
         href={href}
         target='_blank'
         rel='noreferrer'
-        sx={{ my: 0 }}
+        sx={{
+          my: 0,
+          '&:hover': {
+            backgroundColor: theme.palette.colorMode.drawerHoverColor,
+          },
+        }}
       >
         {listItemContent}
       </ListItemButton>
     ) : (
       <ListItem
-        className='hvr-overline-from-center'
+        className={
+          theme.palette.mode === 'dark'
+            ? 'hvr-overline-from-center-dark'
+            : 'hvr-overline-from-center-light'
+        }
         button
         key={text}
         onClick={() => handleScroll(scrollTo)}
+        sx={{
+          '&:hover': {
+            backgroundColor: theme.palette.colorMode.drawerHoverColor,
+          },
+        }}
       >
         {listItemContent}
       </ListItem>
@@ -159,7 +190,11 @@ export default function TemporaryDrawer({
 
   const list = (anchor: Anchor) => (
     <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      sx={{
+        width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250,
+        // backgroundColor: theme.palette.colorMode.drawerBackgroundColor,
+        // color: theme.palette.colorMode.drawerTextColor,
+      }}
       role='presentation'
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
@@ -173,7 +208,7 @@ export default function TemporaryDrawer({
           )
         )}
       </List>
-      <Divider />
+      <Divider component='div' />
       <List>
         {drawerItems2.map(({ text, scrollTo, icon, href, download }, index) =>
           scrollTo ? (
@@ -204,50 +239,61 @@ export default function TemporaryDrawer({
       >
         <MenuIcon />
       </Fab>
-      <Drawer
+      <SwipeableDrawer
+        onOpen={() => console.log('Swiped open')}
         anchor={anchor}
         open={state[anchor]}
         onClose={toggleDrawer(anchor, false)}
-        // transitionDuration={100}
       >
-        {list(anchor)}
-
-        <Box
-          onClick={toggleMode}
-          sx={{
-            cursor: 'pointer',
-            display: 'flex',
-            width: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
-            bgcolor: `${theme.palette.colorMode.modeButtonBackground}`,
-            color: `${theme.palette.colorMode.modeButtonTextColor}`,
-            mt: 1,
-            p: 1,
+        <div
+          style={{
+            backgroundColor: theme.palette.colorMode.drawerBackgroundColor,
+            color: theme.palette.colorMode.drawerTextColor,
+            height: '100%',
           }}
         >
-          <Typography variant='overline'>
-            {theme.palette.mode[0].toUpperCase() +
-              theme.palette.mode.substring(1)}{' '}
-            mode enabled
-          </Typography>
-          <IconButton sx={{ ml: 1 }} color='inherit'>
-            {theme.palette.mode === 'dark' ? (
-              <Brightness4Icon />
-            ) : (
-              <Brightness7Icon />
-            )}
-          </IconButton>
-        </Box>
-        <Typography
-          variant='caption'
-          align='center'
-          mt={1}
-          sx={{ color: theme.palette.fontColor.gray }}
-        >
-          ^ Click to change
-        </Typography>
-      </Drawer>
+          {list(anchor)}
+
+          <Box
+            onClick={toggleMode}
+            sx={{
+              cursor: 'pointer',
+              display: 'flex',
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              bgcolor: `${theme.palette.colorMode.modeButtonBackground}`,
+              color: `${theme.palette.colorMode.modeButtonTextColor}`,
+              mt: 1,
+              p: 1,
+            }}
+          >
+            <Typography variant='overline'>
+              {theme.palette.mode[0].toUpperCase() +
+                theme.palette.mode.substring(1)}{' '}
+              mode enabled
+            </Typography>
+            <IconButton
+              sx={{ ml: 1 }}
+              color={theme.palette.mode === 'dark' ? 'error' : 'inherit'}
+            >
+              {theme.palette.mode === 'dark' ? (
+                <Brightness4Icon />
+              ) : (
+                <Brightness7Icon />
+              )}
+            </IconButton>
+          </Box>
+          {/* <Typography
+            variant='caption'
+            align='center'
+            mt={1}
+            sx={{ color: theme.palette.fontColor.gray }}
+          >
+            ^ Click to change
+          </Typography> */}
+        </div>
+      </SwipeableDrawer>
     </div>
   )
 }
