@@ -19,7 +19,8 @@ type MyCardProps = {
   image: string
   title: string
   alt: string
-  link: string
+  demoURL: string
+  gitHubURL: string
   theme: Theme
 } & CardProps
 
@@ -45,7 +46,8 @@ const MyCard = ({
   image,
   title,
   alt,
-  link,
+  demoURL,
+  gitHubURL,
   theme,
 }: MyCardProps): React.ReactElement => {
   // const springProps = useSpring({
@@ -65,7 +67,7 @@ const MyCard = ({
         onMouseOver={() => setSelected(true)}
         onMouseLeave={() => setSelected(false)}
       >
-        <CardActionArea>
+        <CardActionArea href={demoURL} target='_blank' rel='noreferrer'>
           <CardMedia component='img' height='140' image={image} alt={alt} />
           <CardContent>
             <Typography gutterBottom variant='h5' component='div'>
@@ -77,7 +79,7 @@ const MyCard = ({
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <StyledAnchor href={link} target='_blank' rel='noreferrer'>
+          <StyledAnchor href={gitHubURL} target='_blank' rel='noreferrer'>
             <Button
               className={
                 theme.palette.mode === 'dark'

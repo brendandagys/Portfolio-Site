@@ -58,7 +58,7 @@ const AvatarLinks = ({
           pb: 1,
         }}
       >
-        &copy; 2021 by Brendan Dagys
+        Copyright &copy; Brendan Dagys
       </Typography>
     </ContactItemsRowDiv>
   )
