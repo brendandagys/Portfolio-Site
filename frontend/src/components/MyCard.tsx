@@ -13,6 +13,7 @@ import {
   Theme,
 } from '@mui/material'
 import GitHubIcon from '@mui/icons-material/GitHub'
+import AlertDialogSlide from './MyDialog'
 
 type MyCardProps = {
   // performAnimation?: boolean
@@ -22,6 +23,7 @@ type MyCardProps = {
   demoURL: string
   gitHubURL: string
   theme: Theme
+  dialogContent?: React.ReactChild
 } & CardProps
 
 const StyledCard = styled(({ style, ...rest }) => (
@@ -49,6 +51,7 @@ const MyCard = ({
   demoURL,
   gitHubURL,
   theme,
+  dialogContent,
 }: MyCardProps): React.ReactElement => {
   // const springProps = useSpring({
   //   config: config.slow,
@@ -59,6 +62,24 @@ const MyCard = ({
 
   const [selected, setSelected] = useState(false)
 
+  const [open, setOpen] = useState(false)
+
+  // const handleClickOpen = () => {
+  //   setOpen(true)
+  // }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const showCardDialog = () => setOpen(true)
+
+  const cardActionAreaProps = demoURL
+    ? { href: demoURL, target: '_blank', rel: 'noreferrer' }
+    : dialogContent
+    ? { onClick: showCardDialog }
+    : {}
+
   return (
     <div>
       <StyledCard
@@ -67,7 +88,7 @@ const MyCard = ({
         onMouseOver={() => setSelected(true)}
         onMouseLeave={() => setSelected(false)}
       >
-        <CardActionArea href={demoURL} target='_blank' rel='noreferrer'>
+        <CardActionArea {...cardActionAreaProps}>
           <CardMedia component='img' height='140' image={image} alt={alt} />
           <CardContent>
             <Typography gutterBottom variant='h5' component='div'>
@@ -100,6 +121,9 @@ const MyCard = ({
           </StyledAnchor>
         </CardActions>
       </StyledCard>
+      <AlertDialogSlide open={open} handleClose={handleClose}>
+        {dialogContent}
+      </AlertDialogSlide>
     </div>
   )
 }

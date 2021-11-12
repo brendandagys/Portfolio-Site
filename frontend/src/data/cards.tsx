@@ -1,5 +1,8 @@
 import boston from '../images/boston.jpg'
 
+import VocabularyTrainer from '../components/VocabularyTrainer'
+import React from 'react'
+
 export type CardData = {
   image: string
   title: string
@@ -7,6 +10,7 @@ export type CardData = {
   demoURL: string
   gitHubURL: string
   text: string
+  dialogContent?: React.ReactChild
 }
 
 const portfolioCards = [
@@ -59,6 +63,7 @@ const portfolioCards = [
     text: 'A Python program that presents a definition and has the user guess the appropriate word.',
     demoURL: '',
     gitHubURL: 'https://github.com/brendandagys/Vocabulary-Trainer',
+    dialogContent: <VocabularyTrainer />,
   },
   {
     image: boston,

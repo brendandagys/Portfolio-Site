@@ -57,22 +57,28 @@ const CardGallery = ({
         // alignItems='stretch'
         px={2}
       >
-        {cards.map(({ image, title, alt, demoURL, gitHubURL, text }, index) => {
-          return (
-            <Grid item key={index} xs={12} sm={6} md={4} lg={3} xl={2}>
-              <MyCard
-                image={image}
-                title={title}
-                alt={alt}
-                demoURL={demoURL}
-                gitHubURL={gitHubURL}
-                theme={theme}
-              >
-                {text}
-              </MyCard>
-            </Grid>
-          )
-        })}
+        {cards.map(
+          (
+            { image, title, alt, demoURL, gitHubURL, text, dialogContent },
+            index
+          ) => {
+            return (
+              <Grid item key={index} xs={12} sm={6} md={4} lg={3} xl={2}>
+                <MyCard
+                  image={image}
+                  title={title}
+                  alt={alt}
+                  demoURL={demoURL}
+                  gitHubURL={gitHubURL}
+                  theme={theme}
+                  dialogContent={dialogContent}
+                >
+                  {text}
+                </MyCard>
+              </Grid>
+            )
+          }
+        )}
       </Grid>
     </Slide>
   )

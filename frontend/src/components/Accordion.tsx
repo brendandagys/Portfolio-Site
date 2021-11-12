@@ -14,9 +14,9 @@ const StyledTypography = scStyled(Typography)`
   text-indent: 12px;
 `
 
-const Accordion = styled((props: AccordionProps & { myTheme: Theme }) => (
+const Accordion = styled((props: AccordionProps & { mytheme: Theme }) => (
   <MuiAccordion disableGutters elevation={3} {...props} />
-))(({ theme, myTheme }) => ({
+))(({ theme, mytheme }) => ({
   border: `1px solid ${theme.palette.divider}`,
   '&:not(:last-child)': {
     borderBottom: 0,
@@ -27,8 +27,8 @@ const Accordion = styled((props: AccordionProps & { myTheme: Theme }) => (
   width: '85%',
   minWidth: '350px',
   margin: '0 auto 0 auto',
-  backgroundColor: myTheme.palette.colorMode.s4,
-  color: myTheme.palette.colorMode.accordionHeaderTextColor,
+  backgroundColor: mytheme.palette.colorMode.s4,
+  color: mytheme.palette.colorMode.accordionHeaderTextColor,
 }))
 
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
@@ -68,7 +68,7 @@ export default function CustomizedAccordions({
   return (
     <div>
       <Accordion
-        myTheme={theme}
+        mytheme={theme}
         expanded={expanded === 'panel1'}
         onChange={handleChange('panel1')}
         sx={{ boxShadow: 20 }}
@@ -112,7 +112,7 @@ export default function CustomizedAccordions({
         </AccordionDetails>
       </Accordion>
       <Accordion
-        myTheme={theme}
+        mytheme={theme}
         expanded={expanded === 'panel2'}
         onChange={handleChange('panel2')}
       >
@@ -165,7 +165,7 @@ export default function CustomizedAccordions({
         </AccordionDetails>
       </Accordion>
       <Accordion
-        myTheme={theme}
+        mytheme={theme}
         expanded={expanded === 'panel3'}
         onChange={handleChange('panel3')}
       >
