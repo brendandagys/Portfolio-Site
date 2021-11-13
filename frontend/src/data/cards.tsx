@@ -1,9 +1,10 @@
+import React from 'react'
 import boston from '../images/boston.jpg'
 
 import VocabularyTrainer from '../components/VocabularyTrainer'
-import React from 'react'
+import { Theme } from '@mui/material'
 
-export type CardData = {
+export type CardDataType = {
   image: string
   title: string
   alt: string
@@ -13,7 +14,7 @@ export type CardData = {
   dialogContent?: React.ReactChild
 }
 
-const portfolioCards = [
+const portfolioCards = (theme: Theme) => [
   {
     image: boston,
     title: 'Finances and Budgeting Tool',
@@ -63,7 +64,7 @@ const portfolioCards = [
     text: 'A Python program that presents a definition and has the user guess the appropriate word.',
     demoURL: '',
     gitHubURL: 'https://github.com/brendandagys/Vocabulary-Trainer',
-    dialogContent: <VocabularyTrainer />,
+    dialogContent: <VocabularyTrainer theme={theme} />,
   },
   {
     image: boston,

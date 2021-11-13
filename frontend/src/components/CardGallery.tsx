@@ -1,8 +1,10 @@
+import React, { useState } from 'react'
 import { Grid, Typography, Box, Theme } from '@mui/material'
 import styled from 'styled-components'
 import MyCard from './MyCard'
+import AlertDialogSlide from './MyDialog'
 
-import { CardData } from '../data/cards'
+import { CardDataType } from '../data/cards'
 
 import {
   // Fade,
@@ -23,64 +25,88 @@ const StyledBox = styled(Box)`
 `
 
 type CardGalleryProps = {
-  cards: CardData[]
+  cards: CardDataType[]
   theme: Theme
+  toggleMode: () => void
 }
 
 const CardGallery = ({
   cards,
   theme,
+  toggleMode,
 }: CardGalleryProps): React.ReactElement => {
+  const [open, setOpen] = useState(false)
+  const [dialogContent, setDialogContent] = useState<React.ReactChild>()
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const showCardContentInDialog = (dialogContent: React.ReactChild) => {
+    setOpen(true)
+    setDialogContent(dialogContent)
+  }
   return (
-    <Slide direction='right' cascade={true} triggerOnce>
-      <StyledBox>
-        <Typography
-          variant='h3'
-          sx={{ fontWeight: 'bold', color: 'text.primary' }}
+    <>
+      <Slide direction='right' cascade={true} triggerOnce>
+        <StyledBox>
+          <Typography
+            variant='h3'
+            sx={{ fontWeight: 'bold', color: 'text.primary' }}
+          >
+            My Work
+          </Typography>
+          <Typography
+            m='10px 5% 50px'
+            sx={{ fontWeight: 'light' }}
+            variant='h6'
+            color='text.secondary'
+          >
+            Some past projects of mine, with links to the GitHub repository and
+            a demo of the application!
+          </Typography>
+        </StyledBox>
+        <Grid
+          container
+          spacing={2}
+          // justifyContent='space-evenly'
+          // alignItems='stretch'
+          px={2}
         >
-          My Work
-        </Typography>
-        <Typography
-          m='10px 5% 50px'
-          sx={{ fontWeight: 'light' }}
-          variant='h6'
-          color='text.secondary'
-        >
-          Some past projects of mine, with links to the GitHub repository and a
-          demo of the application!
-        </Typography>
-      </StyledBox>
-      <Grid
-        container
-        spacing={2}
-        // justifyContent='space-evenly'
-        // alignItems='stretch'
-        px={2}
+          {cards.map(
+            (
+              { image, title, alt, demoURL, gitHubURL, text, dialogContent },
+              index
+            ) => {
+              return (
+                <Grid item key={index} xs={12} sm={6} md={4} lg={3} xl={2}>
+                  <MyCard
+                    image={image}
+                    title={title}
+                    alt={alt}
+                    demoURL={demoURL}
+                    gitHubURL={gitHubURL}
+                    theme={theme}
+                    dialogContent={dialogContent}
+                    showCardContentInDialog={showCardContentInDialog}
+                  >
+                    {text}
+                  </MyCard>
+                </Grid>
+              )
+            }
+          )}
+        </Grid>
+      </Slide>
+      <AlertDialogSlide
+        theme={theme}
+        open={open}
+        handleClose={handleClose}
+        toggleMode={toggleMode}
       >
-        {cards.map(
-          (
-            { image, title, alt, demoURL, gitHubURL, text, dialogContent },
-            index
-          ) => {
-            return (
-              <Grid item key={index} xs={12} sm={6} md={4} lg={3} xl={2}>
-                <MyCard
-                  image={image}
-                  title={title}
-                  alt={alt}
-                  demoURL={demoURL}
-                  gitHubURL={gitHubURL}
-                  theme={theme}
-                  dialogContent={dialogContent}
-                >
-                  {text}
-                </MyCard>
-              </Grid>
-            )
-          }
-        )}
-      </Grid>
-    </Slide>
+        {dialogContent}
+      </AlertDialogSlide>
+    </>
   )
 }
 

@@ -29,6 +29,8 @@ declare module '@mui/material/styles/createPalette' {
       drawerBackgroundColor: string
       drawerTextColor: string
       drawerHoverColor: string
+      modalTextFieldColor: string
+      helperTextColor: string
     }
     fontColor: {
       primary: string
@@ -66,6 +68,8 @@ declare module '@mui/material/styles/createPalette' {
       drawerBackgroundColor: string
       drawerTextColor: string
       drawerHoverColor: string
+      modalTextFieldColor: string
+      helperTextColor: string
     }
     fontColor: {
       primary: string
@@ -139,6 +143,8 @@ export const getTheme = (mode: PaletteMode) => {
               drawerBackgroundColor: '',
               drawerTextColor: 'rgba(10,10,10,0.7)',
               drawerHoverColor: '',
+              modalTextFieldColor: 'rgba(10,10,10,0.8)',
+              helperTextColor: 'rgba(10,10,10,0.8)',
             }
           : {
               sm1: '#7b7b7b',
@@ -165,6 +171,8 @@ export const getTheme = (mode: PaletteMode) => {
               drawerBackgroundColor: '#303030',
               drawerTextColor: '#f2f2f2',
               drawerHoverColor: '#262626',
+              modalTextFieldColor: '#fff',
+              helperTextColor: '#fff',
             },
       fontColor:
         mode === 'light'

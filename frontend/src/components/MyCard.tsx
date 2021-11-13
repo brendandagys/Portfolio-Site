@@ -1,6 +1,5 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-// import { useSpring, animated, config } from 'react-spring'
 import {
   Button,
   CardActionArea,
@@ -13,10 +12,8 @@ import {
   Theme,
 } from '@mui/material'
 import GitHubIcon from '@mui/icons-material/GitHub'
-import AlertDialogSlide from './MyDialog'
 
 type MyCardProps = {
-  // performAnimation?: boolean
   image: string
   title: string
   alt: string
@@ -24,6 +21,7 @@ type MyCardProps = {
   gitHubURL: string
   theme: Theme
   dialogContent?: React.ReactChild
+  showCardContentInDialog: (dialogContent: React.ReactChild) => void
 } & CardProps
 
 const StyledCard = styled(({ style, ...rest }) => (
@@ -44,7 +42,6 @@ const StyledAnchor = styled.a`
 
 const MyCard = ({
   children,
-  // performAnimation,
   image,
   title,
   alt,
@@ -52,32 +49,16 @@ const MyCard = ({
   gitHubURL,
   theme,
   dialogContent,
+  showCardContentInDialog,
 }: MyCardProps): React.ReactElement => {
-  // const springProps = useSpring({
-  //   config: config.slow,
-  //   from: { opacity: 0, x: 200 },
-  //   to: { opacity: performAnimation ? 1 : 0, x: performAnimation ? 0 : 200 },
-  //   delay: 300,
-  // })
-
   const [selected, setSelected] = useState(false)
-
-  const [open, setOpen] = useState(false)
-
-  // const handleClickOpen = () => {
-  //   setOpen(true)
-  // }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-
-  const showCardDialog = () => setOpen(true)
 
   const cardActionAreaProps = demoURL
     ? { href: demoURL, target: '_blank', rel: 'noreferrer' }
     : dialogContent
-    ? { onClick: showCardDialog }
+    ? {
+        onClick: () => showCardContentInDialog(dialogContent),
+      }
     : {}
 
   return (
@@ -121,9 +102,6 @@ const MyCard = ({
           </StyledAnchor>
         </CardActions>
       </StyledCard>
-      <AlertDialogSlide open={open} handleClose={handleClose}>
-        {dialogContent}
-      </AlertDialogSlide>
     </div>
   )
 }

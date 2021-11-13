@@ -132,7 +132,9 @@ const ContactForm = ({ theme }: { theme: Theme }): React.ReactElement => {
               id='name-input'
               name='name'
               label='Name'
+              inputLabelColor={theme.palette.fontColor.primary}
               helperText='Please provide your full name.'
+              helperTextColor={theme.palette.text.secondary}
               value={formValues.name}
               onChange={handleInputChange}
               theme={theme}
@@ -141,7 +143,9 @@ const ContactForm = ({ theme }: { theme: Theme }): React.ReactElement => {
               id='email-input'
               name='email'
               label='Email address'
+              inputLabelColor={theme.palette.fontColor.primary}
               helperText='Your email will never be shared.'
+              helperTextColor={theme.palette.text.secondary}
               value={formValues.email}
               onChange={handleInputChange}
               theme={theme}
@@ -152,6 +156,7 @@ const ContactForm = ({ theme }: { theme: Theme }): React.ReactElement => {
               id='subject-input'
               name='subject'
               label='Subject'
+              inputLabelColor={theme.palette.fontColor.primary}
               value={formValues.subject}
               onChange={handleInputChange}
               theme={theme}
@@ -162,6 +167,7 @@ const ContactForm = ({ theme }: { theme: Theme }): React.ReactElement => {
               id='message-input'
               name='message'
               label='Message'
+              inputLabelColor={theme.palette.fontColor.primary}
               multiline
               minRows={4}
               variant='outlined'

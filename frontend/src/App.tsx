@@ -131,7 +131,11 @@ const App = (): JSX.Element => {
         <Grid item xs={12} mt={41}>
           <StyledBackgroundColor>
             <Grid item xs={12} mt={-30} id='portfolio-section'>
-              <CardGallery cards={portfolioCards} theme={theme} />
+              <CardGallery
+                cards={portfolioCards(theme)}
+                theme={theme}
+                toggleMode={toggleMode}
+              />
             </Grid>
           </StyledBackgroundColor>
         </Grid>

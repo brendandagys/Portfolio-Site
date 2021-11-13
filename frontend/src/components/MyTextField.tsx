@@ -1,15 +1,16 @@
-import { TextField, Theme, TextFieldProps } from '@mui/material'
+import { TextField, TextFieldProps } from '@mui/material'
 import React from 'react'
 
 const MyTextField = ({
   className,
-  theme,
   variant = 'standard',
   required = true,
   id,
   name,
   label,
+  inputLabelColor,
   helperText,
+  helperTextColor,
   color = 'secondary',
   margin = 'normal',
   multiline = false,
@@ -18,7 +19,8 @@ const MyTextField = ({
   onChange,
 }: TextFieldProps & {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  theme: Theme
+  inputLabelColor?: string
+  helperTextColor?: string
 }): React.ReactElement => {
   return (
     <TextField
@@ -36,8 +38,14 @@ const MyTextField = ({
       value={value}
       onChange={onChange}
       style={{ backgroundColor: 'transparent' }}
-      InputLabelProps={{ style: { color: theme.palette.text.secondary } }}
-      FormHelperTextProps={{ style: { color: theme.palette.text.secondary } }}
+      InputLabelProps={{
+        style: { color: inputLabelColor },
+      }}
+      FormHelperTextProps={{
+        style: {
+          color: helperTextColor,
+        },
+      }}
       autoComplete='off'
     ></TextField>
   )
