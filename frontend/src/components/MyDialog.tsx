@@ -22,8 +22,10 @@ import { TransitionProps } from '@mui/material/transitions'
 import { forwardRef, useState } from 'react'
 
 const StyledDialogHeader = styled(DialogContent)`
-  background-color: ${({ theme }) => theme.palette.colorMode.s5};
+  background-color: ${({ theme }) =>
+    theme.palette.colorMode.modalHeaderBackgroundColor};
   color: ${({ theme }) => theme.palette.fontColor.primary};
+  padding-bottom: 0;
 `
 const StyledDialogContent = styled(DialogContent)`
   background-color: ${({ theme }) => theme.palette.colorMode.s4};
@@ -97,66 +99,66 @@ export default function AlertDialogSlide({
   }
 
   return (
-    <div>
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        aria-describedby='alert-dialog-slide-description'
-        fullWidth={true}
-        maxWidth={maxWidth}
-      >
-        <StyledDialogHeader sx={formOverrides}>
-          {theme.palette.mode === 'dark' ? (
-            <DarkModeIcon
-              sx={{ position: 'absolute' }}
-              fontSize='large'
-              onClick={toggleMode}
-            />
-          ) : (
-            <Brightness5Icon
-              sx={{ position: 'absolute' }}
-              fontSize='large'
-              onClick={toggleMode}
-            />
-          )}
-          <DialogContentText color='inherit' align='center'>
-            Change the width of the window.
-          </DialogContentText>
-          <Box
-            noValidate
-            component='form'
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              m: 'auto',
-              width: 'fit-content',
-            }}
-          >
-            <FormControl size='small' sx={{ mt: 2, minWidth: 120 }}>
-              <InputLabel htmlFor='max-width'>Size</InputLabel>
-              <Select
-                autoFocus
-                // color='secondary'
-                value={maxWidth}
-                onChange={handleMaxWidthChange}
-                label='maxWidth'
-                inputProps={{
-                  name: 'max-width',
-                  id: 'max-width',
-                }}
-              >
-                <MenuItem value='sm'>Small</MenuItem>
-                <MenuItem value='md'>Medium</MenuItem>
-                <MenuItem value='lg'>Large</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-        </StyledDialogHeader>
+    <Dialog
+      open={open}
+      TransitionComponent={Transition}
+      keepMounted
+      onClose={handleClose}
+      aria-describedby='alert-dialog-slide-description'
+      fullWidth={true}
+      maxWidth={maxWidth}
+    >
+      <StyledDialogHeader sx={formOverrides}>
+        {theme.palette.mode === 'dark' ? (
+          <DarkModeIcon
+            sx={{ position: 'absolute', '&:hover': { opacity: 0.75 } }}
+            fontSize='large'
+            onClick={toggleMode}
+          />
+        ) : (
+          <Brightness5Icon
+            sx={{ position: 'absolute', '&:hover': { opacity: 0.65 } }}
+            fontSize='large'
+            onClick={toggleMode}
+          />
+        )}
+        <DialogContentText color='inherit' align='center'>
+          Change the width of the window.
+        </DialogContentText>
+        <Box
+          noValidate
+          component='form'
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            mx: 'auto',
+            mt: 1,
+            mb: 2,
+            width: 'fit-content',
+          }}
+        >
+          <FormControl size='small' sx={{ mt: 2, minWidth: 120 }}>
+            <InputLabel htmlFor='max-width'>Size</InputLabel>
+            <Select
+              autoFocus
+              // color='secondary'
+              value={maxWidth}
+              onChange={handleMaxWidthChange}
+              label='maxWidth'
+              inputProps={{
+                name: 'max-width',
+                id: 'max-width',
+              }}
+            >
+              <MenuItem value='sm'>Small</MenuItem>
+              <MenuItem value='md'>Medium</MenuItem>
+              <MenuItem value='lg'>Large</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
         <Divider />
-        <StyledDialogContent sx={formOverrides}>{children}</StyledDialogContent>
-      </Dialog>
-    </div>
+      </StyledDialogHeader>
+      <StyledDialogContent sx={formOverrides}>{children}</StyledDialogContent>
+    </Dialog>
   )
 }
