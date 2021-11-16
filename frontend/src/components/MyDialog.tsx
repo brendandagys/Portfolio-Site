@@ -10,7 +10,6 @@ import {
   MenuItem,
   SelectChangeEvent,
   Theme,
-  Divider,
 } from '@mui/material'
 
 import styled from 'styled-components'
@@ -25,7 +24,6 @@ const StyledDialogHeader = styled(DialogContent)`
   background-color: ${({ theme }) =>
     theme.palette.colorMode.modalHeaderBackgroundColor};
   color: ${({ theme }) => theme.palette.fontColor.primary};
-  padding-bottom: 0;
 `
 const StyledDialogContent = styled(DialogContent)`
   background-color: ${({ theme }) => theme.palette.colorMode.s4};
@@ -111,13 +109,19 @@ export default function AlertDialogSlide({
       <StyledDialogHeader sx={formOverrides}>
         {theme.palette.mode === 'dark' ? (
           <DarkModeIcon
-            sx={{ position: 'absolute', '&:hover': { opacity: 0.75 } }}
+            sx={{
+              position: 'absolute',
+              '&:hover': { opacity: 0.75, cursor: 'pointer' },
+            }}
             fontSize='large'
             onClick={toggleMode}
           />
         ) : (
           <Brightness5Icon
-            sx={{ position: 'absolute', '&:hover': { opacity: 0.65 } }}
+            sx={{
+              position: 'absolute',
+              '&:hover': { opacity: 0.65, cursor: 'pointer' },
+            }}
             fontSize='large'
             onClick={toggleMode}
           />
@@ -156,7 +160,6 @@ export default function AlertDialogSlide({
             </Select>
           </FormControl>
         </Box>
-        <Divider />
       </StyledDialogHeader>
       <StyledDialogContent sx={formOverrides}>{children}</StyledDialogContent>
     </Dialog>

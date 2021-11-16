@@ -179,7 +179,7 @@ export const getTheme = (mode: PaletteMode) => {
               drawerHoverColor: '#262626',
               modalTextFieldColor: '#fff',
               helperTextColor: '#fff',
-              vocabularyBannerBackgroundColor: '#808080',
+              vocabularyBannerBackgroundColor: '#595959',
               modalHeaderBackgroundColor: '#303030',
             },
       fontColor:

@@ -68,10 +68,10 @@ const CardGallery = ({
         </StyledBox>
         <Grid
           container
-          spacing={2}
+          spacing={4}
           // justifyContent='space-evenly'
           // alignItems='stretch'
-          px={2}
+          px={4}
         >
           {cards.map(
             (
