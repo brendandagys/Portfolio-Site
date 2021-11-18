@@ -79,7 +79,7 @@ const CardGallery = ({
               index
             ) => {
               return (
-                <Grid item key={index} xs={12} sm={6} md={4} lg={3} xl={2}>
+                <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
                   <MyCard
                     image={image}
                     title={title}

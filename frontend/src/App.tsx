@@ -26,6 +26,8 @@ import { hexPatternLight } from './css/hex-pattern-light'
 
 import styled from 'styled-components'
 
+import useLocalStorage from './hooks/useLocalStorage'
+
 const StyledBackgroundColor = styled(BackgroundColor)`
   border-radius: 30px 30px 0 0;
   ${({ theme }) =>
@@ -48,15 +50,15 @@ const App = (): JSX.Element => {
   const toggleMode = () =>
     setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
 
-  const [mode, setMode] = useState<PaletteMode>('light')
-  const [theme, setTheme] = useState<Theme>(getTheme(mode))
+  const [mode, setMode] = useLocalStorage('colorMode', 'dark')
+  const [theme, setTheme] = useState<Theme>(getTheme(mode as PaletteMode))
 
   useEffect(() => {
     checkHealth()
   }, [])
 
   useEffect(() => {
-    setTheme(getTheme(mode))
+    setTheme(getTheme(mode as PaletteMode))
   }, [mode])
 
   return (

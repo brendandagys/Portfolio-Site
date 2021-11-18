@@ -59,30 +59,45 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
   const [guess, setGuess] = useState('')
   const [numWordsToPlay, setNumWordsToPlay] = useState('3')
   const [scoreColor, setScoreColor] = useState('')
+  const [initialGameStarted, setInitialGameStarted] = useState(false)
+  const [initialIdFetchFlag, setInitialIdFetchFlag] = useState(false)
 
-  const obtainStatus = useCallback(async () => {
-    // Will either return a found Game object, or a string `game_id` (if `num_words_to_play` isn't provided)
+  const getGameId = useCallback(async () => {
+    const { data }: { data: string } = await axios.get('/api/get-game-id', {
+      baseURL,
+    })
 
-    // Only execute if there's no `gameId` or we still haven't chosen the number of words to play
-    const { data }: { data: apiData | string } = await axios.post(
-      '/api',
+    setGameId(data)
+  }, [setGameId])
+
+  const getGame = useCallback(async () => {
+    const { data }: { data: apiData } = await axios.post(
+      '/api/get-game',
       { game_id: gameId },
       {
         baseURL,
       }
     )
 
-    if (typeof data === 'string') {
-      setGameId(data)
-    } else {
-      setApiData(data)
-      setGuess(data.word_letters_revealed)
-    }
-  }, [gameId, setGameId])
+    setApiData(data)
+    setGuess(data.word_letters_revealed ? data.word_letters_revealed : '')
+  }, [gameId, setApiData])
 
-  const startNewGame = async () => {
+  const checkForStartedGame = useCallback(async () => {
+    const { data }: { data: boolean } = await axios.post(
+      '/api/check-if-game-is-started',
+      { game_id: gameId },
+      {
+        baseURL,
+      }
+    )
+
+    if (data === true) setInitialGameStarted(true)
+  }, [gameId, setInitialGameStarted])
+
+  const startGame = async () => {
     const { data }: { data: apiData } = await axios.post(
-      '/api',
+      '/api/start-game',
       { game_id: gameId, num_words_to_play: numWordsToPlay },
       {
         baseURL,
@@ -90,23 +105,19 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
     )
 
     setApiData(data)
-    setGameId(data.game_id)
     setGuessTextFieldFocus()
   }
 
   const makeGuess = async (guess: string) => {
     const previousScore = apiData?.score
-    // console.log(previousScore)
 
     const { data }: { data: apiData } = await axios.post(
-      '/api',
+      '/api/make-guess',
       { game_id: gameId, guess },
       {
         baseURL,
       }
     )
-
-    // console.log(data)
 
     // Green animation when a correct guess is made
     if (previousScore !== undefined && data.score > previousScore) {
@@ -117,21 +128,29 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
       }, 2500)
     }
 
-    // Store in state
     setApiData(data)
-
-    // console.log(apiData)
-
     setGuess(data.word_letters_revealed ? data.word_letters_revealed : '')
-
     setGuessTextFieldFocus()
   }
 
   useEffect(() => {
-    if (gameId === '' || !apiData) {
-      obtainStatus()
+    if (gameId === '' && !initialIdFetchFlag) {
+      setInitialIdFetchFlag(true)
+      getGameId()
+    } else if (!initialGameStarted && !initialIdFetchFlag) {
+      checkForStartedGame()
     }
-  }, [obtainStatus, gameId, apiData])
+  }, [
+    gameId,
+    getGameId,
+    initialGameStarted,
+    checkForStartedGame,
+    initialIdFetchFlag,
+  ])
+
+  useEffect(() => {
+    if (initialGameStarted) getGame()
+  }, [initialGameStarted, getGame])
 
   const gameInterface = (
     <>
@@ -266,19 +285,15 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
             API data received:
           </Typography>
         </div>
-        <Typography>
-          <small>
-            <pre style={{ whiteSpace: 'pre-wrap' }}>
-              {JSON.stringify(apiData, null, 2)}
-            </pre>
-          </small>
-        </Typography>
+        <pre style={{ whiteSpace: 'pre-wrap', fontSize: '0.85rem' }}>
+          {JSON.stringify(apiData, null, 2)}
+        </pre>
       </Grid>
     </>
   )
 
   return (
-    <Grid container justifyContent='center' textAlign='center' xs={12}>
+    <Grid container justifyContent='center' textAlign='center'>
       {gameId ? (
         <Grid item xs={12} sx={{ mt: -1 }}>
           <FormControl sx={{ m: 1, mt: 3 }}>
@@ -311,7 +326,7 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
             <Button
               sx={{ mt: 3, mb: 1 }}
               variant='contained'
-              onClick={startNewGame}
+              onClick={startGame}
             >
               Start New Game
             </Button>
@@ -321,7 +336,7 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
         <Alert severity='warning'>The API is not currently running.</Alert>
       )}
 
-      {apiData?.num_words_to_play ? gameInterface : null}
+      {apiData ? gameInterface : null}
     </Grid>
   )
 }

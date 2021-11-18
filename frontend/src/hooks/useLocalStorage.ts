@@ -7,7 +7,10 @@ const getStorageValue = (key: string, defaultValue: string): string => {
 }
 
 const useLocalStorage = (key: string, defaultValue: string) => {
-  const [value, setValue] = useState(() => getStorageValue(key, defaultValue))
+  const [value, setValue]: [
+    string,
+    React.Dispatch<React.SetStateAction<string>>
+  ] = useState(() => getStorageValue(key, defaultValue))
 
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(value))
