@@ -32,16 +32,21 @@ const HomepageDescription = (): React.ReactElement => {
         Who I am
       </StyledTypography>
       <StyledTypography px={6} fontWeight='light' variant='subtitle1' paragraph>
-        I am a passionate software and Web developer with a strong interest in
-        Python, JavaScript, and other Web technologies (see below).
+        I am a passionate developer with a strong foundation in
+        TypeScript/JavaScript, Python, and other languages. I have experience in
+        analytics as well as with Cloud services and technologies, mainly AWS.
       </StyledTypography>
       <StyledTypography px={6} fontWeight='light' variant='subtitle1' paragraph>
-        I really enjoy solving problems and building apps. I have a lot of
-        professional experience building and designing software solutions, and
-        numerous personal Web and other development projects.
+        I love to solve problems and to build things. I have professional
+        experience creating and designing software solutions through
+        object-oriented as well as procedural programming. In my spare time you
+        can find me outside biking, playing guitar, and working on numerous
+        personal projects to further my interest and knowledge.
       </StyledTypography>
       <StyledTypography px={6} fontWeight='light' variant='subtitle1' paragraph>
-        I love to solve problems and the process of continuous learning!
+        Thanks for visiting my site and reading this far! Below is a more
+        detailed description about myself, and some examples of projects I've
+        created. Feel free to contact me at the bottom of the page!
       </StyledTypography>
     </StyledDiv>
   )
