@@ -1,0 +1,286 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Conditions:
+  CreateDeployBucketAndPolicy: !Equals [!Ref ExistingDeployBucket, '']
+
+Parameters:
+  ExistingDeployBucket:
+    Type: String
+    Default: arn:aws:s3:::finances.brendandagys.com
+
+  Repository:
+    Type: String
+    Default: finances
+  Branch:
+    Type: String
+    Default: main
+    Description: e.g. main or master
+  Domain:
+    Type: String
+    Default: finances.brendandagys.com
+  DomainWWW:
+    Type: String
+    Default: www.finances.brendandagys.com
+  HostedZoneId:
+    Type: String
+    Default: Z1048063LC3J2IKH5GGI
+
+Resources:
+  DeployBucket:
+    Type: AWS::S3::Bucket
+    Condition: CreateDeployBucketAndPolicy
+    DeletionPolicy: Retain
+    Properties:
+      BucketName: !Ref Domain
+      AccessControl: Private
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: true
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: true
+
+  DeployBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Condition: CreateDeployBucketAndPolicy
+    DeletionPolicy: Retain
+    Properties:
+      Bucket:
+        !If [
+          CreateDeployBucketAndPolicy,
+          !Ref DeployBucket,
+          !Ref ExistingDeployBucket,
+        ]
+      PolicyDocument:
+        Id: MySiteDeployBucketPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PolicyForCloudFrontPrivateContent
+            Effect: Allow
+            Principal:
+              CanonicalUser: !GetAtt OriginAccessIdentity.S3CanonicalUserId
+            Action: 's3:GetObject'
+            Resource: !Join
+              - ''
+              - - 'arn:aws:s3:::'
+                - !If [
+                    CreateDeployBucketAndPolicy,
+                    !Ref DeployBucket,
+                    !Ref ExistingDeployBucket,
+                  ]
+                - /*
+
+  CodePipeline:
+    Type: AWS::CodePipeline::Pipeline
+    Properties:
+      ArtifactStore:
+        Location: my-site-pipeline-artifacts
+        Type: S3
+      RoleArn: !ImportValue my-site-CodePipeline-role #!GetAtt CodePipelineRole.Arn
+      Stages:
+        - Name: Source
+          Actions:
+            - Name: SourceAction
+              ActionTypeId:
+                Category: Source
+                Owner: AWS
+                Provider: CodeCommit
+                Version: 1
+              OutputArtifacts:
+                - Name: !Sub '${AWS::StackName}-code'
+              Configuration:
+                RepositoryName: !Ref Repository
+                BranchName: !Ref Branch
+              RunOrder: 2
+        - Name: Approval
+          Actions:
+            - Name: ApprovalAction
+              ActionTypeId:
+                Category: Approval
+                Owner: AWS
+                Provider: Manual
+                Version: 1
+              RunOrder: 1
+        - Name: Build
+          Actions:
+            - Name: BuildAction
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: 1
+              InputArtifacts:
+                - Name: !Sub '${AWS::StackName}-code'
+              OutputArtifacts:
+                - Name: !Sub '${AWS::StackName}-build'
+              Configuration:
+                ProjectName: !Ref CodeBuild
+              RunOrder: 3
+
+  CodeBuild:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: !Sub ${AWS::StackName}-CodeBuild
+      ServiceRole: !ImportValue my-site-CodeBuild-role #!GetAtt CodeBuildRole.Arn
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Type: LINUX_CONTAINER
+        Image: aws/codebuild/standard:4.0
+      Source:
+        Type: CODEPIPELINE
+        BuildSpec: !Sub |
+          version: 0.2
+          env:
+            variables:
+              INLINE_RUNTIME_CHUNK: "false"
+          phases:
+            install:
+              commands:
+                - cd frontend
+                - npm install
+            build:
+              commands:
+                - npm run build
+                # - npm test
+                # - echo $CODEBUILD_SRC_DIR
+                - ls
+            post_build:
+              on-failure: ABORT #CONTINUE
+              commands:
+                - aws s3 cp --recursive --acl public-read ./build s3://${Domain}/
+
+                - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/index.html s3://${Domain}/
+
+                - aws cloudfront create-invalidation --distribution-id ${Distribution} --paths "/*"
+
+          artifacts:
+            files:
+              - 'frontend/build/**/*'
+
+  Distribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        Comment: !Sub 'Origin 1: S3 SPA for ${AWS::StackName} | Origin 2: API Fargate container for ${AWS::StackName}'
+        Aliases:
+          - !Ref Domain
+          - !Ref DomainWWW
+        Origins:
+          - Id:
+              !If [
+                CreateDeployBucketAndPolicy,
+                !Ref DeployBucket,
+                !Ref ExistingDeployBucket,
+              ]
+            DomainName: !Sub
+              - '${Domain}.s3.amazonaws.com'
+              - { Domain: !Ref Domain }
+            S3OriginConfig:
+              OriginAccessIdentity:
+                !Join [
+                  '',
+                  [
+                    'origin-access-identity/cloudfront/',
+                    !Ref OriginAccessIdentity,
+                  ],
+                ]
+          - Id: !ImportValue my-site-Fargate-service
+            DomainName: !ImportValue my-site-Fargate-service-load-balancer-DNS-name
+            CustomOriginConfig:
+              OriginProtocolPolicy: https-only
+              OriginSSLProtocols:
+                - TLSv1.2
+        ViewerCertificate:
+          AcmCertificateArn: !ImportValue my-site-certificate
+          SslSupportMethod: sni-only
+          MinimumProtocolVersion: TLSv1.2_2021
+        CustomErrorResponses:
+          - ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+            ErrorCachingMinTTL: 10
+          - ErrorCode: 404
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+            ErrorCachingMinTTL: 10
+        DefaultRootObject: index.html
+        PriceClass: PriceClass_100
+        HttpVersion: http2
+        IPV6Enabled: false
+        DefaultCacheBehavior:
+          TargetOriginId:
+            !If [
+              CreateDeployBucketAndPolicy,
+              !Ref DeployBucket,
+              !Ref ExistingDeployBucket,
+            ]
+          ViewerProtocolPolicy: redirect-to-https
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+          Compress: true
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          CachedMethods:
+            - GET
+            - HEAD
+          FunctionAssociations:
+            - EventType: viewer-request
+              FunctionARN: !ImportValue my-site-CloudFront-function-canonical-URL
+            - EventType: viewer-response
+              FunctionARN: !ImportValue my-site-CloudFront-function-security-headers
+        CacheBehaviors:
+          - PathPattern: api/*
+            TargetOriginId: !ImportValue my-site-Fargate-service
+            ViewerProtocolPolicy: redirect-to-https
+            CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad
+            OriginRequestPolicyId: 216adef6-5c7f-47e4-b989-5492eafa07d3
+            Compress: true
+            AllowedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+            CachedMethods:
+              - GET
+              - HEAD
+            FunctionAssociations:
+              - EventType: viewer-response
+                FunctionARN: !ImportValue my-site-CloudFront-function-security-headers
+        Logging:
+          Bucket: my-site-cloudfront-distribution-logs.s3.amazonaws.com
+          IncludeCookies: true
+          Prefix: !Sub '${AWS::StackName}-logs'
+
+  OriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: !Sub
+          - '${Domain} OAI'
+          - { Domain: !Ref Domain }
+
+  DNSRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Ref Domain
+      Type: A
+      AliasTarget:
+        HostedZoneId: Z2FDTNDATAQYW2
+        DNSName: !GetAtt Distribution.DomainName
+
+  DNSRecordWWW:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Ref DomainWWW
+      Type: A
+      AliasTarget:
+        HostedZoneId: Z2FDTNDATAQYW2
+        DNSName: !GetAtt Distribution.DomainName
