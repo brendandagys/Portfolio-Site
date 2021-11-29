@@ -9,7 +9,7 @@ Conditions:
 
 Parameters:
   ApplicationStackName:
-    Description: Name of the not-yet-created Application CFN Stack
+    Description: Name of the not-yet-created Application CFN Stack. DO NOT NAME STACK SAME AS THIS PARAMETER! We want to operate on separate stacks.
     Type: String
     Default: spending-tracker-django
     AllowedPattern: (^[a-z][a-z0-9-]+$)
@@ -20,7 +20,10 @@ Parameters:
     Default: spending-tracker-django
     AllowedPattern: (^[a-z][a-z0-9-]+$)
 
-  # CodeCommit repository must == `AWS::StackName`
+  CodeCommitRepository:
+    Type: String
+    Default: spending-tracker-django
+    Description: CodeCommit repository for the application source
   Branch:
     Type: String
     Default: main
@@ -162,6 +165,7 @@ Resources:
               - cloudformation:DescribeStacks
               - cloudformation:DescribeChangeSet
               - cloudformation:ExecuteChangeSet
+              - cloudformation:DeleteChangeSet
             Effect: Allow
             Resource:
               - !Join
@@ -448,6 +452,7 @@ Resources:
               commands:
                 - echo LOGGING IN TO AMAZON ECR...
                 - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+            
             build:
               commands:
                 - pwd
@@ -457,15 +462,16 @@ Resources:
 
                 - echo BUILDING THE DJANGO IMAGE...
 
-                - docker build -t ${ExistingEcrRepository}:latest .
+                - docker build -t ${ExistingEcrRepository}:latest -f Dockerfile.web .
                 # - docker build -t $IMAGE_URI:$IMAGE_TAG .
 
-                - cd nginx
+                # - cd nginx
                 
                 - echo BUILDING THE NGINX IMAGE...
                 
-                - docker build -t ${ExistingEcrRepository2}:latest .
+                - docker build -t ${ExistingEcrRepository2}:latest -f Dockerfile.nginx .
                 # - docker build -t $IMAGE_URI_2:$IMAGE_TAG .
+            
             post_build:
               commands:
                 - echo PUSHING THE DOCKER IMAGES...
@@ -501,6 +507,7 @@ Resources:
              commands:
                - mv /usr/local/bin/docker /usr/bin/docker
                - curl -L https://raw.githubusercontent.com/docker/compose-cli/main/scripts/install/install_linux.sh | sh
+           
            pre_build:
              commands:
                - echo Logging in to Amazon ECR...
@@ -512,6 +519,7 @@ Resources:
                - export AWS_SESSION_TOKEN=$(cat creds.json | jq -r .Token)
                - docker context create ecs demoecs --from-env
                - docker context use demoecs
+           
            build:
              commands:
                - echo Convert Compose File
@@ -562,7 +570,7 @@ Resources:
                 Provider: CodeCommit
                 Version: 1
               Configuration:
-                RepositoryName: !Sub '${AWS::StackName}'
+                RepositoryName: !Ref CodeCommitRepository
                 BranchName: !Ref Branch
               OutputArtifacts:
                 - Name: Source
@@ -612,29 +620,36 @@ Resources:
                 Version: '1'
               Configuration:
                 ProjectName: !Ref ExtractBuild
-                EnvironmentVariables: !Sub |
-                  [
-                    {
-                      "name": "AWS_ACCOUNT_ID",
-                      "value": "${AWS::AccountId}",
-                      "type": "PLAINTEXT"
-                    },
-                    {
-                      "name": "AWS_ECS_CLUSTER",
-                      "value": "my-site",
-                      "type": "PLAINTEXT"
-                    },
-                    {
-                      "name": "AWS_VPC",
-                      "value": "vpc-0b4f83a02425d0827",
-                      "type": "PLAINTEXT"
-                    },
-                    {
-                      "name": "AWS_ELB",
-                      "value": "my-site-backend-ALB",
-                      "type": "PLAINTEXT"
-                    }
-                  ]
+                EnvironmentVariables: !Sub
+                  - |
+                    [
+                      {
+                        "name": "AWS_ACCOUNT_ID",
+                        "value": "${AWS::AccountId}",
+                        "type": "PLAINTEXT"
+                      },
+                      {
+                        "name": "AWS_ECS_CLUSTER",
+                        "value": "my-site",
+                        "type": "PLAINTEXT"
+                      },
+                      {
+                        "name": "AWS_VPC",
+                        "value": "vpc-09de43e623fde2ee1",
+                        "type": "PLAINTEXT"
+                      },
+                      {
+                        "name": "AWS_ELB",
+                        "value": "my-site-backend-ALB",
+                        "type": "PLAINTEXT"
+                      },
+                      {
+                        "name": "LISTENER_HTTPS",
+                        "value": "${ListenerHttps}",
+                        "type": "PLAINTEXT"
+                      }
+                    ]
+                  - ListenerHttps: !ImportValue my-site-listener-https-arn
               InputArtifacts:
                 - Name: Source
               OutputArtifacts:

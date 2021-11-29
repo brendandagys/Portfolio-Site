@@ -47,6 +47,9 @@ Parameters:
   DomainWWW:
     Type: String
     Default: www.brendandagys.com
+  DomainSpendingTracker:
+    Type: String
+    Default: spending.brendandagys.com
 
   HostedZoneId:
     Type: String
@@ -785,11 +788,13 @@ Resources:
   FargateServiceLoadBalancerSecurityGroupOutboundRule:
     Type: AWS::EC2::SecurityGroupEgress
     Properties:
+      GroupId: !GetAtt FargateServiceLoadBalancerSecurityGroup.GroupId
       IpProtocol: tcp
       FromPort: 80
       ToPort: 83
-      DestinationSecurityGroupId: !GetAtt ContainerSecurityGroup.GroupId
-      GroupId: !GetAtt FargateServiceLoadBalancerSecurityGroup.GroupId
+      # DestinationSecurityGroupId: !GetAtt ContainerSecurityGroup.GroupId
+      CidrIp: 0.0.0.0/0
+      Description: Allows outbound traffic from the Fargate Service ALB to any services in my cluster
 
   MySiteTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
@@ -844,7 +849,7 @@ Resources:
   ListenerHTTPSRuleFinances:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
-      Priority: 2
+      Priority: 1
       ListenerArn: !Ref ListenerHTTPS
       Conditions:
         - Field: host-header
@@ -853,7 +858,7 @@ Resources:
               - finances.brendandagys.com
       Actions:
         - Type: forward
-          TargetGroupArn: !Ref FinancesTargetGroup
+          TargetGroupArn: !Ref FinancesTargetGroup # Specify only when Type is `forward` and you want to route to a single target group
           ForwardConfig:
             TargetGroups:
               - TargetGroupArn: !Ref FinancesTargetGroup
@@ -863,7 +868,7 @@ Resources:
   ListenerHTTPSRuleVocabularyTrainer:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
-      Priority: 1
+      Priority: 2
       ListenerArn: !Ref ListenerHTTPS
       Conditions:
         - Field: host-header
@@ -918,6 +923,16 @@ Resources:
         HostedZoneId: Z2FDTNDATAQYW2
         DNSName: !GetAtt Distribution.DomainName
 
+  DNSRecordSpendingToFargateServiceLoadBalancer:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      AliasTarget:
+        DNSName: !GetAtt FargateServiceLoadBalancer.DNSName
+        HostedZoneId: !GetAtt FargateServiceLoadBalancer.CanonicalHostedZoneID
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Ref DomainSpendingTracker
+      Type: A
+
 Outputs:
   CodePipelineRole:
     Value: !GetAtt CodePipelineRole.Arn
@@ -970,3 +985,14 @@ Outputs:
     Value: !Ref ECSCluster
     Export:
       Name: !Sub '${AWS::StackName}-fargate-cluster'
+
+  VPCID:
+    Description: VPC ID of the VPC created in the network nested stack. Can't output directly from there
+    Value: !GetAtt NetworkStack.Outputs.VPC
+    Export:
+      Name: !Sub '${AWS::StackName}-vpc-id'
+
+  ListenerHttpsArn:
+    Value: !Ref ListenerHTTPS
+    Export:
+      Name: !Sub '${AWS::StackName}-listener-https-arn'
