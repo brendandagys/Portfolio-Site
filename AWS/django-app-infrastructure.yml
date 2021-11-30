@@ -633,49 +633,7 @@ Resources:
               Configuration:
                 ProjectName: !Ref ExtractBuild
                 EnvironmentVariables: !Sub
-                  - |
-                    [
-                      {
-                        "name": "AWS_ACCOUNT_ID",
-                        "value": "${AWS::AccountId}",
-                        "type": "PLAINTEXT"
-                      },
-                      {
-                        "name": "AWS_ECS_CLUSTER",
-                        "value": "${ExistingEcsClusterName}",
-                        "type": "PLAINTEXT"
-                      },
-                      {
-                        "name": "AWS_VPC",
-                        "value": "${ExistingVpcId}",
-                        "type": "PLAINTEXT"
-                      },
-                      {
-                        "name": "AWS_ELB",
-                        "value": "${ExistingAlbArn}",
-                        "type": "PLAINTEXT"
-                      },
-                      {
-                        "name": "LISTENER_HTTPS",
-                        "value": "${ListenerHttps}",
-                        "type": "PLAINTEXT"
-                      },
-                      {
-                        "name": "DOCKER_IMAGE",
-                        "value": "${DockerImage}",
-                        "type": "PLAINTEXT"
-                      },
-                      {
-                        "name": "DOCKER_IMAGE_2",
-                        "value": "${DockerImage2}",
-                        "type": "PLAINTEXT"
-                      },
-                      {
-                        "name": "HOST_HEADER_CONFIG",
-                        "value": "${HostHeaderConfig}",
-                        "type": "PLAINTEXT"
-                      }
-                    ]
+                  - '[{"name":"AWS_ACCOUNT_ID","value":"${AWS::AccountId}","type":"PLAINTEXT"},{"name":"AWS_ECS_CLUSTER","value":"${ExistingEcsClusterName}","type":"PLAINTEXT"},{"name":"AWS_VPC","value":"${ExistingVpcId}","type":"PLAINTEXT"},{"name":"AWS_ELB","value":"${ExistingAlbArn}","type":"PLAINTEXT"},{"name":"LISTENER_HTTPS","value":"${ListenerHttps}","type":"PLAINTEXT"},{"name":"DOCKER_IMAGE","value":"${DockerImage}","type":"PLAINTEXT"},{"name":"DOCKER_IMAGE_2","value":"${DockerImage2}","type":"PLAINTEXT"},{"name":"HOST_HEADER_CONFIG","value":"${HostHeaderConfig}","type":"PLAINTEXT"}]'
                   - ListenerHttps: !ImportValue my-site-listener-https-arn
                     ExistingEcsClusterName: !ImportValue my-site-fargate-cluster-name
                     ExistingVpcId: !ImportValue my-site-vpc-id
