@@ -56,15 +56,20 @@ Parameters:
     Type: String
     Default: spending-tracker-django-nginx
 
-  # ExistingAwsVpc:
-  #   Description: Name of existing AWS Vpc
-  #   Type: AWS::EC2::VPC::Id
-  # ExistingLoadbalancer:
-  #   Description: ARN of existing Application Load Balancer
+  DockerImage:
+    Type: String
+    Default: 708746137251.dkr.ecr.us-east-1.amazonaws.com/spending-tracker-django-nginx
+  DockerImage2:
+    Type: String
+    Default: 708746137251.dkr.ecr.us-east-1.amazonaws.com/spending-tracker-django
+
+  HostHeaderConfig:
+    Type: String
+    Default: spending.brendandagys.com
+
+  # DjangoSecretKey:
   #   Type: String
-  # ExistingEcsCluster:
-  #   Description: Name of existing ECS Cluster
-  #   Type: String
+  #   Default: fjs8fekjlfse8@340s9djfl#R980FJS83jhf038FJjfldksjf8ofdnn*^&#%j0kD)8#hfdsukncdskuht43nvuihkjanr62nfk7fj3u33j3330009hfkh3wkf3hwkfneskfsun
 
 Resources:
   EcrRepository:
@@ -547,20 +552,6 @@ Resources:
           - PipelineRole
           - Arn
       Stages:
-        # - Name: S3Source
-        #   Actions:
-        #     - Name: TemplateSource
-        #       ActionTypeId:
-        #         Category: Source
-        #         Owner: AWS
-        #         Provider: S3
-        #         Version: '1'
-        #       Configuration:
-        #         S3Bucket: !Ref SourceBucket
-        #         S3ObjectKey: 'compose-bundle.zip'
-        #       OutputArtifacts:
-        #         - Name: Source
-
         - Name: Source
           Actions:
             - Name: SourceAction
@@ -575,6 +566,20 @@ Resources:
               OutputArtifacts:
                 - Name: Source
               RunOrder: 1
+
+        # - Name: S3Source
+        #   Actions:
+        #     - Name: TemplateSource
+        #       ActionTypeId:
+        #         Category: Source
+        #         Owner: AWS
+        #         Provider: S3
+        #         Version: '1'
+        #       Configuration:
+        #         S3Bucket: !Ref SourceBucket
+        #         S3ObjectKey: 'compose-bundle.zip'
+        #       OutputArtifacts:
+        #         - Name: Source
 
         - Name: Approval
           Actions:
@@ -596,14 +601,21 @@ Resources:
                 Version: '1'
               Configuration:
                 ProjectName: !Ref ImageBuild
-                EnvironmentVariables: !Sub |
-                  [
-                    {
-                      "name": "AWS_ACCOUNT_ID",
-                      "value": "${AWS::AccountId}",
-                      "type": "PLAINTEXT"
-                    }
-                  ]
+                EnvironmentVariables: !Sub
+                  - |
+                    [
+                      {
+                        "name": "AWS_ACCOUNT_ID",
+                        "value": "${AWS::AccountId}",
+                        "type": "PLAINTEXT"
+                      },
+                      {
+                        "name": "DJANGO_SECRET_KEY",
+                        "value": "${DjangoSecretKey}",
+                        "type": "PLAINTEXT"
+                      }
+                    ]
+                  - DjangoSecretKey: '{{resolve:secretsmanager:my-secrets:SecretString:DJANGO_SECRET_KEY}}'
               InputArtifacts:
                 - Name: Source
               OutputArtifacts:
@@ -630,26 +642,44 @@ Resources:
                       },
                       {
                         "name": "AWS_ECS_CLUSTER",
-                        "value": "my-site",
+                        "value": "${ExistingEcsClusterName}",
                         "type": "PLAINTEXT"
                       },
                       {
                         "name": "AWS_VPC",
-                        "value": "vpc-09de43e623fde2ee1",
+                        "value": "${ExistingVpcId}",
                         "type": "PLAINTEXT"
                       },
                       {
                         "name": "AWS_ELB",
-                        "value": "my-site-backend-ALB",
+                        "value": "${ExistingAlbArn}",
                         "type": "PLAINTEXT"
                       },
                       {
                         "name": "LISTENER_HTTPS",
                         "value": "${ListenerHttps}",
                         "type": "PLAINTEXT"
+                      },
+                      {
+                        "name": "DOCKER_IMAGE",
+                        "value": "${DockerImage}",
+                        "type": "PLAINTEXT"
+                      },
+                      {
+                        "name": "DOCKER_IMAGE_2",
+                        "value": "${DockerImage2}",
+                        "type": "PLAINTEXT"
+                      },
+                      {
+                        "name": "HOST_HEADER_CONFIG",
+                        "value": "${HostHeaderConfig}",
+                        "type": "PLAINTEXT"
                       }
                     ]
                   - ListenerHttps: !ImportValue my-site-listener-https-arn
+                    ExistingEcsClusterName: !ImportValue my-site-fargate-cluster-name
+                    ExistingVpcId: !ImportValue my-site-vpc-id
+                    ExistingAlbArn: !ImportValue my-site-fargate-service-load-balancer-arn
               InputArtifacts:
                 - Name: Source
               OutputArtifacts:

@@ -697,19 +697,19 @@ Resources:
             - Name: PORT
               Value: !Ref ContainerPortFinances
             - Name: MONGO_URI_PROD
-              Value: '{{resolve:secretsmanager:finances:SecretString:MONGO_URI_PROD}}'
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:MONGO_URI_PROD}}'
             - Name: GOOGLE_CLIENT_ID_PROD
-              Value: '{{resolve:secretsmanager:finances:SecretString:GOOGLE_CLIENT_ID_PROD}}'
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:GOOGLE_CLIENT_ID_PROD}}'
             - Name: GOOGLE_CLIENT_SECRET_PROD
-              Value: '{{resolve:secretsmanager:finances:SecretString:GOOGLE_CLIENT_SECRET_PROD}}'
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:GOOGLE_CLIENT_SECRET_PROD}}'
             - Name: COOKIE_KEY
-              Value: '{{resolve:secretsmanager:finances:SecretString:COOKIE_KEY}}'
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:COOKIE_KEY}}'
             - Name: AWS_ACCESS_KEY_ID
-              Value: '{{resolve:secretsmanager:finances:SecretString:AWS_ACCESS_KEY_ID}}'
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:AWS_ACCESS_KEY_ID}}'
             - Name: AWS_SECRET_ACCESS_KEY
-              Value: '{{resolve:secretsmanager:finances:SecretString:AWS_SECRET_ACCESS_KEY}}'
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:AWS_SECRET_ACCESS_KEY}}'
             - Name: AWS_BUCKET_NAME
-              Value: '{{resolve:secretsmanager:finances:SecretString:AWS_BUCKET_NAME}}'
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:AWS_BUCKET_NAME}}'
         - Image: !Ref ImageURLVocabularyTrainer
           Name: vocabulary-trainer
           PortMappings:
@@ -794,7 +794,7 @@ Resources:
       ToPort: 83
       # DestinationSecurityGroupId: !GetAtt ContainerSecurityGroup.GroupId
       CidrIp: 0.0.0.0/0
-      Description: Allows outbound traffic from the Fargate Service ALB to any services in my cluster
+      Description: Allows outbound traffic from the Fargate Service ALB to any services in my cluster, or anywhere else
 
   MySiteTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
@@ -984,7 +984,7 @@ Outputs:
     Description: Used by Django template
     Value: !Ref ECSCluster
     Export:
-      Name: !Sub '${AWS::StackName}-fargate-cluster'
+      Name: !Sub '${AWS::StackName}-fargate-cluster-name'
 
   VPCID:
     Description: VPC ID of the VPC created in the network nested stack. Can't output directly from there
