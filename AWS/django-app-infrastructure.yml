@@ -468,7 +468,7 @@ Resources:
 
                 - echo BUILDING THE DJANGO IMAGE...
 
-                - docker build -t ${ExistingEcrRepository}:latest -f Dockerfile.web .
+                - docker build -t ${ExistingEcrRepository}:latest -f Dockerfile.web --build-arg DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY} .
                 # - docker build -t $IMAGE_URI:$IMAGE_TAG .
 
                 # - cd nginx
