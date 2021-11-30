@@ -67,9 +67,9 @@ Parameters:
     Type: String
     Default: spending.brendandagys.com
 
-  # DjangoSecretKey:
-  #   Type: String
-  #   Default: fjs8fekjlfse8@340s9djfl#R980FJS83jhf038FJjfldksjf8ofdnn*^&#%j0kD)8#hfdsukncdskuht43nvuihkjanr62nfk7fj3u33j3330009hfkh3wkf3hwkfneskfsun
+  DjangoSecretKey:
+    Type: String
+    Default: fjs8fekjlfshkjanr62nfk7fj3u33j3330009hfkh3wkf3hwkfneskfsun
 
 Resources:
   EcrRepository:
@@ -611,8 +611,8 @@ Resources:
                     },
                     {
                       "name": "DJANGO_SECRET_KEY",
-                      "value": "my-secrets:DJANGO_SECRET_KEY",
-                      "type": "SECRETS_MANAGER"
+                      "value": "${DjangoSecretKey}",
+                      "type": "PLAINTEXT"
                     }
                   ]
               InputArtifacts:
