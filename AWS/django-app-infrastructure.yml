@@ -211,6 +211,7 @@ Resources:
           - Action:
               - elasticfilesystem:*
               - ec2:*
+              - ssm:GetParameters
             Effect: Allow
             Resource: '*'
           - Action:
@@ -601,21 +602,19 @@ Resources:
                 Version: '1'
               Configuration:
                 ProjectName: !Ref ImageBuild
-                EnvironmentVariables: !Sub
-                  - |
-                    [
-                      {
-                        "name": "AWS_ACCOUNT_ID",
-                        "value": "${AWS::AccountId}",
-                        "type": "PLAINTEXT"
-                      },
-                      {
-                        "name": "DJANGO_SECRET_KEY",
-                        "value": "${DjangoSecretKey}",
-                        "type": "PLAINTEXT"
-                      }
-                    ]
-                  - DjangoSecretKey: '{{resolve:secretsmanager:my-secrets:SecretString:DJANGO_SECRET_KEY}}'
+                EnvironmentVariables: !Sub |
+                  [
+                    {
+                      "name": "AWS_ACCOUNT_ID",
+                      "value": "${AWS::AccountId}",
+                      "type": "PLAINTEXT"
+                    },
+                    {
+                      "name": "DJANGO_SECRET_KEY",
+                      "value": "my-secrets:DJANGO_SECRET_KEY",
+                      "type": "SECRETS_MANAGER"
+                    }
+                  ]
               InputArtifacts:
                 - Name: Source
               OutputArtifacts:
