@@ -67,10 +67,6 @@ Parameters:
     Type: String
     Default: spending.brendandagys.com
 
-  DjangoSecretKey:
-    Type: String
-    Default: fjs8fekjlfshkjanr62nfk7fj3u33j3330009hfkh3wkf3hwkfneskfsun
-
 Resources:
   EcrRepository:
     Type: AWS::ECR::Repository
@@ -467,16 +463,10 @@ Resources:
                 - ls
 
                 - echo BUILDING THE DJANGO IMAGE...
-
                 - docker build -t ${ExistingEcrRepository}:latest -f Dockerfile.web --build-arg DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY} .
-                # - docker build -t $IMAGE_URI:$IMAGE_TAG .
-
-                # - cd nginx
                 
                 - echo BUILDING THE NGINX IMAGE...
-                
                 - docker build -t ${ExistingEcrRepository2}:latest -f Dockerfile.nginx .
-                # - docker build -t $IMAGE_URI_2:$IMAGE_TAG .
             
             post_build:
               commands:
@@ -484,8 +474,6 @@ Resources:
 
                 - docker push ${ExistingEcrRepository}:latest
                 - docker push ${ExistingEcrRepository2}:latest
-                # - docker push $IMAGE_URI:$IMAGE_TAG
-                # - docker push $IMAGE_URI_2:$IMAGE_TAG
 
   # Code Build to Extract Cfn
   ExtractBuild:
@@ -611,8 +599,8 @@ Resources:
                     },
                     {
                       "name": "DJANGO_SECRET_KEY",
-                      "value": "${DjangoSecretKey}",
-                      "type": "PLAINTEXT"
+                      "value": "my-secrets:DJANGO_SECRET_KEY",
+                      "type": "SECRETS_MANAGER"
                     }
                   ]
               InputArtifacts:
