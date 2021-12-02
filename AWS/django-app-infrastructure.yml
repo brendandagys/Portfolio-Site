@@ -8,6 +8,10 @@ Conditions:
   CreateEcrRepository2: !Equals [!Ref ExistingEcrRepository2, '']
 
 Parameters:
+  MasterStackName:
+    Type: String
+    Default: my-site
+
   ApplicationStackName:
     Description: Name of the not-yet-created Application CFN Stack. DO NOT NAME STACK SAME AS THIS PARAMETER! We want to operate on separate stacks.
     Type: String
@@ -15,7 +19,7 @@ Parameters:
     AllowedPattern: (^[a-z][a-z0-9-]+$)
 
   ChangeSetName:
-    Description: Name of Cfn Change Set
+    Description: Name of CloudFormation Change Set
     Type: String
     Default: spending-tracker-django
     AllowedPattern: (^[a-z][a-z0-9-]+$)
@@ -621,10 +625,18 @@ Resources:
                 ProjectName: !Ref ExtractBuild
                 EnvironmentVariables: !Sub
                   - '[{"name":"AWS_ACCOUNT_ID","value":"${AWS::AccountId}","type":"PLAINTEXT"},{"name":"AWS_ECS_CLUSTER","value":"${ExistingEcsClusterName}","type":"PLAINTEXT"},{"name":"AWS_VPC","value":"${ExistingVpcId}","type":"PLAINTEXT"},{"name":"AWS_ELB","value":"${ExistingAlbArn}","type":"PLAINTEXT"},{"name":"LISTENER_HTTPS","value":"${ListenerHttps}","type":"PLAINTEXT"},{"name":"DOCKER_IMAGE","value":"${DockerImage}","type":"PLAINTEXT"},{"name":"DOCKER_IMAGE_2","value":"${DockerImage2}","type":"PLAINTEXT"},{"name":"HOST_HEADER_CONFIG","value":"${HostHeaderConfig}","type":"PLAINTEXT"}]'
-                  - ListenerHttps: !ImportValue my-site-listener-https-arn
-                    ExistingEcsClusterName: !ImportValue my-site-fargate-cluster-name
-                    ExistingVpcId: !ImportValue my-site-vpc-id
-                    ExistingAlbArn: !ImportValue my-site-fargate-service-load-balancer-arn
+                  - ListenerHttps:
+                      !ImportValue { !Sub: '${MasterStackName}-listener-https' }
+                    ExistingEcsClusterName:
+                      !ImportValue {
+                        !Sub: '${MasterStackName}-fargate-cluster-name',
+                      }
+                    ExistingVpcId:
+                      !ImportValue { !Sub: '${MasterStackName}-vpc-id' }
+                    ExistingAlbArn:
+                      !ImportValue {
+                        !Sub: '${MasterStackName}-fargate-service-load-balancer',
+                      }
               InputArtifacts:
                 - Name: Source
               OutputArtifacts:

@@ -4,6 +4,10 @@ Conditions:
   CreateDeployBucketAndPolicy: !Equals [!Ref ExistingDeployBucket, '']
 
 Parameters:
+  MasterStackName:
+    Type: String
+    Default: my-site
+
   ExistingDeployBucket:
     Type: String
     Default: arn:aws:s3:::<REPLACE>.brendandagys.com
@@ -15,15 +19,22 @@ Parameters:
     Type: String
     Default: main
     Description: e.g. main or master
+
   Domain:
     Type: String
     Default: <REPLACE>.brendandagys.com
-  DomainWWW:
+  DomainWww:
     Type: String
     Default: www.<REPLACE>.brendandagys.com
+
   HostedZoneId:
+    Description: Route53 Hosted Zone ID
     Type: String
     Default: Z1048063LC3J2IKH5GGI
+
+  CloudFrontHostedZoneId:
+    Type: String
+    Default: Z2FDTNDATAQYW2
 
   DistributionHomePage:
     Type: String
@@ -77,9 +88,10 @@ Resources:
     Type: AWS::CodePipeline::Pipeline
     Properties:
       ArtifactStore:
-        Location: my-site-pipeline-artifacts
+        Location: !Sub '${MasterStackName}-pipeline-artifacts'
         Type: S3
-      RoleArn: !ImportValue my-site-CodePipeline-role #!GetAtt CodePipelineRole.Arn
+      RoleArn:
+        !ImportValue { 'Fn::Sub': '${MasterStackName}-codepipeline-role' }
       Stages:
         - Name: Source
           Actions:
@@ -123,8 +135,9 @@ Resources:
   CodeBuild:
     Type: AWS::CodeBuild::Project
     Properties:
-      Name: !Sub ${AWS::StackName}-CodeBuild
-      ServiceRole: !ImportValue my-site-CodeBuild-role #!GetAtt CodeBuildRole.Arn
+      Name: !Sub ${AWS::StackName}-codebuild
+      ServiceRole:
+        !ImportValue { 'Fn::Sub': '${MasterStackName}-codebuild-role' }
       Artifacts:
         Type: CODEPIPELINE
       Environment:
@@ -170,7 +183,7 @@ Resources:
         Comment: !Sub 'Origin 1: S3 SPA for ${AWS::StackName} | Origin 2: API Fargate container for ${AWS::StackName}'
         Aliases:
           - !Ref Domain
-          - !Ref DomainWWW
+          - !Ref DomainWww
         Origins:
           - Id:
               !If [
@@ -178,9 +191,7 @@ Resources:
                 !Ref DeployBucket,
                 !Ref ExistingDeployBucket,
               ]
-            DomainName: !Sub
-              - '${Domain}.s3.amazonaws.com'
-              - { Domain: !Ref Domain }
+            DomainName: !Sub '${Domain}.s3.amazonaws.com'
             S3OriginConfig:
               OriginAccessIdentity:
                 !Join [
@@ -190,14 +201,18 @@ Resources:
                     !Ref OriginAccessIdentity,
                   ],
                 ]
-          - Id: !ImportValue my-site-Fargate-service
-            DomainName: !ImportValue my-site-Fargate-service-load-balancer-DNS-name
+          - Id: !ImportValue { 'Fn::Sub': '${MasterStackName}-fargate-service' }
+            DomainName:
+              !ImportValue {
+                'Fn::Sub': '${MasterStackName}-fargate-service-load-balancer-dns-name',
+              }
             CustomOriginConfig:
               OriginProtocolPolicy: https-only
               OriginSSLProtocols:
                 - TLSv1.2
         ViewerCertificate:
-          AcmCertificateArn: !ImportValue my-site-certificate
+          AcmCertificateArn:
+            !ImportValue { 'Fn::Sub': '${MasterStackName}-certificate' }
           SslSupportMethod: sni-only
           MinimumProtocolVersion: TLSv1.2_2021
         CustomErrorResponses:
@@ -232,12 +247,19 @@ Resources:
             - HEAD
           FunctionAssociations:
             - EventType: viewer-request
-              FunctionARN: !ImportValue my-site-CloudFront-function-canonical-URL
+              FunctionARN:
+                !ImportValue {
+                  'Fn::Sub': '${MasterStackName}-cloudfront-function-canonical-url',
+                }
             - EventType: viewer-response
-              FunctionARN: !ImportValue my-site-CloudFront-function-security-headers
+              FunctionARN:
+                !ImportValue {
+                  'Fn::Sub': '${MasterStackName}-cloudfront-function-security-headers',
+                }
         CacheBehaviors:
           - PathPattern: api/*
-            TargetOriginId: !ImportValue my-site-Fargate-service
+            TargetOriginId:
+              !ImportValue { 'Fn::Sub': '${MasterStackName}-fargate-service' }
             ViewerProtocolPolicy: redirect-to-https
             CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad
             OriginRequestPolicyId: 216adef6-5c7f-47e4-b989-5492eafa07d3
@@ -255,9 +277,12 @@ Resources:
               - HEAD
             FunctionAssociations:
               - EventType: viewer-response
-                FunctionARN: !ImportValue my-site-CloudFront-function-security-headers
+                FunctionARN:
+                  !ImportValue {
+                    'Fn::Sub': '${MasterStackName}-cloudfront-function-security-headers',
+                  }
         Logging:
-          Bucket: my-site-cloudfront-distribution-logs.s3.amazonaws.com
+          Bucket: !Sub '${MasterStackName}-cloudfront-distribution-logs.s3.amazonaws.com'
           IncludeCookies: true
           Prefix: !Sub '${AWS::StackName}-logs'
 
@@ -265,26 +290,24 @@ Resources:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
     Properties:
       CloudFrontOriginAccessIdentityConfig:
-        Comment: !Sub
-          - '${Domain} OAI'
-          - { Domain: !Ref Domain }
+        Comment: !Sub '${Domain} OAI'
 
-  DNSRecord:
+  DnsRecord:
     Type: AWS::Route53::RecordSet
     Properties:
       HostedZoneId: !Ref HostedZoneId
       Name: !Ref Domain
       Type: A
       AliasTarget:
-        HostedZoneId: Z2FDTNDATAQYW2
+        HostedZoneId: !Ref CloudFrontHostedZoneId
         DNSName: !GetAtt Distribution.DomainName
 
-  DNSRecordWWW:
+  DnsRecordWww:
     Type: AWS::Route53::RecordSet
     Properties:
       HostedZoneId: !Ref HostedZoneId
-      Name: !Ref DomainWWW
+      Name: !Ref DomainWww
       Type: A
       AliasTarget:
-        HostedZoneId: Z2FDTNDATAQYW2
+        HostedZoneId: !Ref CloudFrontHostedZoneId
         DNSName: !GetAtt Distribution.DomainName

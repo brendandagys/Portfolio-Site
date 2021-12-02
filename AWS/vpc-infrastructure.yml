@@ -212,8 +212,8 @@ Outputs:
   VPC:
     Description: Used by Django template
     Value: !Ref VPC
-    Export:
-      Name: !Sub '${AWS::StackName}-vpc-id'
+    # Export:
+    #   Name: !Sub '${AWS::StackName}-vpc-id'
 
   PublicSubnets:
     Description: A list of the public subnets

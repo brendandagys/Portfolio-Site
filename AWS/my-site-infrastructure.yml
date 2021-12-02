@@ -25,48 +25,35 @@ Parameters:
     Type: String
     Default: arn:aws:s3:::my-site-load-balancer-logs
 
-  DeployBucketDomainName:
-    Type: String
-    Default: brendandagys.com.s3.amazonaws.com
-
-  Repository:
-    Type: String
-    Default: my-site
-  Branch:
-    Type: String
-    Default: main
-    Description: e.g. main or master
-
   Certificate:
     Type: String
     Default: arn:aws:acm:us-east-1:708746137251:certificate/d61599f4-ca74-4bb7-893f-ed00e147d33c
-
-  Domain:
-    Type: String
-    Default: brendandagys.com
-  DomainWWW:
-    Type: String
-    Default: www.brendandagys.com
-  DomainSpendingTracker:
-    Type: String
-    Default: spending.brendandagys.com
-
-  HostedZoneId:
-    Type: String
-    Default: Z1048063LC3J2IKH5GGI
 
   ServiceName:
     Type: String
     Default: my-site-backend
 
-  ImageURL:
+  ContainerCpu:
+    Type: Number
+    Default: 256
+    Description: How many CPU to assign to the container (1024 = 1 CPU)
+  ContainerMemory:
+    Type: Number
+    Default: 512
+    Description: How many MB of memory to assign to the container
+  DesiredCount:
+    Type: Number
+    Default: 1
+    Description: The number of copies of the service task to run
+
+  ImageUrl:
     Type: String
     Default: 708746137251.dkr.ecr.us-east-1.amazonaws.com/my-site-backend
     Description: The URL of a Docker image that contains the application process that will handle the traffic for this service
-  ImageURLFinances:
+  ImageUrlFinances:
     Type: String
     Default: 708746137251.dkr.ecr.us-east-1.amazonaws.com/finances:latest
-  ImageURLVocabularyTrainer:
+  ImageUrlVocabularyTrainer:
     Type: String
     Default: 708746137251.dkr.ecr.us-east-1.amazonaws.com/vocabulary-trainer:latest
 
@@ -84,35 +71,23 @@ Parameters:
   ContainerPortVocabularyTrainer:
     Type: Number
     Default: 82
-  ContainerCPU:
-    Type: Number
-    Default: 256
-    Description: How many CPU to assign to the container (1024 = 1 CPU)
-  ContainerMemory:
-    Type: Number
-    Default: 512
-    Description: How many MB of memory to assign to the container
-  DesiredCount:
-    Type: Number
-    Default: 1
-    Description: The number of copies of the service task to run
-
-  VpcCIDR:
-    Type: String
-    Default: 10.192.0.0/16
-  PublicSubnet1CIDR:
-    Type: String
-    Default: 10.192.10.0/24
-  PublicSubnet2CIDR:
-    Type: String
-    Default: 10.192.11.0/24
-  # PrivateSubnet1CIDR:
-  #   Type: String
-  #   Default: 10.192.20.0/24
 
   VocabularyOrigin:
     Type: String
     Default: https://brendandagys.com
+
+  VpcCidr:
+    Type: String
+    Default: 10.192.0.0/16
+  PublicSubnet1Cidr:
+    Type: String
+    Default: 10.192.10.0/24
+  PublicSubnet2Cidr:
+    Type: String
+    Default: 10.192.11.0/24
+  # PrivateSubnet1Cidr:
+  #   Type: String
+  #   Default: 10.192.20.0/24
 
 Resources:
   NetworkStack:
@@ -120,61 +95,12 @@ Resources:
     Properties:
       Parameters:
         EnvironmentName: !Sub '${AWS::StackName}'
-        VpcCIDR: !Ref VpcCIDR
-        PublicSubnet1CIDR: !Ref PublicSubnet1CIDR
-        PublicSubnet2CIDR: !Ref PublicSubnet2CIDR
-        # PrivateSubnet1CIDR: !Ref PrivateSubnet1CIDR
+        VpcCIDR: !Ref VpcCidr
+        PublicSubnet1CIDR: !Ref PublicSubnet1Cidr
+        PublicSubnet2CIDR: !Ref PublicSubnet2Cidr
+        # PrivateSubnet1CIDR: !Ref PrivateSubnet1Cidr
       TemplateURL: https://my-site-cloudformation-templates.s3.amazonaws.com/vpc-infrastructure.yml
       # TimeoutInMinutes: Integer
-
-  CodePipeline:
-    Type: AWS::CodePipeline::Pipeline
-    Properties:
-      ArtifactStore:
-        Location: !Sub '${AWS::StackName}-pipeline-artifacts'
-        Type: S3
-      RoleArn: !GetAtt CodePipelineRole.Arn
-      Stages:
-        - Name: Source
-          Actions:
-            - Name: SourceAction
-              ActionTypeId:
-                Category: Source
-                Owner: AWS
-                Provider: CodeCommit
-                Version: 1
-              OutputArtifacts:
-                - Name: !Sub '${AWS::StackName}-code'
-              Configuration:
-                RepositoryName: !Ref Repository
-                BranchName: !Ref Branch
-              RunOrder: 1
-
-        - Name: Approval
-          Actions:
-            - Name: ApprovalAction
-              ActionTypeId:
-                Category: Approval
-                Owner: AWS
-                Provider: Manual
-                Version: 1
-              RunOrder: 2
-
-        - Name: Build
-          Actions:
-            - Name: BuildAction
-              ActionTypeId:
-                Category: Build
-                Owner: AWS
-                Provider: CodeBuild
-                Version: 1
-              InputArtifacts:
-                - Name: !Sub '${AWS::StackName}-code'
-              OutputArtifacts:
-                - Name: !Sub '${AWS::StackName}-build'
-              Configuration:
-                ProjectName: !Ref CodeBuild
-              RunOrder: 3
 
   CodePipelineRole:
     Type: AWS::IAM::Role
@@ -231,48 +157,6 @@ Resources:
                   #     ],
                   #   ]
 
-  CodeBuild:
-    Type: AWS::CodeBuild::Project
-    Properties:
-      Name: !Sub ${AWS::StackName}-CodeBuild
-      ServiceRole: !GetAtt CodeBuildRole.Arn
-      Artifacts:
-        Type: CODEPIPELINE
-      Environment:
-        ComputeType: BUILD_GENERAL1_SMALL
-        Type: LINUX_CONTAINER
-        Image: aws/codebuild/standard:4.0
-      Source:
-        Type: CODEPIPELINE
-        BuildSpec: !Sub |
-          version: 0.2
-          env:
-            variables:
-              INLINE_RUNTIME_CHUNK: "false"
-          phases:
-            install:
-              commands:
-                - cd frontend
-                - npm install
-            build:
-              commands:
-                - npm run build
-                # - npm test
-                # - echo $CODEBUILD_SRC_DIR
-                - ls
-            post_build:
-              on-failure: ABORT #CONTINUE
-              commands:
-                - aws s3 cp --recursive --acl public-read ./build s3://${Domain}/
-                
-                - aws s3 cp --acl public-read --cache-control="max-age=0, no-cache, no-store, must-revalidate" ./build/index.html s3://${Domain}/
-                
-                - aws cloudfront create-invalidation --distribution-id ${Distribution} --paths "/*"
-                
-          artifacts:
-            files:
-              - 'frontend/build/**/*'
-
   CodeBuildRole:
     Type: AWS::IAM::Role
     Properties:
@@ -300,7 +184,6 @@ Resources:
                 Resource:
                   - !If [
                       CreatePipelineBucket,
-                      # !Ref PipelineBucket,
                       !GetAtt PipelineBucket.Arn,
                       !Ref ExistingPipelineBucket,
                     ]
@@ -309,7 +192,6 @@ Resources:
                       [
                         !If [
                           CreatePipelineBucket,
-                          # !Ref PipelineBucket,
                           !GetAtt PipelineBucket.Arn,
                           !Ref ExistingPipelineBucket,
                         ],
@@ -348,49 +230,6 @@ Resources:
         BlockPublicPolicy: true
         IgnorePublicAcls: false
         RestrictPublicBuckets: true
-
-  DeployBucket:
-    Type: AWS::S3::Bucket
-    Condition: CreateDeployBucketAndPolicy
-    DeletionPolicy: Retain
-    Properties:
-      BucketName: !Ref Domain
-      AccessControl: Private
-      PublicAccessBlockConfiguration:
-        BlockPublicAcls: false
-        BlockPublicPolicy: true
-        IgnorePublicAcls: false
-        RestrictPublicBuckets: true
-
-  DeployBucketPolicy:
-    Type: AWS::S3::BucketPolicy
-    Condition: CreateDeployBucketAndPolicy
-    DeletionPolicy: Retain
-    Properties:
-      Bucket:
-        !If [
-          CreateDeployBucketAndPolicy,
-          !Ref DeployBucket,
-          !Ref ExistingDeployBucket,
-        ]
-      PolicyDocument:
-        Id: MySiteDeployBucketPolicy
-        Version: 2012-10-17
-        Statement:
-          - Sid: PolicyForCloudFrontPrivateContent
-            Effect: Allow
-            Principal:
-              CanonicalUser: !GetAtt OriginAccessIdentity.S3CanonicalUserId
-            Action: 's3:GetObject'
-            Resource: !Join
-              - ''
-              - - 'arn:aws:s3:::'
-                - !If [
-                    CreateDeployBucketAndPolicy,
-                    !Ref DeployBucket,
-                    !Ref ExistingDeployBucket,
-                  ]
-                - /*
 
   DistributionLogsBucket:
     Type: AWS::S3::Bucket
@@ -458,103 +297,6 @@ Resources:
                   ]
                 - /*
 
-  Distribution:
-    Type: AWS::CloudFront::Distribution
-    Properties:
-      DistributionConfig:
-        Enabled: true
-        Comment: !Sub 'Origin 1: S3 SPA for ${AWS::StackName} | Origin 2: API Fargate container for ${AWS::StackName}'
-        Aliases:
-          - !Ref Domain
-          - !Ref DomainWWW
-        Origins:
-          - Id:
-              !If [
-                CreateDeployBucketAndPolicy,
-                !Ref DeployBucket,
-                !Ref ExistingDeployBucket,
-              ]
-            DomainName: !Ref DeployBucketDomainName
-            S3OriginConfig:
-              OriginAccessIdentity:
-                !Join [
-                  '',
-                  [
-                    'origin-access-identity/cloudfront/',
-                    !Ref OriginAccessIdentity,
-                  ],
-                ]
-          - Id: !Ref FargateService
-            DomainName: !GetAtt FargateServiceLoadBalancer.DNSName
-            CustomOriginConfig:
-              OriginProtocolPolicy: https-only
-              OriginSSLProtocols:
-                - TLSv1.2
-        ViewerCertificate:
-          AcmCertificateArn: !Ref Certificate
-          SslSupportMethod: sni-only
-          MinimumProtocolVersion: TLSv1.2_2021
-        CustomErrorResponses:
-          - ErrorCode: 403
-            ResponseCode: 200
-            ResponsePagePath: /index.html
-            ErrorCachingMinTTL: 10
-          - ErrorCode: 404
-            ResponseCode: 200
-            ResponsePagePath: /index.html
-            ErrorCachingMinTTL: 10
-        DefaultRootObject: index.html
-        PriceClass: PriceClass_100
-        HttpVersion: http2
-        IPV6Enabled: false
-        DefaultCacheBehavior:
-          TargetOriginId:
-            !If [
-              CreateDeployBucketAndPolicy,
-              !Ref DeployBucket,
-              !Ref ExistingDeployBucket,
-            ]
-          ViewerProtocolPolicy: redirect-to-https
-          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
-          Compress: true
-          AllowedMethods:
-            - GET
-            - HEAD
-            - OPTIONS
-          CachedMethods:
-            - GET
-            - HEAD
-          FunctionAssociations:
-            - EventType: viewer-request
-              FunctionARN: !Ref CloudFrontFunctionCanonicalURL
-            - EventType: viewer-response
-              FunctionARN: !Ref CloudFrontFunctionSecurityHeaders
-        CacheBehaviors:
-          - PathPattern: api/*
-            TargetOriginId: !Ref FargateService
-            ViewerProtocolPolicy: redirect-to-https
-            CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad
-            OriginRequestPolicyId: 216adef6-5c7f-47e4-b989-5492eafa07d3
-            Compress: true
-            AllowedMethods:
-              - GET
-              - HEAD
-              - OPTIONS
-              - POST
-              - PUT
-              - PATCH
-              - DELETE
-            CachedMethods:
-              - GET
-              - HEAD
-            FunctionAssociations: # API DOES NOT NEED WWW.-REDIRECTION
-              - EventType: viewer-response
-                FunctionARN: !Ref CloudFrontFunctionSecurityHeaders
-        Logging:
-          Bucket: !Sub '${AWS::StackName}-cloudfront-distribution-logs.s3.amazonaws.com'
-          IncludeCookies: true
-          Prefix: !Sub '${AWS::StackName}-logs'
-
   CloudFrontFunctionSecurityHeaders:
     Type: AWS::CloudFront::Function
     Properties:
@@ -585,7 +327,7 @@ Resources:
             return response;
         }
 
-  CloudFrontFunctionCanonicalURL:
+  CloudFrontFunctionCanonicalUrl:
     Type: AWS::CloudFront::Function
     Properties:
       Name: !Sub '${AWS::StackName}-viewer-request'
@@ -610,15 +352,7 @@ Resources:
             return request;
         }
 
-  OriginAccessIdentity:
-    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
-    Properties:
-      CloudFrontOriginAccessIdentityConfig:
-        Comment: !Sub
-          - '${Domain} OAI'
-          - { Domain: !Ref Domain }
-
-  ECSCluster:
+  FargateCluster:
     Type: AWS::ECS::Cluster
     Properties:
       ClusterName: !Sub '${AWS::StackName}'
@@ -626,15 +360,15 @@ Resources:
   FargateService:
     Type: AWS::ECS::Service
     DependsOn:
-      - ListenerHTTPS
-      - ListenerHTTPSRuleFinances
-      - ListenerHTTPSRuleVocabularyTrainer
+      - ListenerHttps
+      - ListenerHttpsRuleFinances
+      - ListenerHttpsRuleVocabularyTrainer
       - MySiteTargetGroup
       - FinancesTargetGroup
       - VocabularyTrainerTargetGroup
     Properties:
       ServiceName: !Ref ServiceName
-      Cluster: !Ref ECSCluster
+      Cluster: !Ref FargateCluster
       TaskDefinition: !Ref FargateServiceTaskDefinition
       LaunchType: FARGATE
       DesiredCount: !Ref DesiredCount
@@ -662,11 +396,11 @@ Resources:
     Properties:
       Family: !Ref ServiceName
       NetworkMode: awsvpc
-      Cpu: !Ref ContainerCPU
+      Cpu: !Ref ContainerCpu
       Memory: !Ref ContainerMemory
       ExecutionRoleArn: 'arn:aws:iam::708746137251:role/ecs-task-execution-role'
       ContainerDefinitions:
-        - Image: !Ref ImageURL
+        - Image: !Ref ImageUrl
           Name: !Ref ContainerName
           PortMappings:
             - Protocol: tcp
@@ -680,7 +414,7 @@ Resources:
           Environment:
             - Name: NODE_ENV
               Value: production
-        - Image: !Ref ImageURLFinances
+        - Image: !Ref ImageUrlFinances
           Name: finances
           PortMappings:
             - Protocol: tcp
@@ -710,7 +444,7 @@ Resources:
               Value: '{{resolve:secretsmanager:my-secrets:SecretString:AWS_SECRET_ACCESS_KEY}}'
             - Name: AWS_BUCKET_NAME
               Value: '{{resolve:secretsmanager:my-secrets:SecretString:AWS_BUCKET_NAME}}'
-        - Image: !Ref ImageURLVocabularyTrainer
+        - Image: !Ref ImageUrlVocabularyTrainer
           Name: vocabulary-trainer
           PortMappings:
             - Protocol: tcp
@@ -730,9 +464,10 @@ Resources:
   FargateTaskDefinitionLogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Sub
-        - '/ecs/${ServiceName}-task-definition'
-        - { ServiceName: !Ref ServiceName }
+      LogGroupName:
+        !Sub '/ecs/${ServiceName}-task-definition'
+        # - '/ecs/${ServiceName}-task-definition'
+        # - ServiceName: !Ref ServiceName
 
   ContainerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -751,10 +486,10 @@ Resources:
       IpProtocol: tcp
       FromPort: 80
       ToPort: 83
-      SourceSecurityGroupId: !GetAtt FargateServiceLoadBalancerSecurityGroup.GroupId
+      SourceSecurityGroupId: !GetAtt LoadBalancerSecurityGroup.GroupId
       GroupId: !GetAtt ContainerSecurityGroup.GroupId
 
-  FargateServiceLoadBalancer:
+  LoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       Name: !Sub
@@ -766,7 +501,7 @@ Resources:
         - !GetAtt NetworkStack.Outputs.PublicSubnet1
         - !GetAtt NetworkStack.Outputs.PublicSubnet2
       SecurityGroups:
-        - !Ref FargateServiceLoadBalancerSecurityGroup
+        - !Ref LoadBalancerSecurityGroup
       IpAddressType: ipv4
       LoadBalancerAttributes:
         - Key: access_logs.s3.enabled
@@ -774,7 +509,7 @@ Resources:
         - Key: access_logs.s3.bucket
           Value: !Sub '${AWS::StackName}-load-balancer-logs'
 
-  FargateServiceLoadBalancerSecurityGroup:
+  LoadBalancerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Fargate Service ALB Security Group
@@ -785,10 +520,10 @@ Resources:
           ToPort: 443
           CidrIp: 0.0.0.0/0
 
-  FargateServiceLoadBalancerSecurityGroupOutboundRule:
+  LoadBalancerSecurityGroupOutboundRule:
     Type: AWS::EC2::SecurityGroupEgress
     Properties:
-      GroupId: !GetAtt FargateServiceLoadBalancerSecurityGroup.GroupId
+      GroupId: !GetAtt LoadBalancerSecurityGroup.GroupId
       IpProtocol: tcp
       FromPort: 80
       ToPort: 83
@@ -810,7 +545,7 @@ Resources:
   FinancesTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     DependsOn:
-      - FargateServiceLoadBalancer
+      - LoadBalancer
     Properties:
       Name: finances-target-group
       Protocol: HTTP
@@ -823,7 +558,7 @@ Resources:
   VocabularyTrainerTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     DependsOn:
-      - FargateServiceLoadBalancer
+      - LoadBalancer
     Properties:
       Name: vocabulary-trainer-target-group
       Protocol: HTTP
@@ -833,10 +568,10 @@ Resources:
       HealthCheckEnabled: true
       HealthCheckPath: /api/health
 
-  ListenerHTTPS:
+  ListenerHttps:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
-      LoadBalancerArn: !Ref FargateServiceLoadBalancer
+      LoadBalancerArn: !Ref LoadBalancer
       Protocol: HTTPS
       Port: 443
       SslPolicy: ELBSecurityPolicy-2016-08
@@ -846,11 +581,11 @@ Resources:
         - Type: forward
           TargetGroupArn: !Ref MySiteTargetGroup
 
-  ListenerHTTPSRuleFinances:
+  ListenerHttpsRuleFinances:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       Priority: 1
-      ListenerArn: !Ref ListenerHTTPS
+      ListenerArn: !Ref ListenerHttps
       Conditions:
         - Field: host-header
           HostHeaderConfig:
@@ -865,11 +600,11 @@ Resources:
                 Weight: 1
           # Order: 1
 
-  ListenerHTTPSRuleVocabularyTrainer:
+  ListenerHttpsRuleVocabularyTrainer:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       Priority: 2
-      ListenerArn: !Ref ListenerHTTPS
+      ListenerArn: !Ref ListenerHttps
       Conditions:
         - Field: host-header
           HostHeaderConfig:
@@ -887,10 +622,10 @@ Resources:
               - TargetGroupArn: !Ref VocabularyTrainerTargetGroup
                 Weight: 1
 
-  # ListenerHTTP:
+  # ListenerHttp:
   #   Type: AWS::ElasticLoadBalancingV2::Listener
   #   Properties:
-  #     LoadBalancerArn: !Ref FargateServiceLoadBalancer
+  #     LoadBalancerArn: !Ref LoadBalancer
   #     Protocol: HTTP
   #     Port: 80
   #     DefaultActions:
@@ -903,96 +638,118 @@ Resources:
   #           Query: '#{query}'
   #           StatusCode: 'HTTP_301'
 
-  DNSRecord:
-    Type: AWS::Route53::RecordSet
-    Properties:
-      HostedZoneId: !Ref HostedZoneId
-      Name: !Ref Domain
-      Type: A
-      AliasTarget:
-        HostedZoneId: Z2FDTNDATAQYW2
-        DNSName: !GetAtt Distribution.DomainName
-
-  DNSRecordWWW:
-    Type: AWS::Route53::RecordSet
-    Properties:
-      HostedZoneId: !Ref HostedZoneId
-      Name: !Ref DomainWWW
-      Type: A
-      AliasTarget:
-        HostedZoneId: Z2FDTNDATAQYW2
-        DNSName: !GetAtt Distribution.DomainName
-
-  DNSRecordSpendingToFargateServiceLoadBalancer:
-    Type: AWS::Route53::RecordSet
-    Properties:
-      AliasTarget:
-        DNSName: !GetAtt FargateServiceLoadBalancer.DNSName
-        HostedZoneId: !GetAtt FargateServiceLoadBalancer.CanonicalHostedZoneID
-      HostedZoneId: !Ref HostedZoneId
-      Name: !Ref DomainSpendingTracker
-      Type: A
+  # DnsRecordSpendingToLoadBalancer:
+  #   Type: AWS::Route53::RecordSet
+  #   Properties:
+  #     AliasTarget:
+  #       DNSName: !GetAtt LoadBalancer.DNSName
+  #       HostedZoneId: !GetAtt LoadBalancer.CanonicalHostedZoneID
+  #     HostedZoneId: !Ref HostedZoneId
+  #     Name: !Ref DomainSpendingTracker
+  #     Type: A
 
 Outputs:
-  CodePipelineRole:
-    Value: !GetAtt CodePipelineRole.Arn
-    Export:
-      Name: !Sub '${AWS::StackName}-CodePipeline-role'
-
-  CodeBuildRole:
-    Value: !GetAtt CodeBuildRole.Arn
-    Export:
-      Name: !Sub '${AWS::StackName}-CodeBuild-role'
-
-  FargateService:
-    Value: !Ref FargateService
-    Export:
-      Name: !Sub '${AWS::StackName}-Fargate-service'
-
-  FargateServiceLoadBalancer:
-    Value: !GetAtt FargateServiceLoadBalancer.DNSName
-    Export:
-      Name: !Sub '${AWS::StackName}-Fargate-service-load-balancer-DNS-name'
-
   Certificate:
     Value: !Ref Certificate
     Export:
       Name: !Sub '${AWS::StackName}-certificate'
 
+  CloudFrontFunctionCanonicalUrl:
+    Value: !Ref CloudFrontFunctionCanonicalUrl
+    Export:
+      Name: !Sub '${AWS::StackName}-cloudfront-function-canonical-url'
+
   CloudFrontFunctionSecurityHeaders:
     Value: !Ref CloudFrontFunctionSecurityHeaders
     Export:
-      Name: !Sub '${AWS::StackName}-CloudFront-function-security-headers'
+      Name: !Sub '${AWS::StackName}-cloudfront-function-security-headers'
 
-  CloudFrontFunctionCanonicalURL:
-    Value: !Ref CloudFrontFunctionCanonicalURL
+  CodeBuildRole:
+    Value: !GetAtt CodeBuildRole.Arn
     Export:
-      Name: !Sub '${AWS::StackName}-CloudFront-function-canonical-URL'
+      Name: !Sub '${AWS::StackName}-codebuild-role'
 
-  FargateServiceLoadBalancerArn:
-    Description: Used by Django template
-    Value: !Ref FargateServiceLoadBalancer
+  CodePipelineRole:
+    Value: !GetAtt CodePipelineRole.Arn
     Export:
-      Name: !Sub '${AWS::StackName}-fargate-service-load-balancer-arn'
+      Name: !Sub '${AWS::StackName}-codepipeline-role'
 
-  FargateServiceLoadBalancerHostedZoneId:
-    Value: !GetAtt FargateServiceLoadBalancer.CanonicalHostedZoneID
-    Export:
-      Name: !Sub '${AWS::StackName}-fargate-service-load-balancer-hosted-zone-id'
+  # ContainerSecurityGroup:
+  #   Description: For possible use with `x-aws-cloudformation` to control SG creation
+  #   Value: !Ref ContainerSecurityGroup
+  #   Export:
+  #     Name: !Sub '${AWS::StackName}-container-security-group'
+
+  # DistributionLogsBucket:
+  #   Value:
+  #     !If [
+  #       CreateDistributionLogsBucket,
+  #       !GetAtt DistributionLogsBucket.Arn,
+  #       !Ref ExistingDistributionLogsBucket,
+  #     ]
+  #   Export:
+  #     Name: !Sub '${AWS::StackName}-distribution-logs-bucket'
 
   FargateClusterName:
     Description: Used by Django template
-    Value: !Ref ECSCluster
+    Value: !Ref FargateCluster
     Export:
       Name: !Sub '${AWS::StackName}-fargate-cluster-name'
 
-  VPCID:
+  FargateService:
+    Value: !Ref FargateService
+    Export:
+      Name: !Sub '${AWS::StackName}-fargate-service'
+
+  ListenerHttps:
+    Value: !Ref ListenerHttps
+    Export:
+      Name: !Sub '${AWS::StackName}-listener-https'
+
+  LoadBalancerDnsName:
+    Value: !GetAtt LoadBalancer.DNSName
+    Export:
+      Name: !Sub '${AWS::StackName}-fargate-service-load-balancer-dns-name'
+
+  LoadBalancer:
+    Description: Used by Django template
+    Value: !Ref LoadBalancer
+    Export:
+      Name: !Sub '${AWS::StackName}-fargate-service-load-balancer'
+
+  LoadBalancerHostedZoneId:
+    Description: Used by API template DNS records
+    Value: !GetAtt LoadBalancer.CanonicalHostedZoneID
+    Export:
+      Name: !Sub '${AWS::StackName}-fargate-service-load-balancer-hosted-zone-id'
+
+  # LoadBalancerLogsBucket:
+  #   Value:
+  #     !If [
+  #       CreateLoadBalancerLogsBucketAndPolicy,
+  #       !GetAtt LoadBalancerLogsBucket.Arn,
+  #       !Ref ExistingLoadBalancerLogsBucket,
+  #     ]
+  #   Export:
+  #     Name: !Sub '${AWS::StackName}-load-balancer-logs-bucket'
+
+  # MasterStackName:
+  #   Value: !Sub '${AWS::StackName}'
+  #   Export:
+  #     Name: MasterStackName
+
+  # PipelineBucket:
+  #   Value:
+  #     !If [
+  #       CreatePipelineBucket,
+  #       !GetAtt PipelineBucket.Arn,
+  #       !Ref ExistingPipelineBucket,
+  #     ]
+  #   Export:
+  #     Name: !Sub '${AWS::StackName}-pipeline-bucket'
+
+  VpcId:
     Description: VPC ID of the VPC created in the network nested stack. Can't output directly from there
     Value: !GetAtt NetworkStack.Outputs.VPC
     Export:
       Name: !Sub '${AWS::StackName}-vpc-id'
-
-  ListenerHttpsArn:
-    Value: !Ref ListenerHTTPS
-    Export:
-      Name: !Sub '${AWS::StackName}-listener-https-arn'

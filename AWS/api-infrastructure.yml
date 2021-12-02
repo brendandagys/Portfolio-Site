@@ -1,15 +1,16 @@
 AWSTemplateFormatVersion: 2010-09-09
 
 Parameters:
+  HostedZoneId:
+    Type: String
+    Default: Z1048063LC3J2IKH5GGI
+
   Domain:
     Type: String
     Default: <REPLACE>.brendandagys.com
   DomainWWW:
     Type: String
     Default: www.<REPLACE>.brendandagys.com
-  HostedZoneId:
-    Type: String
-    Default: Z1048063LC3J2IKH5GGI
 
   DistributionHomePage:
     Type: String
@@ -23,8 +24,14 @@ Resources:
       Name: !Ref Domain
       Type: A
       AliasTarget:
-        HostedZoneId: !ImportValue my-site-fargate-service-load-balancer-hosted-zone-id
-        DNSName: !ImportValue my-site-Fargate-service-load-balancer-DNS-name
+        HostedZoneId:
+          !ImportValue {
+            !Sub: '${MasterStackName}-fargate-service-load-balancer-hosted-zone-id',
+          }
+        DNSName:
+          !ImportValue {
+            !Sub: '${MasterStackName}-fargate-service-load-balancer-dns-name',
+          }
 
   DNSRecordWWW:
     Type: AWS::Route53::RecordSet
@@ -33,5 +40,11 @@ Resources:
       Name: !Ref DomainWWW
       Type: A
       AliasTarget:
-        HostedZoneId: !ImportValue my-site-fargate-service-load-balancer-hosted-zone-id
-        DNSName: !ImportValue my-site-Fargate-service-load-balancer-DNS-name
+        HostedZoneId:
+          !ImportValue {
+            !Sub: '${MasterStackName}-fargate-service-load-balancer-hosted-zone-id',
+          }
+        DNSName:
+          !ImportValue {
+            !Sub: '${MasterStackName}-fargate-service-load-balancer-dns-name',
+          }
