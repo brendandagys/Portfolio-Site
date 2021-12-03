@@ -414,6 +414,14 @@ Resources:
           Environment:
             - Name: NODE_ENV
               Value: production
+            - Name: CLIENT_EMAIL
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:CLIENT_EMAIL}}'
+            - Name: CLIENT_ID
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:CLIENT_ID}}'
+            - Name: CLIENT_SECRET
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:CLIENT_SECRET}}'
+            - Name: REFRESH_TOKEN
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:REFRESH_TOKEN}}'
         - Image: !Ref ImageUrlFinances
           Name: finances
           PortMappings:
