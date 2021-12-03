@@ -30,6 +30,7 @@ import useLocalStorage from './hooks/useLocalStorage'
 
 const StyledBackgroundColor = styled(BackgroundColor)`
   border-radius: 30px 30px 0 0;
+  box-shadow: 0px -1px 10px #565656;
   ${({ theme }) =>
     theme.palette.mode === 'dark' ? hexPattern : hexPatternLight}
 `

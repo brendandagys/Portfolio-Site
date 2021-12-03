@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: 2010-09-09
 Description: Change Set CodeDeploy Pipeline
 
 Conditions:
@@ -558,7 +558,6 @@ Resources:
                 BranchName: !Ref Branch
               OutputArtifacts:
                 - Name: Source
-              RunOrder: 1
 
         # - Name: S3Source
         #   Actions:
@@ -582,7 +581,6 @@ Resources:
                 Owner: AWS
                 Provider: Manual
                 Version: 1
-              RunOrder: 2
 
         - Name: Build
           Actions:
@@ -611,7 +609,6 @@ Resources:
                 - Name: Source
               OutputArtifacts:
                 - Name: ImageBuild
-              # RunOrder: 3
 
         - Name: Compose2Cloudformation
           Actions:
@@ -641,7 +638,6 @@ Resources:
                 - Name: Source
               OutputArtifacts:
                 - Name: ExtractedCfn
-              # RunOrder: 4
 
         - Name: DeployStage
           Actions:

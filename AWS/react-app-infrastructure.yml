@@ -106,7 +106,6 @@ Resources:
               Configuration:
                 RepositoryName: !Ref Repository
                 BranchName: !Ref Branch
-              RunOrder: 2
         - Name: Approval
           Actions:
             - Name: ApprovalAction
@@ -115,7 +114,6 @@ Resources:
                 Owner: AWS
                 Provider: Manual
                 Version: 1
-              RunOrder: 1
         - Name: Build
           Actions:
             - Name: BuildAction
@@ -130,7 +128,6 @@ Resources:
                 - Name: !Sub '${AWS::StackName}-build'
               Configuration:
                 ProjectName: !Ref CodeBuild
-              RunOrder: 3
 
   CodeBuild:
     Type: AWS::CodeBuild::Project

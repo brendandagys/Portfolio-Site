@@ -13,6 +13,7 @@ const sendEmail = async (
     html: `
       <div>
         Name: ${name}
+        <br />
         Email: ${email}
       </div>
 

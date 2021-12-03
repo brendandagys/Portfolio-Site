@@ -26,6 +26,7 @@ const Accordion = styled((props: AccordionProps & { mytheme: Theme }) => (
   },
   width: '85%',
   minWidth: '350px',
+  maxWidth: '1150px',
   margin: '0 auto 0 auto',
   backgroundColor: mytheme.palette.colorMode.s4,
   color: mytheme.palette.colorMode.accordionHeaderTextColor,
