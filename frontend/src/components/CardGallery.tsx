@@ -75,7 +75,16 @@ const CardGallery = ({
         >
           {cards.map(
             (
-              { image, title, alt, demoURL, gitHubURL, text, dialogContent },
+              {
+                image,
+                title,
+                alt,
+                demoURL,
+                gitHubURL,
+                text,
+                dialogContent,
+                descriptionContent,
+              },
               index
             ) => {
               return (
@@ -88,6 +97,7 @@ const CardGallery = ({
                     gitHubURL={gitHubURL}
                     theme={theme}
                     dialogContent={dialogContent}
+                    descriptionContent={descriptionContent}
                     showCardContentInDialog={showCardContentInDialog}
                   >
                     {text}

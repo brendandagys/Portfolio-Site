@@ -6,7 +6,7 @@ import { useState, Fragment } from 'react'
 import { Box, FormControl, Typography, Button } from '@mui/material'
 
 import MyTextField from './MyTextField'
-import MyModal from './MyModal'
+import ContactThankYouModal from './ContactThankYouModal'
 import AvatarLinks from './AvatarLinks'
 
 import SendIcon from '@mui/icons-material/Send'
@@ -189,7 +189,7 @@ const ContactForm = ({ theme }: { theme: Theme }): React.ReactElement => {
         </FormControl>
       </StyledBox>
       <AvatarLinks avatars={contactAvatarLinks} theme={theme} />
-      <MyModal open={open} handleClose={handleClose} />
+      <ContactThankYouModal open={open} handleClose={handleClose} />
     </>
   )
 }

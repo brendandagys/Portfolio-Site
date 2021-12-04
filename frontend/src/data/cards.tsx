@@ -4,6 +4,16 @@ import boston from '../images/boston.jpg'
 import VocabularyTrainer from '../components/VocabularyTrainer'
 import { Theme } from '@mui/material'
 
+import FinancesDescription from '../components/card-descriptions/FinancesDescription'
+import CovidScreeningDescription from '../components/card-descriptions/CovidScreeningDescription'
+import EcommerceDescription from '../components/card-descriptions/EcommerceDescription'
+import EmergencyResponseDescription from '../components/card-descriptions/EmergencyResponseDescription'
+import WaitingRoomNotificationDescription from '../components/card-descriptions/WaitingRoomNotificationDescription'
+import VocabularyTrainerDescription from '../components/card-descriptions/VocabularyTrainerDescription'
+import MusicTheoryPracticeDescription from '../components/card-descriptions/MusicTheoryPracticeDescription'
+import IncidentReportingDescription from '../components/card-descriptions/IncidentReportingDescription'
+import DeviceReprocessingDescription from '../components/card-descriptions/DeviceReprocessingDescription'
+
 export type CardDataType = {
   image: string
   title: string
@@ -12,6 +22,7 @@ export type CardDataType = {
   gitHubURL: string
   text: string
   dialogContent?: React.ReactChild
+  descriptionContent?: React.ReactChild
 }
 
 const portfolioCards = (theme: Theme) => [
@@ -22,22 +33,25 @@ const portfolioCards = (theme: Theme) => [
     text: 'A financial tracker that allows users to track their expenses and asset growth. It additionally contains clock + calculator widgets that I built with vanilla JavaScript, as well as a mood tracker page!',
     demoURL: 'https://finances.brendandagys.com',
     gitHubURL: 'https://github.com/brendandagys/Finances',
+    descriptionContent: <FinancesDescription theme={theme} />,
   },
   {
     image: boston,
-    title: 'COVID-19 Screening App',
+    title: 'COVID-19 Screening',
     alt: '',
     text: 'An improved clone of common workplace COVID-19 screening apps. One solution that I implemented was to have the application remember if a user has already completed the daily screening, and other general UX improvements such as transitions.',
     demoURL: '',
     gitHubURL: 'https://github.com/brendandagys/COVID-19-Screening-App',
+    descriptionContent: <CovidScreeningDescription theme={theme} />,
   },
   {
     image: boston,
-    title: 'E-commerce Web App',
+    title: 'ProShop E-commerce Store',
     alt: '',
     text: 'A fully-functioning e-commerce application for a fictional technology supplier. Features include a shopping cart, product reviews,  administrator portal, integration with PayPal, and shipment tracking.',
     demoURL: '',
     gitHubURL: 'https://github.com/brendandagys',
+    descriptionContent: <EcommerceDescription theme={theme} />,
   },
   {
     image: boston,
@@ -47,24 +61,27 @@ const portfolioCards = (theme: Theme) => [
     demoURL: '',
     gitHubURL:
       'https://github.com/brendandagys/Hospital-Emergency-Response-Management-and-Communication-Web-App',
+    descriptionContent: <EmergencyResponseDescription theme={theme} />,
   },
   {
     image: boston,
-    title: 'Waiting Room Notification App',
+    title: 'Waiting Room Notifier',
     alt: '',
     text: 'A form that allows a clinic or waiting room clerk to optionally record contact information of those waiting. They can be sent an email or text when it is time for their appointment in the case that they wish to leave the waiting room.',
     demoURL: '',
     gitHubURL:
       'https://github.com/brendandagys/Hospital-Clinic-Waiting-Room-Notification-Web-App',
+    descriptionContent: <WaitingRoomNotificationDescription theme={theme} />,
   },
   {
     image: boston,
-    title: 'Vocabulary Trainer',
+    title: 'Vocabulary Trainer Game',
     alt: '',
     text: 'An API for a word-guessing game. Users are presented with a definition and must guess the corresponding word. Hints can be requested. Game state is saved and games can be resumed on next site visit through use of `localstorage`. Click to PLAY!',
     demoURL: '',
     gitHubURL: 'https://github.com/brendandagys/Vocabulary-Trainer',
     dialogContent: <VocabularyTrainer theme={theme} />,
+    descriptionContent: <VocabularyTrainerDescription theme={theme} />,
   },
   {
     image: boston,
@@ -73,6 +90,7 @@ const portfolioCards = (theme: Theme) => [
     text: 'A command-line program that offers various options for practice/study, such a chord recital or scale practice. Audio files are included in the program so that users can hear and practice to pedal tones.',
     demoURL: '',
     gitHubURL: 'https://github.com/brendandagys/Guitar-Theory-Practice-Tool',
+    descriptionContent: <MusicTheoryPracticeDescription theme={theme} />,
   },
   {
     image: boston,
@@ -82,6 +100,7 @@ const portfolioCards = (theme: Theme) => [
     demoURL: '',
     gitHubURL:
       'https://github.com/brendandagys/Hospital-Protective-Services-Incident-Reporting-Software',
+    descriptionContent: <IncidentReportingDescription theme={theme} />,
   },
   {
     image: boston,
@@ -91,6 +110,7 @@ const portfolioCards = (theme: Theme) => [
     demoURL: '',
     gitHubURL:
       'https://github.com/brendandagys/Hospital-Medical-Device-Reprocessing-Auditing-Software',
+    descriptionContent: <DeviceReprocessingDescription theme={theme} />,
   },
 ]
 

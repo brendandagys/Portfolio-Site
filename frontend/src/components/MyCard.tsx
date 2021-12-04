@@ -12,6 +12,7 @@ import {
   Theme,
 } from '@mui/material'
 import GitHubIcon from '@mui/icons-material/GitHub'
+import TextSnippetIcon from '@mui/icons-material/TextSnippet'
 
 type MyCardProps = {
   image: string
@@ -21,6 +22,7 @@ type MyCardProps = {
   gitHubURL: string
   theme: Theme
   dialogContent?: React.ReactChild
+  descriptionContent?: React.ReactChild
   showCardContentInDialog: (dialogContent: React.ReactChild) => void
 } & CardProps
 
@@ -49,6 +51,7 @@ const MyCard = ({
   gitHubURL,
   theme,
   dialogContent,
+  descriptionContent,
   showCardContentInDialog,
 }: MyCardProps): React.ReactElement => {
   const [selected, setSelected] = useState(false)
@@ -89,17 +92,28 @@ const MyCard = ({
                   : 'hvr-underline-from-left-thin-light'
               }
               size='small'
-              // color='secondary'
               style={{
                 backgroundColor: theme.palette.colorMode.gitHubButtonColor,
+                margin: '0 auto 5px 10px',
               }}
-              // style={{ backgroundColor: theme.palette.secondary.main }}
               variant='contained'
               startIcon={<GitHubIcon sx={{ mb: '2px' }} />}
             >
               GitHub
             </Button>
           </StyledAnchor>
+          {!descriptionContent ? null : (
+            <Button
+              style={{ margin: '0 10px 5px auto' }}
+              size='small'
+              color='info'
+              variant='contained'
+              startIcon={<TextSnippetIcon sx={{ mb: '2px' }} />}
+              onClick={() => showCardContentInDialog(descriptionContent)}
+            >
+              Description
+            </Button>
+          )}
         </CardActions>
       </StyledCard>
     </div>
