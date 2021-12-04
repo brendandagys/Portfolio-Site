@@ -104,9 +104,11 @@ const MyCard = ({
           </StyledAnchor>
           {!descriptionContent ? null : (
             <Button
-              style={{ margin: '0 10px 5px auto' }}
+              style={{
+                backgroundColor: theme.palette.colorMode.descriptionButtonColor,
+                margin: '0 10px 5px auto',
+              }}
               size='small'
-              color='info'
               variant='contained'
               startIcon={<TextSnippetIcon sx={{ mb: '2px' }} />}
               onClick={() => showCardContentInDialog(descriptionContent)}

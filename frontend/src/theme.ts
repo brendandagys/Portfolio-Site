@@ -25,6 +25,7 @@ declare module '@mui/material/styles/createPalette' {
       cardOutlineColor: string
       imageListBackgroundColor: string
       gitHubButtonColor: string
+      descriptionButtonColor: string
       accordionHeaderBackgroundColor: string
       drawerBackgroundColor: string
       drawerTextColor: string
@@ -66,6 +67,7 @@ declare module '@mui/material/styles/createPalette' {
       cardOutlineColor: string
       imageListBackgroundColor: string
       gitHubButtonColor: string
+      descriptionButtonColor: string
       accordionHeaderBackgroundColor: string
       drawerBackgroundColor: string
       drawerTextColor: string
@@ -144,6 +146,7 @@ export const getTheme = (mode: PaletteMode) => {
               cardOutlineColor: '#1e88e5',
               imageListBackgroundColor: '#6ab7ff',
               gitHubButtonColor: '#1e88e5',
+              descriptionButtonColor: '#a77af5',
               drawerBackgroundColor: '',
               drawerTextColor: 'rgba(10,10,10,0.7)',
               drawerHoverColor: '',
@@ -174,6 +177,7 @@ export const getTheme = (mode: PaletteMode) => {
               cardOutlineColor: '#000',
               imageListBackgroundColor: '#303030',
               gitHubButtonColor: '#3d3d3d',
+              descriptionButtonColor: '#1976d2',
               drawerBackgroundColor: '#303030',
               drawerTextColor: '#f2f2f2',
               drawerHoverColor: '#262626',

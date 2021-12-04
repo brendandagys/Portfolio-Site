@@ -16,7 +16,7 @@ import IconGallery from './components/IconGallery'
 import CardGallery from './components/CardGallery'
 import HomepageDescription from './components/HomepageDescription'
 
-import { imageQuiltImages } from './data/images'
+import imageQuiltImages from './data/images'
 import { technologyIcons, awsIcons } from './images/images'
 import portfolioCards from './data/cards'
 

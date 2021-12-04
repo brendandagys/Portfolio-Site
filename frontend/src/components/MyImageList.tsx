@@ -55,9 +55,10 @@ const MyImageList = ({
           key={index}
           title={
             <>
-              <Typography color='inherit'>{item.title}</Typography>
-              <em>{"And here's"}</em> <b>{'some'}</b> <u>{'amazing content'}</u>
-              . {"It's very engaging. Right?"}
+              {!item.title ? null : (
+                <Typography color='inherit'>{item.title}</Typography>
+              )}
+              {!item.tooltip ? null : <>{item.tooltip}</>}
             </>
           }
         >
