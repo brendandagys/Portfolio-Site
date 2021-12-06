@@ -152,6 +152,10 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
     if (initialGameStarted) getGame()
   }, [initialGameStarted, getGame])
 
+  useEffect(() => {
+    console.log('HI THERE', theme.palette.mode)
+  })
+
   const gameInterface = (
     <>
       <Grid item xs={12}>
@@ -189,8 +193,13 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
         <Collapse in={apiData?.game_over}>
           <Alert
             variant='outlined'
-            severity='info'
-            sx={{ mt: 4, mx: 2, mb: 'auto' }}
+            // severity='success'
+            sx={{
+              mt: 4,
+              mx: 2,
+              mb: 'auto',
+              color: theme.palette.mode === 'dark' ? 'white' : 'black',
+            }}
           >
             <AlertTitle>GAME OVER</AlertTitle>
             You have guessed on all {apiData?.num_words_to_play} words —{' '}
@@ -309,18 +318,18 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
               }}
             >
               {/* <MenuItem value=''></MenuItem> */}
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={15}>15</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={25}>25</MenuItem>
-              <MenuItem value={30}>30</MenuItem>
-              <MenuItem value={40}>40</MenuItem>
-              <MenuItem value={50}>50</MenuItem>
+              <MenuItem value={'1'}>1</MenuItem>
+              <MenuItem value={'2'}>2</MenuItem>
+              <MenuItem value={'3'}>3</MenuItem>
+              <MenuItem value={'4'}>4</MenuItem>
+              <MenuItem value={'5'}>5</MenuItem>
+              <MenuItem value={'10'}>10</MenuItem>
+              <MenuItem value={'15'}>15</MenuItem>
+              <MenuItem value={'20'}>20</MenuItem>
+              <MenuItem value={'25'}>25</MenuItem>
+              <MenuItem value={'30'}>30</MenuItem>
+              <MenuItem value={'40'}>40</MenuItem>
+              <MenuItem value={'50'}>50</MenuItem>
             </Select>
             <FormHelperText>How many words to guess?</FormHelperText>
             <Button

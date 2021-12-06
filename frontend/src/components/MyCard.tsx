@@ -73,8 +73,8 @@ const MyCard = ({
         onMouseLeave={() => setSelected(false)}
       >
         <CardActionArea {...cardActionAreaProps}>
-          <CardMedia component='img' height='140' image={image} alt={alt} />
-          <CardContent>
+          <CardMedia component='img' height='190' image={image} alt={alt} />
+          <CardContent style={{ borderTop: '1px solid lightgray' }}>
             <Typography gutterBottom variant='h5' component='div'>
               {title}
             </Typography>

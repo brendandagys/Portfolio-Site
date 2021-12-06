@@ -1,5 +1,9 @@
 import React from 'react'
 import boston from '../images/boston.jpg'
+import screeningAppScreenshot from '../images/screening-app-screenshot.png'
+import financesAppScreenshot from '../images/finances-app-screenshot.png'
+import proShopAppScreenshot from '../images/proshop-app-screenshot.png'
+import vocabularyTrainerScreenshot from '../images/vocabulary-trainer-app-screenshot.png'
 
 import VocabularyTrainer from '../components/VocabularyTrainer'
 import { Theme } from '@mui/material'
@@ -27,7 +31,7 @@ export type CardDataType = {
 
 const portfolioCards = (theme: Theme) => [
   {
-    image: boston,
+    image: financesAppScreenshot,
     title: 'Finances and Budgeting Tool',
     alt: '',
     text: 'A financial tracker that allows users to track their expenses and asset growth. It additionally contains clock + calculator widgets that I built with vanilla JavaScript, as well as a mood tracker page!',
@@ -36,7 +40,7 @@ const portfolioCards = (theme: Theme) => [
     descriptionContent: <FinancesDescription theme={theme} />,
   },
   {
-    image: boston,
+    image: screeningAppScreenshot,
     title: 'COVID-19 Screening',
     alt: '',
     text: 'An improved clone of common workplace COVID-19 screening apps. One solution that I implemented was to have the application remember if a user has already completed the daily screening, and other general UX improvements such as transitions.',
@@ -45,7 +49,7 @@ const portfolioCards = (theme: Theme) => [
     descriptionContent: <CovidScreeningDescription theme={theme} />,
   },
   {
-    image: boston,
+    image: proShopAppScreenshot,
     title: 'ProShop E-commerce Store',
     alt: '',
     text: 'A fully-functioning e-commerce application for a fictional technology supplier. Features include a shopping cart, product reviews,  administrator portal, integration with PayPal, and shipment tracking.',
@@ -74,7 +78,7 @@ const portfolioCards = (theme: Theme) => [
     descriptionContent: <WaitingRoomNotificationDescription theme={theme} />,
   },
   {
-    image: boston,
+    image: vocabularyTrainerScreenshot,
     title: 'Vocabulary Trainer Game',
     alt: '',
     text: 'An API for a word-guessing game. Users are presented with a definition and must guess the corresponding word. Hints can be requested. Game state is saved and games can be resumed on next site visit through use of `localstorage`. Click to PLAY!',
