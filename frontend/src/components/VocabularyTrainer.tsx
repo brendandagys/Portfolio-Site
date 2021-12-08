@@ -194,7 +194,7 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
               mt: 4,
               mx: 2,
               mb: 'auto',
-              color: theme.palette.mode === 'dark' ? 'white' : 'black',
+              color: '#0CAC13',
             }}
           >
             <AlertTitle>GAME OVER</AlertTitle>
