@@ -152,10 +152,6 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
     if (initialGameStarted) getGame()
   }, [initialGameStarted, getGame])
 
-  useEffect(() => {
-    console.log('HI THERE', theme.palette.mode)
-  })
-
   const gameInterface = (
     <>
       <Grid item xs={12}>
