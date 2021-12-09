@@ -13,6 +13,7 @@ import {
 } from '@mui/material'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import TextSnippetIcon from '@mui/icons-material/TextSnippet'
+import { useSpring, animated, config } from 'react-spring'
 
 type MyCardProps = {
   image: string
@@ -55,6 +56,17 @@ const MyCard = ({
   showCardContentInDialog,
 }: MyCardProps): React.ReactElement => {
   const [selected, setSelected] = useState(false)
+  const [flip, set] = useState(false)
+
+  const springProps = useSpring({
+    to: { opacity: 1 },
+    from: { opacity: 0 },
+    // reset: true,  // Will reset animation on every re-render
+    reverse: flip,
+    delay: 200,
+    config: config.molasses,
+    onRest: () => set(!flip),
+  })
 
   const cardActionAreaProps = demoURL
     ? { href: demoURL, target: '_blank', rel: 'noreferrer' }
@@ -64,6 +76,8 @@ const MyCard = ({
       }
     : {}
 
+  const cardMediaProps = demoURL || dialogContent ? {} : { opacity: '0.6' }
+
   return (
     <div>
       <StyledCard
@@ -72,8 +86,48 @@ const MyCard = ({
         onMouseOver={() => setSelected(true)}
         onMouseLeave={() => setSelected(false)}
       >
+        {demoURL || dialogContent ? null : (
+          <animated.div
+            style={{
+              ...springProps,
+              color: 'firebrick',
+              backgroundColor: '#ffffff10',
+              position: 'absolute',
+              width: '345px',
+              marginTop: '85px',
+              zIndex: 200,
+              backdropFilter: 'blur(12px)',
+              fontSize: '1.25rem',
+              fontFamily: 'arial',
+            }}
+          >
+            Temporarily offline
+          </animated.div>
+        )}
+        {/* {demoURL || dialogContent ? null : (
+          <Typography
+            style={{
+              color: 'firebrick',
+              backgroundColor: '#ffffff10',
+              position: 'absolute',
+              width: '345px',
+              marginTop: '85px',
+              zIndex: 200,
+              backdropFilter: 'blur(12px)',
+              fontSize: '1.25rem',
+            }}
+          >
+            Temporarily offline
+          </Typography>
+        )} */}
         <CardActionArea {...cardActionAreaProps}>
-          <CardMedia component='img' height='190' image={image} alt={alt} />
+          <CardMedia
+            component='img'
+            height='190'
+            image={image}
+            alt={alt}
+            style={cardMediaProps}
+          />
           <CardContent style={{ borderTop: '1px solid lightgray' }}>
             <Typography gutterBottom variant='h5' component='div'>
               {title}
