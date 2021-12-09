@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
+import axios from 'axios'
 import styled from 'styled-components'
 import {
   Button,
@@ -57,26 +58,64 @@ const MyCard = ({
 }: MyCardProps): React.ReactElement => {
   const [selected, setSelected] = useState(false)
   const [flip, set] = useState(false)
+  const [healthy, setHealthy] = useState(true)
 
   const springProps = useSpring({
     to: { opacity: 1 },
     from: { opacity: 0 },
     // reset: true,  // Will reset animation on every re-render
     reverse: flip,
-    delay: 200,
+    delay: 100,
     config: config.molasses,
     onRest: () => set(!flip),
   })
 
-  const cardActionAreaProps = demoURL
-    ? { href: demoURL, target: '_blank', rel: 'noreferrer' }
-    : dialogContent
+  const checkHealth = useCallback(async (url: string) => {
+    console.log('Checking health of', title)
+    try {
+      const { data: healthStatus } = await axios.get(`${url}/api/health`)
+      console.log(healthStatus)
+      healthStatus ? setHealthy(true) : setHealthy(false)
+    } catch {
+      setHealthy(false)
+    }
+    // console.log(healthy)
+  }, [])
+
+  useEffect(() => {
+    if (demoURL) {
+      checkHealth(demoURL)
+    }
+  }, [checkHealth, demoURL, dialogContent])
+
+  const cardActionAreaProps = dialogContent
     ? {
-        onClick: () => showCardContentInDialog(dialogContent),
+        onClick: () => {
+          if (healthy) {
+            showCardContentInDialog(dialogContent)
+          } else {
+            checkHealth(demoURL)
+            // showCardContentInDialog(dialogContent)
+          }
+        },
+      }
+    : demoURL && healthy
+    ? {
+        href: demoURL,
+        target: '_blank',
+        rel: 'noreferrer',
+      }
+    : demoURL
+    ? {
+        onClick: () => {
+          if (!healthy) {
+            checkHealth(demoURL)
+          }
+        },
       }
     : {}
 
-  const cardMediaProps = demoURL || dialogContent ? {} : { opacity: '0.6' }
+  const cardMediaProps = healthy ? {} : { opacity: '0.6' }
 
   return (
     <div>
@@ -86,19 +125,23 @@ const MyCard = ({
         onMouseOver={() => setSelected(true)}
         onMouseLeave={() => setSelected(false)}
       >
-        {demoURL || dialogContent ? null : (
+        {healthy ? null : (
           <animated.div
             style={{
               ...springProps,
               color: 'firebrick',
-              backgroundColor: '#ffffff10',
+              backgroundColor: '#d3d3d3',
               position: 'absolute',
               width: '345px',
               marginTop: '85px',
               zIndex: 200,
               backdropFilter: 'blur(12px)',
-              fontSize: '1.25rem',
+              fontSize: '1.5rem',
               fontFamily: 'arial',
+              paddingTop: '7px',
+              paddingBottom: '7px',
+              // borderTop: '1px solid slategray',
+              // borderBottom: '1px solid slategray',
             }}
           >
             Temporarily offline
