@@ -70,17 +70,19 @@ const MyCard = ({
     onRest: () => set(!flip),
   })
 
-  const checkHealth = useCallback(async (url: string) => {
-    console.log('Checking health of', title)
-    try {
-      const { data: healthStatus } = await axios.get(`${url}/api/health`)
-      console.log(healthStatus)
-      healthStatus ? setHealthy(true) : setHealthy(false)
-    } catch {
-      setHealthy(false)
-    }
-    // console.log(healthy)
-  }, [])
+  const checkHealth = useCallback(
+    async (url: string) => {
+      console.log('Checking health of', title)
+      try {
+        const { data: healthStatus } = await axios.get(`${url}/api/health`)
+        console.log(healthStatus)
+        healthStatus ? setHealthy(true) : setHealthy(false)
+      } catch {
+        setHealthy(false)
+      }
+    },
+    [title]
+  )
 
   useEffect(() => {
     if (demoURL) {
