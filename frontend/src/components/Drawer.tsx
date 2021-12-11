@@ -1,5 +1,6 @@
 import { Fragment, SyntheticEvent, useState } from 'react'
 import { scroller } from 'react-scroll'
+import axios from 'axios'
 
 import {
   Box,
@@ -126,6 +127,23 @@ export default function TemporaryDrawer({
       })
   }
 
+  const getResume = async () => {
+    axios({
+      method: 'get',
+      url: '/api/documents/resume.pdf',
+      responseType: 'blob',
+      // data: dates
+    }).then((response) => {
+      let blob = new Blob([response.data], { type: 'application/pdf' })
+      let link = document.createElement('a')
+      link.href = window.URL.createObjectURL(blob)
+      link.download = 'Brendan Dagys - Resume.pdf'
+      link.click()
+    })
+
+    // await axios.get('/api/documents/resume.pdf', { responseType: 'blob' })
+  }
+
   const listItem = (
     text: string,
     icon: React.ReactElement,
@@ -164,6 +182,7 @@ export default function TemporaryDrawer({
             backgroundColor: theme.palette.colorMode.drawerHoverColor,
           },
         }}
+        onClick={download ? getResume : undefined}
       >
         {listItemContent}
       </ListItemButton>

@@ -1,9 +1,8 @@
 import express, { Request, Response } from 'express'
-
 import contactRoutes from './routes/contactRoutes'
-
 import dotenv from 'dotenv'
-dotenv.config({ path: __dirname + (process.env.ENVPATH ?? '/../.env') })
+
+dotenv.config({ path: __dirname + (process.env.ENVPATH ?? '/.env') })
 
 const PORT = process.env.PORT ?? 80
 
@@ -24,6 +23,15 @@ app.get('/api/health', (req: Request, res: Response) => {
 })
 
 app.use('/api/contact', contactRoutes)
+
+app.use('/api/documents', (req: Request, res: Response) => {
+  const pathSplit = req.originalUrl.split('/')
+  const path = pathSplit[pathSplit.length - 1]
+
+  const file = `${__dirname}/documents/${path}`
+
+  res.download(file, 'Brendan Dagys - Resume.pdf')
+})
 
 app.get('*', (req: Request, res: Response) => {
   res.send(
