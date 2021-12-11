@@ -18,10 +18,6 @@ app.use((req, res, next) => {
 
 app.use(express.json())
 
-app.get('/api/health', (req: Request, res: Response) => {
-  res.send('API server for site is healthy!')
-})
-
 app.use('/api/contact', contactRoutes)
 
 app.use('/api/documents', (req: Request, res: Response) => {
@@ -31,6 +27,10 @@ app.use('/api/documents', (req: Request, res: Response) => {
   const file = `${__dirname}/documents/${path}`
 
   res.download(file, 'Brendan Dagys - Resume.pdf')
+})
+
+app.get('/api/health', (req: Request, res: Response) => {
+  res.send('API server for site is healthy!')
 })
 
 app.get('*', (req: Request, res: Response) => {

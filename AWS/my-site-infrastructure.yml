@@ -53,6 +53,12 @@ Parameters:
   ImageUrlFinances:
     Type: String
     Default: 708746137251.dkr.ecr.us-east-1.amazonaws.com/finances:latest
+  ImageUrlScreening:
+    Type: String
+    Default: 708746137251.dkr.ecr.us-east-1.amazonaws.com/screening
+  ImageUrlECommerce:
+    Type: String
+    Default: 708746137251.dkr.ecr.us-east-1.amazonaws.com/e-commerce
   ImageUrlVocabularyTrainer:
     Type: String
     Default: 708746137251.dkr.ecr.us-east-1.amazonaws.com/vocabulary-trainer:latest
@@ -60,6 +66,18 @@ Parameters:
   ContainerName:
     Type: String
     Default: my-site-backend
+  ContainerNameFinances:
+    Type: String
+    Default: finances
+  ContainerNameScreening:
+    Type: String
+    Default: screening
+  ContainerNameECommerce:
+    Type: String
+    Default: e-commerce
+  ContainerNameVocabularyTrainer:
+    Type: String
+    Default: vocabulary-trainer
 
   ContainerPort:
     Type: Number
@@ -68,9 +86,15 @@ Parameters:
   ContainerPortFinances:
     Type: Number
     Default: 81
-  ContainerPortVocabularyTrainer:
+  ContainerPortScreening:
     Type: Number
     Default: 82
+  ContainerPortECommerce:
+    Type: Number
+    Default: 83
+  ContainerPortVocabularyTrainer:
+    Type: Number
+    Default: 84
 
   VocabularyOrigin:
     Type: String
@@ -376,10 +400,16 @@ Resources:
         - ContainerName: !Ref ContainerName
           ContainerPort: !Ref ContainerPort
           TargetGroupArn: !Ref MySiteTargetGroup
-        - ContainerName: finances
+        - ContainerName: !Ref ContainerNameFinances
           ContainerPort: !Ref ContainerPortFinances
           TargetGroupArn: !Ref FinancesTargetGroup
-        - ContainerName: vocabulary-trainer
+        - ContainerName: !Ref ContainerNameScreening
+          ContainerPort: !Ref ContainerPortScreening
+          TargetGroupArn: !Ref ScreeningTargetGroup
+        - ContainerName: !Ref ContainerNameECommerce
+          ContainerPort: !Ref ContainerPortECommerce
+          TargetGroupArn: !Ref ECommerceTargetGroup
+        - ContainerName: !Ref ContainerNameVocabularyTrainer
           ContainerPort: !Ref ContainerPortVocabularyTrainer
           TargetGroupArn: !Ref VocabularyTrainerTargetGroup
       NetworkConfiguration:
@@ -432,7 +462,7 @@ Resources:
             Options:
               awslogs-region: !Ref AWS::Region
               awslogs-group: !Ref FargateTaskDefinitionLogGroup
-              awslogs-stream-prefix: ecs/finances
+              awslogs-stream-prefix: !Sub 'ecs/${ContainerNameFinances}'
           Environment:
             - Name: NODE_ENV
               Value: production
@@ -452,6 +482,52 @@ Resources:
               Value: '{{resolve:secretsmanager:my-secrets:SecretString:AWS_SECRET_ACCESS_KEY}}'
             - Name: AWS_BUCKET_NAME
               Value: '{{resolve:secretsmanager:my-secrets:SecretString:AWS_BUCKET_NAME}}'
+        - Image: !Ref ImageUrlScreening
+          Name: !Ref ContainerNameScreening
+          PortMappings:
+            - Protocol: tcp
+              ContainerPort: !Ref ContainerPortScreening
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-region: !Ref AWS::Region
+              awslogs-group: !Ref FargateTaskDefinitionLogGroup
+              awslogs-stream-prefix: !Sub 'ecs/${ContainerNameScreening}'
+          Environment:
+            - Name: NODE_ENV
+              Value: production
+            - Name: PORT
+              Value: !Ref ContainerPortScreening
+            - Name: MONGO_URI_SCREENING
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:MONGO_URI_SCREENING}}'
+            - Name: JWT_SECRET_SCREENING
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:JWT_SECRET_SCREENING}}'
+            - Name: SCREENING_GMAIL_USERNAME
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:SCREENING_GMAIL_USERNAME}}'
+            - Name: SCREENING_GMAIL_PASSWORD
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:SCREENING_GMAIL_PASSWORD}}'
+        - Image: !Ref ImageUrlECommerce
+          Name: !Ref ContainerNameECommerce
+          PortMappings:
+            - Protocol: tcp
+              ContainerPort: !Ref ContainerPortECommerce
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-region: !Ref AWS::Region
+              awslogs-group: !Ref FargateTaskDefinitionLogGroup
+              awslogs-stream-prefix: !Sub 'ecs/${ContainerNameECommerce}'
+          Environment:
+            - Name: NODE_ENV
+              Value: production
+            - Name: PORT
+              Value: !Ref ContainerPortECommerce
+            - Name: MONGO_URI
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:MONGO_URI}}'
+            - Name: JWT_SECRET
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:JWT_SECRET}}'
+            - Name: PAYPAL_CLIENT_ID
+              Value: '{{resolve:secretsmanager:my-secrets:SecretString:PAYPAL_CLIENT_ID}}'
         - Image: !Ref ImageUrlVocabularyTrainer
           Name: vocabulary-trainer
           PortMappings:
@@ -561,7 +637,33 @@ Resources:
       TargetType: ip
       VpcId: !GetAtt NetworkStack.Outputs.VPC
       HealthCheckEnabled: true
-      HealthCheckPath: /api/finances/health
+      HealthCheckPath: /api/health
+
+  ScreeningTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    DependsOn:
+      - LoadBalancer
+    Properties:
+      Name: screening-target-group
+      Protocol: HTTP
+      Port: !Ref ContainerPortScreening
+      TargetType: ip
+      VpcId: !GetAtt NetworkStack.Outputs.VPC
+      HealthCheckEnabled: true
+      HealthCheckPath: /api/health
+
+  ECommerceTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    DependsOn:
+      - LoadBalancer
+    Properties:
+      Name: e-commerce-target-group
+      Protocol: HTTP
+      Port: !Ref ContainerPortECommerce
+      TargetType: ip
+      VpcId: !GetAtt NetworkStack.Outputs.VPC
+      HealthCheckEnabled: true
+      HealthCheckPath: /api/health
 
   VocabularyTrainerTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
@@ -605,6 +707,44 @@ Resources:
           ForwardConfig:
             TargetGroups:
               - TargetGroupArn: !Ref FinancesTargetGroup
+                Weight: 1
+          # Order: 1
+
+  ListenerHttpsRuleScreening:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      Priority: 1
+      ListenerArn: !Ref ListenerHttps
+      Conditions:
+        - Field: host-header
+          HostHeaderConfig:
+            Values:
+              - screening.brendandagys.com
+      Actions:
+        - Type: forward
+          TargetGroupArn: !Ref ScreeningTargetGroup # Specify only when Type is `forward` and you want to route to a single target group
+          ForwardConfig:
+            TargetGroups:
+              - TargetGroupArn: !Ref ScreeningTargetGroup
+                Weight: 1
+          # Order: 1
+
+  ListenerHttpsRuleECommerce:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      Priority: 1
+      ListenerArn: !Ref ListenerHttps
+      Conditions:
+        - Field: host-header
+          HostHeaderConfig:
+            Values:
+              - e-commerce.brendandagys.com
+      Actions:
+        - Type: forward
+          TargetGroupArn: !Ref ECommerceTargetGroup # Specify only when Type is `forward` and you want to route to a single target group
+          ForwardConfig:
+            TargetGroups:
+              - TargetGroupArn: !Ref ECommerceTargetGroup
                 Weight: 1
           # Order: 1
 
