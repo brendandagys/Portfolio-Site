@@ -50,7 +50,7 @@ const portfolioCards = (theme: Theme) => [
   },
   {
     image: proShopAppScreenshot,
-    title: 'ProShop E-commerce Store',
+    title: 'e-Commerce Store',
     alt: '',
     text: 'A fully-functioning e-commerce application for a fictional technology supplier. Features include a shopping cart, product reviews,  administrator portal, integration with PayPal, and shipment tracking.',
     demoURL: 'https://e-commerce.brendandagys.com',
@@ -98,9 +98,9 @@ const portfolioCards = (theme: Theme) => [
   },
   {
     image: boston,
-    title: 'Security Services Incident Reporting Tool',
+    title: 'Incident Reporting Tool',
     alt: '',
-    text: "A Python GUI application built with TKinter that allows for 'incident' data's entry, storage, and analysis by members of an organization's Security team.",
+    text: "A Python GUI application built with Tkinter that allows for 'incident' data's entry, storage, and analysis by members of an organization's Security team.",
     demoURL: '',
     gitHubURL:
       'https://github.com/brendandagys/Hospital-Protective-Services-Incident-Reporting-Software',
@@ -108,9 +108,9 @@ const portfolioCards = (theme: Theme) => [
   },
   {
     image: boston,
-    title: 'Medical Device Reprocessing Auditing Tool',
+    title: 'Auditing Tool',
     alt: '',
-    text: "A Python GUI application built with TKinter that allows for data entry, storage, and analysis of a hospital's MDRD auditing process.",
+    text: 'A Python GUI application built with Tkinter that provides a data entry, storage, and analysis solution for any paper-based auditing process.',
     demoURL: '',
     gitHubURL:
       'https://github.com/brendandagys/Hospital-Medical-Device-Reprocessing-Auditing-Software',
