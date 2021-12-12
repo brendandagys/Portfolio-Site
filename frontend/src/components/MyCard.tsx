@@ -20,8 +20,9 @@ type MyCardProps = {
   image: string
   title: string
   alt: string
-  demoURL: string
+  demoURL?: string
   gitHubURL: string
+  healthCheckUrl?: string
   theme: Theme
   dialogContent?: React.ReactChild
   descriptionContent?: React.ReactChild
@@ -51,6 +52,7 @@ const MyCard = ({
   alt,
   demoURL,
   gitHubURL,
+  healthCheckUrl,
   theme,
   dialogContent,
   descriptionContent,
@@ -72,7 +74,7 @@ const MyCard = ({
 
   const checkHealth = useCallback(
     async (url: string) => {
-      console.log('Checking health of', title)
+      console.log(`Checking health of' ${title}...`)
       try {
         const { data: healthStatus } = await axios.get(`${url}/api/health`)
         console.log(healthStatus)
@@ -85,18 +87,18 @@ const MyCard = ({
   )
 
   useEffect(() => {
-    if (demoURL) {
-      checkHealth(demoURL)
+    if (healthCheckUrl) {
+      checkHealth(healthCheckUrl)
     }
-  }, [checkHealth, demoURL, dialogContent])
+  }, [checkHealth, healthCheckUrl, dialogContent])
 
   const cardActionAreaProps = dialogContent
     ? {
         onClick: () => {
           if (healthy) {
             showCardContentInDialog(dialogContent)
-          } else {
-            checkHealth(demoURL)
+          } else if (healthCheckUrl) {
+            checkHealth(healthCheckUrl)
             // showCardContentInDialog(dialogContent)
           }
         },

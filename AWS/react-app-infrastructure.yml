@@ -3,10 +3,16 @@ AWSTemplateFormatVersion: 2010-09-09
 Conditions:
   CreateDeployBucketAndPolicy: !Equals [!Ref ExistingDeployBucket, '']
 
+  CreateDnsRecordWww: !Equals [!Ref DnsRecordWwwFlag, 'true']
+
 Parameters:
   MasterStackName:
     Type: String
     Default: my-site
+
+  DnsRecordWwwFlag:
+    Type: String
+    Default: false
 
   ExistingDeployBucket:
     Type: String
@@ -180,7 +186,7 @@ Resources:
         Comment: !Sub 'Origin 1: S3 SPA for ${AWS::StackName} | Origin 2: API Fargate container for ${AWS::StackName}'
         Aliases:
           - !Ref Domain
-          - !Ref DomainWww
+          # - !Ref DomainWww
         Origins:
           - Id:
               !If [
@@ -210,6 +216,8 @@ Resources:
         ViewerCertificate:
           AcmCertificateArn:
             !ImportValue { 'Fn::Sub': '${MasterStackName}-certificate' }
+            # arn:aws:acm:us-east-1:708746137251:certificate/d61599f4-ca74-4bb7-893f-ed00e147d33c
+            # !ImportValue my-site-certificate
           SslSupportMethod: sni-only
           MinimumProtocolVersion: TLSv1.2_2021
         CustomErrorResponses:
@@ -300,6 +308,7 @@ Resources:
         DNSName: !GetAtt Distribution.DomainName
 
   DnsRecordWww:
+    Condition: CreateDnsRecordWww
     Type: AWS::Route53::RecordSet
     Properties:
       HostedZoneId: !Ref HostedZoneId

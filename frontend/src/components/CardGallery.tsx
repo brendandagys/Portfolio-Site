@@ -81,6 +81,7 @@ const CardGallery = ({
                 alt,
                 demoURL,
                 gitHubURL,
+                healthCheckUrl,
                 text,
                 dialogContent,
                 descriptionContent,
@@ -95,6 +96,7 @@ const CardGallery = ({
                     alt={alt}
                     demoURL={demoURL}
                     gitHubURL={gitHubURL}
+                    healthCheckUrl={healthCheckUrl}
                     theme={theme}
                     dialogContent={dialogContent}
                     descriptionContent={descriptionContent}

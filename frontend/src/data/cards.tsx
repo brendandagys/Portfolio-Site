@@ -22,8 +22,9 @@ export type CardDataType = {
   image: string
   title: string
   alt: string
-  demoURL: string
+  demoURL?: string
   gitHubURL: string
+  healthCheckUrl?: string
   text: string
   dialogContent?: React.ReactChild
   descriptionContent?: React.ReactChild
@@ -35,8 +36,15 @@ const portfolioCards = (theme: Theme) => [
     title: 'Finances and Budgeting Tool',
     alt: '',
     text: 'A financial tracker that allows users to track their expenses and asset growth. It additionally contains clock + calculator widgets that I built with vanilla JavaScript, as well as a mood tracker page!',
-    demoURL: 'https://finances.brendandagys.com',
+    demoURL:
+      process.env.NODE_ENV === 'production'
+        ? 'https://finances.brendandagys.com'
+        : 'http://localhost:3001',
     gitHubURL: 'https://github.com/brendandagys/Finances',
+    healthCheckUrl:
+      process.env.NODE_ENV === 'production'
+        ? 'https://finances.brendandagys.com'
+        : 'http://localhost:5001',
     descriptionContent: <FinancesDescription theme={theme} />,
   },
   {
@@ -44,8 +52,15 @@ const portfolioCards = (theme: Theme) => [
     title: 'COVID-19 Screening',
     alt: '',
     text: 'An improved clone of common workplace COVID-19 screening apps. One solution that I implemented was to have the application remember if a user has already completed the daily screening, and other general UX improvements such as transitions.',
-    demoURL: 'https://screening.brendandagys.com',
+    demoURL:
+      process.env.NODE_ENV === 'production'
+        ? 'https://screening.brendandagys.com'
+        : 'http://localhost:3002',
     gitHubURL: 'https://github.com/brendandagys/COVID-19-Screening-App',
+    healthCheckUrl:
+      process.env.NODE_ENV === 'production'
+        ? 'https://screening.brendandagys.com'
+        : 'http://localhost:5002',
     descriptionContent: <CovidScreeningDescription theme={theme} />,
   },
   {
@@ -53,8 +68,15 @@ const portfolioCards = (theme: Theme) => [
     title: 'e-Commerce Store',
     alt: '',
     text: 'A fully-functioning e-commerce application for a fictional technology supplier. Features include a shopping cart, product reviews,  administrator portal, integration with PayPal, and shipment tracking.',
-    demoURL: 'https://e-commerce.brendandagys.com',
+    demoURL:
+      process.env.NODE_ENV === 'production'
+        ? 'https://e-commerce.brendandagys.com'
+        : 'http://localhost:3003',
     gitHubURL: 'https://github.com/brendandagys',
+    healthCheckUrl:
+      process.env.NODE_ENV === 'production'
+        ? 'https://e-commerce.brendandagys.com'
+        : 'http://localhost:5003',
     descriptionContent: <EcommerceDescription theme={theme} />,
   },
   {
@@ -82,8 +104,15 @@ const portfolioCards = (theme: Theme) => [
     title: 'Vocabulary Trainer Game',
     alt: '',
     text: 'An API for a word-guessing game. Users are presented with a definition and must guess the corresponding word. Hints can be requested. Game state is saved and games can be resumed on next site visit through use of `localstorage`. Click to PLAY!',
-    demoURL: 'https://vocabulary.brendandagys.com',
+    // demoURL:
+    //   process.env.NODE_ENV === 'production'
+    //     ? 'https://vocabulary.brendandagys.com'
+    //     : 'http://localhost:5004',
     gitHubURL: 'https://github.com/brendandagys/Vocabulary-Trainer',
+    healthCheckUrl:
+      process.env.NODE_ENV === 'production'
+        ? 'https://vocabulary.brendandagys.com'
+        : 'http://localhost:5004',
     dialogContent: <VocabularyTrainer theme={theme} />,
     descriptionContent: <VocabularyTrainerDescription theme={theme} />,
   },

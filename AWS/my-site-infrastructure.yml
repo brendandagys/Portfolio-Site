@@ -569,7 +569,7 @@ Resources:
     Properties:
       IpProtocol: tcp
       FromPort: 80
-      ToPort: 83
+      ToPort: 84
       SourceSecurityGroupId: !GetAtt LoadBalancerSecurityGroup.GroupId
       GroupId: !GetAtt ContainerSecurityGroup.GroupId
 
@@ -610,7 +610,7 @@ Resources:
       GroupId: !GetAtt LoadBalancerSecurityGroup.GroupId
       IpProtocol: tcp
       FromPort: 80
-      ToPort: 83
+      ToPort: 84
       # DestinationSecurityGroupId: !GetAtt ContainerSecurityGroup.GroupId
       CidrIp: 0.0.0.0/0
       Description: Allows outbound traffic from the Fargate Service ALB to any services in my cluster, or anywhere else
@@ -681,7 +681,6 @@ Resources:
   ListenerHttps:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
-      Priority: 1
       LoadBalancerArn: !Ref LoadBalancer
       Protocol: HTTPS
       Port: 443
@@ -714,7 +713,7 @@ Resources:
   ListenerHttpsRuleScreening:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
-      Priority: 3
+      Priority: 4
       ListenerArn: !Ref ListenerHttps
       Conditions:
         - Field: host-header
@@ -733,7 +732,7 @@ Resources:
   ListenerHttpsRuleECommerce:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
-      Priority: 4
+      Priority: 5
       ListenerArn: !Ref ListenerHttps
       Conditions:
         - Field: host-header
@@ -752,7 +751,7 @@ Resources:
   ListenerHttpsRuleVocabularyTrainer:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
-      Priority: 5
+      Priority: 3
       ListenerArn: !Ref ListenerHttps
       Conditions:
         - Field: host-header

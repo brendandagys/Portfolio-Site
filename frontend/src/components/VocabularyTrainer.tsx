@@ -49,7 +49,7 @@ const StyledGridItem = styled(Grid)`
 const baseURL =
   process.env.NODE_ENV === 'production'
     ? 'https://vocabulary.brendandagys.com'
-    : 'http://localhost:5000'
+    : 'http://localhost:5004'
 
 const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
   const [guessTextFieldRef, setGuessTextFieldFocus] = useFocus()
@@ -68,8 +68,29 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
     })
 
     setGameId(data)
+
+    return data
   }, [setGameId])
 
+  const checkIfGameIsStarted = useCallback(async () => {
+    try {
+      const { data }: { data: boolean } = await axios.post(
+        '/api/check-if-game-is-started',
+        { game_id: gameId },
+        {
+          baseURL,
+        }
+      )
+
+      if (data === true) setInitialGameStarted(true)
+
+      console.log(data)
+    } catch (e) {
+      await getGameId()
+    }
+  }, [gameId, setInitialGameStarted, getGameId])
+
+  // Called only for possible local-storage `game_id` if `initialGameStarted` is `true`
   const getGame = useCallback(async () => {
     const { data }: { data: apiData } = await axios.post(
       '/api/get-game',
@@ -83,19 +104,30 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
     setGuess(data.word_letters_revealed ? data.word_letters_revealed : '')
   }, [gameId, setApiData])
 
-  const checkForStartedGame = useCallback(async () => {
-    const { data }: { data: boolean } = await axios.post(
-      '/api/check-if-game-is-started',
-      { game_id: gameId },
-      {
-        baseURL,
-      }
-    )
+  useEffect(() => {
+    if (gameId === '' && !initialIdFetchFlag) {
+      setInitialIdFetchFlag(true)
+      getGameId()
+      // Else if we have an existing `game_id` and don't know if it's started...
+      // May set `initialGameStarted` which would call `getGame()`
+      // If game not started, either way we end up with  `game_id`
+    } else if (!initialGameStarted && !initialIdFetchFlag) {
+      checkIfGameIsStarted()
+    }
+  }, [
+    gameId,
+    getGameId,
+    initialGameStarted,
+    checkIfGameIsStarted,
+    initialIdFetchFlag,
+  ])
 
-    if (data === true) setInitialGameStarted(true)
-  }, [gameId, setInitialGameStarted])
+  useEffect(() => {
+    if (initialGameStarted) getGame()
+  }, [initialGameStarted, getGame])
 
-  const startGame = async () => {
+  const startGame = async (gameId: string) => {
+    console.log('Started Game', gameId)
     const { data }: { data: apiData } = await axios.post(
       '/api/start-game',
       { game_id: gameId, num_words_to_play: numWordsToPlay },
@@ -132,25 +164,6 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
     setGuess(data.word_letters_revealed ? data.word_letters_revealed : '')
     setGuessTextFieldFocus()
   }
-
-  useEffect(() => {
-    if (gameId === '' && !initialIdFetchFlag) {
-      setInitialIdFetchFlag(true)
-      getGameId()
-    } else if (!initialGameStarted && !initialIdFetchFlag) {
-      checkForStartedGame()
-    }
-  }, [
-    gameId,
-    getGameId,
-    initialGameStarted,
-    checkForStartedGame,
-    initialIdFetchFlag,
-  ])
-
-  useEffect(() => {
-    if (initialGameStarted) getGame()
-  }, [initialGameStarted, getGame])
 
   const gameInterface = (
     <>
@@ -299,47 +312,50 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
 
   return (
     <Grid container justifyContent='center' textAlign='center'>
-      {gameId ? (
-        <Grid item xs={12} sx={{ mt: -1 }}>
-          <FormControl sx={{ m: 1, mt: 3 }}>
-            <InputLabel id='num-words-select-label'>Words</InputLabel>
-            <Select
-              size='small'
-              labelId='num-words-select-label'
-              id='num-words-select'
-              value={numWordsToPlay}
-              label='Words'
-              onChange={(e: SelectChangeEvent) => {
-                setNumWordsToPlay(e.target.value)
-              }}
-            >
-              {/* <MenuItem value=''></MenuItem> */}
-              <MenuItem value={'1'}>1</MenuItem>
-              <MenuItem value={'2'}>2</MenuItem>
-              <MenuItem value={'3'}>3</MenuItem>
-              <MenuItem value={'4'}>4</MenuItem>
-              <MenuItem value={'5'}>5</MenuItem>
-              <MenuItem value={'10'}>10</MenuItem>
-              <MenuItem value={'15'}>15</MenuItem>
-              <MenuItem value={'20'}>20</MenuItem>
-              <MenuItem value={'25'}>25</MenuItem>
-              <MenuItem value={'30'}>30</MenuItem>
-              <MenuItem value={'40'}>40</MenuItem>
-              <MenuItem value={'50'}>50</MenuItem>
-            </Select>
-            <FormHelperText>How many words to guess?</FormHelperText>
-            <Button
-              sx={{ mt: 3, mb: 1 }}
-              variant='contained'
-              onClick={startGame}
-            >
-              Start New Game
-            </Button>
-          </FormControl>
-        </Grid>
-      ) : (
-        <Alert severity='warning'>The API is not currently running.</Alert>
-      )}
+      <Grid item xs={12} sx={{ mt: -1 }}>
+        <FormControl sx={{ m: 1, mt: 3 }}>
+          <InputLabel id='num-words-select-label'>Words</InputLabel>
+          <Select
+            size='small'
+            labelId='num-words-select-label'
+            id='num-words-select'
+            value={numWordsToPlay}
+            label='Words'
+            onChange={(e: SelectChangeEvent) => {
+              setNumWordsToPlay(e.target.value)
+            }}
+          >
+            {/* <MenuItem value=''></MenuItem> */}
+            <MenuItem value={'1'}>1</MenuItem>
+            <MenuItem value={'2'}>2</MenuItem>
+            <MenuItem value={'3'}>3</MenuItem>
+            <MenuItem value={'4'}>4</MenuItem>
+            <MenuItem value={'5'}>5</MenuItem>
+            <MenuItem value={'10'}>10</MenuItem>
+            <MenuItem value={'15'}>15</MenuItem>
+            <MenuItem value={'20'}>20</MenuItem>
+            <MenuItem value={'25'}>25</MenuItem>
+            <MenuItem value={'30'}>30</MenuItem>
+            <MenuItem value={'40'}>40</MenuItem>
+            <MenuItem value={'50'}>50</MenuItem>
+          </Select>
+          <FormHelperText>How many words to guess?</FormHelperText>
+          <Button
+            sx={{ mt: 3, mb: 1 }}
+            variant='contained'
+            onClick={async () => {
+              if (apiData) {
+                const newGameId = await getGameId()
+                await startGame(newGameId)
+              } else {
+                await startGame(gameId)
+              }
+            }}
+          >
+            Start New Game
+          </Button>
+        </FormControl>
+      </Grid>
 
       {apiData ? gameInterface : null}
     </Grid>

@@ -1,6 +1,10 @@
 AWSTemplateFormatVersion: 2010-09-09
 
 Parameters:
+  MasterStackName:
+    Type: String
+    Default: my-site
+
   HostedZoneId:
     Type: String
     Default: Z1048063LC3J2IKH5GGI
@@ -26,11 +30,11 @@ Resources:
       AliasTarget:
         HostedZoneId:
           !ImportValue {
-            !Sub: '${MasterStackName}-fargate-service-load-balancer-hosted-zone-id',
+            'Fn::Sub': '${MasterStackName}-fargate-service-load-balancer-hosted-zone-id',
           }
         DNSName:
           !ImportValue {
-            !Sub: '${MasterStackName}-fargate-service-load-balancer-dns-name',
+            'Fn::Sub': '${MasterStackName}-fargate-service-load-balancer-dns-name',
           }
 
   DNSRecordWWW:
@@ -42,9 +46,9 @@ Resources:
       AliasTarget:
         HostedZoneId:
           !ImportValue {
-            !Sub: '${MasterStackName}-fargate-service-load-balancer-hosted-zone-id',
+            'Fn::Sub': '${MasterStackName}-fargate-service-load-balancer-hosted-zone-id',
           }
         DNSName:
           !ImportValue {
-            !Sub: '${MasterStackName}-fargate-service-load-balancer-dns-name',
+            'Fn::Sub': '${MasterStackName}-fargate-service-load-balancer-dns-name',
           }
