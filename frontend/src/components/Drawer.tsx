@@ -46,6 +46,7 @@ type DrawerItem = {
   icon: React.ReactElement
   href?: string
   download?: boolean
+  subtitle?: string
 }
 
 const drawerItems1: DrawerItem[] = [
@@ -79,7 +80,8 @@ const drawerItems2: DrawerItem[] = [
   {
     text: 'Blog',
     icon: <MenuBookIcon />,
-    href: 'https://brendandagys.com',
+    // href: 'https://brendandagys.com',
+    subtitle: 'Under construction...',
   },
   {
     text: 'Resume',
@@ -149,7 +151,8 @@ export default function TemporaryDrawer({
     icon: React.ReactElement,
     scrollTo?: string,
     href?: string,
-    download?: boolean
+    download?: boolean,
+    subtitle?: string
   ) => {
     const listItemContent = (
       <>
@@ -166,10 +169,23 @@ export default function TemporaryDrawer({
             <FileDownloadIcon fontSize='small' />
           </ListItemIcon>
         ) : null}
+        {subtitle ? (
+          <Typography
+            style={{
+              fontSize: '0.6rem',
+              // position: 'absolute',
+              // bottom: '-1px',
+              // left: '72px',
+              // height: '60px',
+            }}
+          >
+            {subtitle}
+          </Typography>
+        ) : null}
       </>
     )
 
-    return href || download ? (
+    return href || download || text === 'Blog' ? (
       <ListItemButton
         dense={false}
         component='a'
@@ -215,27 +231,27 @@ export default function TemporaryDrawer({
         // color: theme.palette.colorMode.drawerTextColor,
       }}
       role='presentation'
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {drawerItems1.map(({ text, scrollTo, icon }, index) =>
-          scrollTo ? (
-            <Fragment key={index}>{listItem(text, icon, scrollTo)}</Fragment>
-          ) : (
-            <Fragment key={index}>{listItem(text, icon)}</Fragment>
-          )
-        )}
+        {drawerItems1.map(({ text, scrollTo, icon }, index) => (
+          <Box
+            key={index}
+            onClick={toggleDrawer(anchor, false)}
+            onKeyDown={toggleDrawer(anchor, false)}
+          >
+            {scrollTo ? listItem(text, icon, scrollTo) : listItem(text, icon)}
+          </Box>
+        ))}
       </List>
       <Divider component='div' />
       <List>
-        {drawerItems2.map(({ text, scrollTo, icon, href, download }, index) =>
-          scrollTo ? (
-            <Fragment key={index}>{listItem(text, icon)}</Fragment>
-          ) : (
-            <Fragment key={index}>
-              {listItem(text, icon, undefined, href, download)}
-            </Fragment>
+        {drawerItems2.map(
+          ({ text, scrollTo, icon, href, download, subtitle }, index) => (
+            <Box key={index}>
+              {scrollTo
+                ? listItem(text, icon)
+                : listItem(text, icon, undefined, href, download, subtitle)}
+            </Box>
           )
         )}
       </List>
