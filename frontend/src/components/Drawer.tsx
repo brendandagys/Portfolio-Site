@@ -142,8 +142,6 @@ export default function TemporaryDrawer({
       link.download = 'Brendan Dagys - Resume.pdf'
       link.click()
     })
-
-    // await axios.get('/api/documents/resume.pdf', { responseType: 'blob' })
   }
 
   const listItem = (
@@ -173,10 +171,6 @@ export default function TemporaryDrawer({
           <Typography
             style={{
               fontSize: '0.6rem',
-              // position: 'absolute',
-              // bottom: '-1px',
-              // left: '72px',
-              // height: '60px',
             }}
           >
             {subtitle}
