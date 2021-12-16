@@ -30,7 +30,7 @@ const HomepageTitles = ({ theme }: { theme: Theme }): React.ReactElement => {
           fontWeight: 'bold',
         }}
       >
-        JavaScript and Python developer
+        TypeScript and Python developer
       </Typography>
       {/* </div> */}
       <Typography

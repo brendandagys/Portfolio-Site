@@ -11,6 +11,7 @@ import {
   CardMedia,
   Typography,
   Theme,
+  Tooltip,
 } from '@mui/material'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import TextSnippetIcon from '@mui/icons-material/TextSnippet'
@@ -122,36 +123,61 @@ const MyCard = ({
   const cardMediaProps = healthy ? {} : { opacity: '0.6' }
 
   return (
-    <div>
-      <StyledCard
-        raised
-        elevation={selected ? 24 : 3}
-        onMouseOver={() => setSelected(true)}
-        onMouseLeave={() => setSelected(false)}
-      >
-        {healthy ? null : (
-          <animated.div
-            style={{
-              ...springProps,
-              color: 'firebrick',
-              backgroundColor: '#d3d3d3',
-              position: 'absolute',
-              width: '345px',
-              marginTop: '85px',
-              zIndex: 200,
-              backdropFilter: 'blur(12px)',
-              fontSize: '1.5rem',
-              fontFamily: 'arial',
-              paddingTop: '7px',
-              paddingBottom: '7px',
-              // borderTop: '1px solid slategray',
-              // borderBottom: '1px solid slategray',
-            }}
-          >
-            Temporarily offline
-          </animated.div>
-        )}
-        {/* {demoURL || dialogContent ? null : (
+    <Tooltip
+      disableFocusListener
+      disableTouchListener
+      placement='top'
+      arrow
+      PopperProps={{
+        popperOptions: {
+          modifiers: [
+            {
+              name: 'offset',
+              options: { offset: [0, -6] },
+            },
+          ],
+        },
+      }}
+      title={
+        <>
+          {healthy ? (
+            <small>Click anywhere on the tile to view the application!</small>
+          ) : (
+            <small>Link disabled as application is offline.</small>
+          )}
+        </>
+      }
+    >
+      <div>
+        <StyledCard
+          raised
+          elevation={selected ? 24 : 3}
+          onMouseOver={() => setSelected(true)}
+          onMouseLeave={() => setSelected(false)}
+        >
+          {healthy ? null : (
+            <animated.div
+              style={{
+                ...springProps,
+                color: 'firebrick',
+                backgroundColor: '#d3d3d3',
+                position: 'absolute',
+                width: '345px',
+                marginTop: '85px',
+                zIndex: 200,
+                backdropFilter: 'blur(12px)',
+                fontSize: '1.5rem',
+                fontFamily: 'Courier New',
+                paddingTop: '7px',
+                paddingBottom: '7px',
+                // borderTop: '1px solid slategray',
+                // borderBottom: '1px solid slategray',
+              }}
+            >
+              Temporarily offline
+            </animated.div>
+          )}
+          {/* {demoURL || dialogContent ? null : (
           <Typography
             style={{
               color: 'firebrick',
@@ -167,59 +193,61 @@ const MyCard = ({
             Temporarily offline
           </Typography>
         )} */}
-        <CardActionArea {...cardActionAreaProps}>
-          <CardMedia
-            component='img'
-            height='190'
-            image={image}
-            alt={alt}
-            style={cardMediaProps}
-          />
-          <CardContent style={{ borderTop: '1px solid lightgray' }}>
-            <Typography gutterBottom variant='h5' component='div'>
-              {title}
-            </Typography>
-            <Typography variant='body2' color='text.secondary'>
-              {children}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <StyledAnchor href={gitHubURL} target='_blank' rel='noreferrer'>
-            <Button
-              className={
-                theme.palette.mode === 'dark'
-                  ? 'hvr-underline-from-left-thin-dark'
-                  : 'hvr-underline-from-left-thin-light'
-              }
-              size='small'
-              style={{
-                backgroundColor: theme.palette.colorMode.gitHubButtonColor,
-                margin: '0 auto 5px 10px',
-              }}
-              variant='contained'
-              startIcon={<GitHubIcon sx={{ mb: '2px' }} />}
-            >
-              GitHub
-            </Button>
-          </StyledAnchor>
-          {!descriptionContent ? null : (
-            <Button
-              style={{
-                backgroundColor: theme.palette.colorMode.descriptionButtonColor,
-                margin: '0 10px 5px auto',
-              }}
-              size='small'
-              variant='contained'
-              startIcon={<TextSnippetIcon sx={{ mb: '2px' }} />}
-              onClick={() => showCardContentInDialog(descriptionContent)}
-            >
-              Description
-            </Button>
-          )}
-        </CardActions>
-      </StyledCard>
-    </div>
+          <CardActionArea {...cardActionAreaProps}>
+            <CardMedia
+              component='img'
+              height='190'
+              image={image}
+              alt={alt}
+              style={cardMediaProps}
+            />
+            <CardContent style={{ borderTop: '1px solid lightgray' }}>
+              <Typography gutterBottom variant='h5' component='div'>
+                {title}
+              </Typography>
+              <Typography variant='body2' color='text.secondary'>
+                {children}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions>
+            <StyledAnchor href={gitHubURL} target='_blank' rel='noreferrer'>
+              <Button
+                className={
+                  theme.palette.mode === 'dark'
+                    ? 'hvr-underline-from-left-thin-dark'
+                    : 'hvr-underline-from-left-thin-light'
+                }
+                size='small'
+                style={{
+                  backgroundColor: theme.palette.colorMode.gitHubButtonColor,
+                  margin: '0 auto 5px 10px',
+                }}
+                variant='contained'
+                startIcon={<GitHubIcon sx={{ mb: '2px' }} />}
+              >
+                GitHub
+              </Button>
+            </StyledAnchor>
+            {!descriptionContent ? null : (
+              <Button
+                style={{
+                  backgroundColor:
+                    theme.palette.colorMode.descriptionButtonColor,
+                  margin: '0 10px 5px auto',
+                }}
+                size='small'
+                variant='contained'
+                startIcon={<TextSnippetIcon sx={{ mb: '2px' }} />}
+                onClick={() => showCardContentInDialog(descriptionContent)}
+              >
+                Description
+              </Button>
+            )}
+          </CardActions>
+        </StyledCard>
+      </div>
+    </Tooltip>
   )
 }
 
