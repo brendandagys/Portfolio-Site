@@ -4,6 +4,8 @@ import screeningAppScreenshot from '../images/screening-app-screenshot.png'
 import financesAppScreenshot from '../images/finances-app-screenshot.png'
 import proShopAppScreenshot from '../images/proshop-app-screenshot.png'
 import vocabularyTrainerScreenshot from '../images/vocabulary-trainer-app-screenshot.png'
+import auditAppScreenshot from '../images/audit-app-screenshot.png'
+import incidentReportingAppScreenshot from '../images/incident-reporting-app-screenshot.png'
 
 import VocabularyTrainer from '../components/VocabularyTrainer'
 import { Theme } from '@mui/material'
@@ -33,7 +35,7 @@ export type CardDataType = {
 const portfolioCards = (theme: Theme) => [
   {
     image: financesAppScreenshot,
-    title: 'Finances and Budgeting Tool',
+    title: 'Finances and Budgeting Tracker',
     alt: '',
     text: 'A financial tracker that allows users to track their expenses and asset growth. It additionally contains clock + calculator widgets that I built with vanilla JavaScript, as well as a mood tracker page!',
     demoURL:
@@ -51,7 +53,7 @@ const portfolioCards = (theme: Theme) => [
     image: screeningAppScreenshot,
     title: 'COVID-19 Screening',
     alt: '',
-    text: 'An improved clone of common workplace COVID-19 screening apps. One solution that I implemented was to have the application remember if a user has already completed the daily screening, and other general UX improvements such as transitions.',
+    text: 'An improved clone of common workplace COVID-19 screening apps. One solution that I implemented was to have the application remember if a user has already completed the daily screening, and other general UX improvements such as transitions. Users can have the results emailed to them as well in case of cellular data limitations.',
     demoURL:
       process.env.NODE_ENV === 'production'
         ? 'https://screening.brendandagys.com'
@@ -83,27 +85,17 @@ const portfolioCards = (theme: Theme) => [
     image: boston,
     title: 'Emergency Response Communication Hub',
     alt: '',
-    text: 'A communication hub for staff of a fictional hospital to track management of entry/exit points, communication with Fire/Police departments, and other internal staff in the event of an emergency.',
+    text: 'A communication hub/messaging system for staff of a fictional hospital to track management of entry/exit points, communication with Fire/Police departments, and other internal staff in the event of an emergency.',
     demoURL: '',
     gitHubURL:
       'https://github.com/brendandagys/Hospital-Emergency-Response-Management-and-Communication-Web-App',
     descriptionContent: <EmergencyResponseDescription theme={theme} />,
   },
   {
-    image: boston,
-    title: 'Waiting Room Notifier',
-    alt: '',
-    text: 'A form that allows a clinic or waiting room clerk to optionally record contact information of those waiting. They can be sent an email or text when it is time for their appointment in the case that they wish to leave the waiting room.',
-    demoURL: '',
-    gitHubURL:
-      'https://github.com/brendandagys/Hospital-Clinic-Waiting-Room-Notification-Web-App',
-    descriptionContent: <WaitingRoomNotificationDescription theme={theme} />,
-  },
-  {
     image: vocabularyTrainerScreenshot,
     title: 'Vocabulary Trainer Game',
     alt: '',
-    text: 'An API for a word-guessing game. Users are presented with a definition and must guess the corresponding word. Hints can be requested. Game state is saved and games can be resumed on next site visit through use of `localstorage`. Click to PLAY!',
+    text: "An API for a word-guessing game. Users are presented with a definition and must guess the corresponding word. Hints can be requested. Game state is saved and games can be resumed on a user's next site visit through use of `localstorage`. Click to PLAY!",
     // demoURL:
     //   process.env.NODE_ENV === 'production'
     //     ? 'https://vocabulary.brendandagys.com'
@@ -118,6 +110,16 @@ const portfolioCards = (theme: Theme) => [
   },
   {
     image: boston,
+    title: 'Waiting Room Notifier',
+    alt: '',
+    text: 'A simple application that allows a clinic or waiting room assistant to optionally record contact information of those waiting. The person waiting can be sent an email or text when it is time for their appointment in the case that they wish to leave the waiting room.',
+    demoURL: '',
+    gitHubURL:
+      'https://github.com/brendandagys/Hospital-Clinic-Waiting-Room-Notification-Web-App',
+    descriptionContent: <WaitingRoomNotificationDescription theme={theme} />,
+  },
+  {
+    image: boston,
     title: 'Music Theory Practice Tool',
     alt: '',
     text: 'A command-line program that offers various options for practice/study, such a chord recital or scale practice. Audio files are included in the program so that users can hear and practice to pedal tones.',
@@ -126,7 +128,7 @@ const portfolioCards = (theme: Theme) => [
     descriptionContent: <MusicTheoryPracticeDescription theme={theme} />,
   },
   {
-    image: boston,
+    image: incidentReportingAppScreenshot,
     title: 'Incident Reporting Tool',
     alt: '',
     text: "A Python GUI application built with Tkinter that allows for 'incident' data's entry, storage, and analysis by members of an organization's Security team.",
@@ -136,10 +138,10 @@ const portfolioCards = (theme: Theme) => [
     descriptionContent: <IncidentReportingDescription theme={theme} />,
   },
   {
-    image: boston,
+    image: auditAppScreenshot,
     title: 'Auditing Tool',
     alt: '',
-    text: 'A Python GUI application built with Tkinter that provides a data entry, storage, and analysis solution for any paper-based auditing process.',
+    text: 'A Python GUI application built with Tkinter that provides a data entry, storage, and analysis solution via multiple reports for a paper-based auditing process.',
     demoURL: '',
     gitHubURL:
       'https://github.com/brendandagys/Hospital-Medical-Device-Reprocessing-Auditing-Software',
