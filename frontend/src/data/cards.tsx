@@ -7,6 +7,7 @@ import vocabularyTrainerScreenshot from '../images/vocabulary-trainer-app-screen
 import auditAppScreenshot from '../images/audit-app-screenshot.png'
 import incidentReportingAppScreenshot from '../images/incident-reporting-app-screenshot.png'
 import hubAppScreenshot from '../images/hub-app-screenshot.png'
+import musicTheoryAppScreenshot from '../images/music-theory-app-screenshot.png'
 
 import VocabularyTrainer from '../components/VocabularyTrainer'
 import { Theme } from '@mui/material'
@@ -121,7 +122,7 @@ const portfolioCards = (theme: Theme) => [
     tooltipContent: 'Demo coming soon!',
   },
   {
-    image: boston,
+    image: musicTheoryAppScreenshot,
     title: 'Music Theory Practice Tool',
     alt: '',
     text: 'A command-line program that offers various options for practice/study, such a chord recital or scale practice. Audio files are included in the program so that users can hear and practice to pedal tones.',

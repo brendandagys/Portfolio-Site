@@ -90,9 +90,14 @@ export const accordionContentSkills = (
       Other skills that I possess but did not mention above include:
     </StyledTypography>
     <ul>
-      <StyledListItem>
+      <StyledListItem style={{ marginTop: '10px' }}>
         <StyledTypography>
           SQL and relational/non-relational database design
+        </StyledTypography>
+      </StyledListItem>
+      <StyledListItem>
+        <StyledTypography>
+          Git, version control systems, and virtual environments
         </StyledTypography>
       </StyledListItem>
       <StyledListItem>
@@ -164,7 +169,7 @@ export const accordionContentHowSiteWasBuilt = (
     </StyledTypography>
     <div>
       <ul>
-        <StyledListItem>
+        <StyledListItem style={{ marginTop: '10px' }}>
           <StyledTypography>
             CloudFront, for Distributions that pointed to S3 buckets and
             ECS-hosted APIs
