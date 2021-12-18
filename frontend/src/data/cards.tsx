@@ -8,6 +8,7 @@ import auditAppScreenshot from '../images/audit-app-screenshot.png'
 import incidentReportingAppScreenshot from '../images/incident-reporting-app-screenshot.png'
 import hubAppScreenshot from '../images/hub-app-screenshot.png'
 import musicTheoryAppScreenshot from '../images/music-theory-app-screenshot.png'
+import waitingRoomAppScreenshot from '../images/waiting-room-app-screenshot.png'
 
 import VocabularyTrainer from '../components/VocabularyTrainer'
 import { Theme } from '@mui/material'
@@ -112,7 +113,7 @@ const portfolioCards = (theme: Theme) => [
     tooltipContent: 'Demo coming soon!',
   },
   {
-    image: boston,
+    image: waitingRoomAppScreenshot,
     title: 'Waiting Room Notifier',
     alt: '',
     text: 'A simple application that allows a clinic or waiting room assistant to optionally record contact information of those waiting. The person waiting can be sent an email or text when it is time for their appointment in the case that they wish to leave the waiting room.',

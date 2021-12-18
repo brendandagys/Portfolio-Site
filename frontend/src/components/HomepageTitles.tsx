@@ -1,38 +1,27 @@
-// import styled from 'styled-components'
 import { Theme, Typography } from '@mui/material'
-
-// const StyledTypography = styled(Typography)`
-//   color: ${({ theme }) => theme.palette.text.third};
-// `
 
 const HomepageTitles = ({ theme }: { theme: Theme }): React.ReactElement => {
   return (
     <div>
-      {/* <div style={{ backgroundColor: 'white' }}> */}
       <Typography
         variant='h3'
-        // color='secondary'
         align='center'
         mt='3.5rem'
         px='100px'
         sx={{
           color: theme.palette.colorMode.titleTextColor,
-          // background: '-webkit-linear-gradient(45deg, #09009f, #999 95%)',
-          // background:
-          // '-webkit-linear-gradient(-70deg, #a2facf 0%, #64acff 100%)',
-          // background:
-          //   '-webkit-linear-gradient(-70deg, #db469f 0%, #2188ff 100%',
-          // background: 'linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%)',
-          // background: 'linear-gradient(90deg, #eee 0%, #333 100%)',
-          // WebkitBackgroundClip: 'text',
-          // WebkitTextFillColor: 'transparent',
-          // WebkitBoxDecorationBreak: 'clone',
+          backgroundColor: 'rgba(255, 255, 255, .15)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          width: '45%',
+          mx: 'auto',
+          py: '10px',
+          borderRadius: '12px',
           fontWeight: 'bold',
         }}
       >
         TypeScript and Python developer
       </Typography>
-      {/* </div> */}
       <Typography
         align='center'
         variant='h4'
