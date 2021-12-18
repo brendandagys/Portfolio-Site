@@ -27,6 +27,7 @@ type MyCardProps = {
   theme: Theme
   dialogContent?: React.ReactChild
   descriptionContent?: React.ReactChild
+  tooltipContent: string
   showCardContentInDialog: (dialogContent: React.ReactChild) => void
 } & CardProps
 
@@ -57,6 +58,7 @@ const MyCard = ({
   theme,
   dialogContent,
   descriptionContent,
+  tooltipContent,
   showCardContentInDialog,
 }: MyCardProps): React.ReactElement => {
   const [selected, setSelected] = useState(false)
@@ -140,10 +142,12 @@ const MyCard = ({
       }}
       title={
         <>
-          {healthy ? (
-            <small>Click anywhere on the tile to view the application!</small>
-          ) : (
+          {healthCheckUrl && healthy ? (
+            <small>{tooltipContent}</small>
+          ) : healthCheckUrl ? (
             <small>Link disabled as application is offline.</small>
+          ) : (
+            <small>{tooltipContent}</small>
           )}
         </>
       }

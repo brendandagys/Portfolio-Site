@@ -85,6 +85,7 @@ const CardGallery = ({
                 text,
                 dialogContent,
                 descriptionContent,
+                tooltipContent,
               },
               index
             ) => {
@@ -100,6 +101,7 @@ const CardGallery = ({
                     theme={theme}
                     dialogContent={dialogContent}
                     descriptionContent={descriptionContent}
+                    tooltipContent={tooltipContent}
                     showCardContentInDialog={showCardContentInDialog}
                   >
                     {text}
