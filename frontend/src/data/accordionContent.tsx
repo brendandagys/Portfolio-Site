@@ -134,11 +134,11 @@ export const accordionContentHowSiteWasBuilt = (
       I had to make many design decisions including whether to use Elastic
       Container Service (ECS) vs. Elastic Beanstalk vs. EC2, how I wanted to
       configure routing from/to all of my services, security, and TLS
-      certificates.{' '}
+      certificates.
       <i>
         Was a load balancer necessary? Should I deploy the front-end through
         Amazon S3, or Docker-ize that also?
-      </i>{' '}
+      </i>
       There were so many things I learned by applying the knowledge I gained
       from studying for the examinations.
     </StyledTypography>

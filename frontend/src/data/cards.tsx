@@ -1,5 +1,4 @@
 import React from 'react'
-import boston from '../images/boston.jpg'
 import screeningAppScreenshot from '../images/screening-app-screenshot.png'
 import financesAppScreenshot from '../images/finances-app-screenshot.png'
 import proShopAppScreenshot from '../images/proshop-app-screenshot.png'

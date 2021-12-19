@@ -77,7 +77,7 @@ const MyCard = ({
 
   const checkHealth = useCallback(
     async (url: string) => {
-      console.log(`Checking health of' ${title}...`)
+      console.log(`Checking health of '${title}'...`)
       try {
         const { data: healthStatus } = await axios.get(`${url}/api/health`)
         console.log(healthStatus)
