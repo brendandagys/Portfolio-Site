@@ -22,12 +22,12 @@ const Description = ({ theme }: { theme: Theme }) => {
       <Typography>The items that I wanted to improve were:</Typography>
       <br />
       <Typography>
-        Having larger buttons that are easier to press, with appropriate spacing
+        Having large buttons that are easy to press, with appropriate spacing
         between (e.g. Yes/No).
       </Typography>
       <br />
       <Typography>
-        Automation and animation, for example, when all questions are answered,
+        Automation and animation. For example, when all questions are answered,
         scroll immediately to the ‘Submit’ button so that the user does not need
         to do this – only click.
       </Typography>
