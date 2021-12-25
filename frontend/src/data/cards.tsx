@@ -8,6 +8,7 @@ import incidentReportingAppScreenshot from '../images/incident-reporting-app-scr
 import hubAppScreenshot from '../images/hub-app-screenshot.png'
 import musicTheoryAppScreenshot from '../images/music-theory-app-screenshot.png'
 import waitingRoomAppScreenshot from '../images/waiting-room-app-screenshot.png'
+import personalBlogScreenshot from '../images/personal-blog-app-screenshot.png'
 
 import VocabularyTrainer from '../components/VocabularyTrainer'
 import { Theme } from '@mui/material'
@@ -21,6 +22,7 @@ import VocabularyTrainerDescription from '../components/card-descriptions/Vocabu
 import MusicTheoryPracticeDescription from '../components/card-descriptions/MusicTheoryPracticeDescription'
 import IncidentReportingDescription from '../components/card-descriptions/IncidentReportingDescription'
 import DeviceReprocessingDescription from '../components/card-descriptions/DeviceReprocessingDescription'
+import PersonalBlogDescription from '../components/card-descriptions/PersonalBlogDescription'
 
 export type CardDataType = {
   image: string
@@ -37,9 +39,26 @@ export type CardDataType = {
 
 const portfolioCards = (theme: Theme) => [
   {
+    image: personalBlogScreenshot,
+    title: 'Personal Blog',
+    alt: 'Personal Blog',
+    text: 'A place for me to post blog articles and connect with others. Built with Next.js and GraphQL. Also utilized GraphCMS to manage content handily.',
+    demoURL:
+      process.env.NODE_ENV === 'production'
+        ? 'https://blog.brendandagys.com'
+        : 'http://localhost:3005',
+    gitHubURL: 'https://github.com/brendandagys/Personal-Blog',
+    healthCheckUrl:
+      process.env.NODE_ENV === 'production'
+        ? 'https://blog.brendandagys.com'
+        : 'http://localhost:3005',
+    descriptionContent: <PersonalBlogDescription theme={theme} />,
+    tooltipContent: 'Click anywhere on the tile to view the application!',
+  },
+  {
     image: financesAppScreenshot,
     title: 'Finances and Budgeting Tracker',
-    alt: '',
+    alt: 'Finances and Budgeting Tracker',
     text: 'A financial tracker that allows users to track their expenses and asset growth. It additionally contains clock + calculator widgets that I built with vanilla JavaScript, as well as a mood tracker page!',
     demoURL:
       process.env.NODE_ENV === 'production'
@@ -56,7 +75,7 @@ const portfolioCards = (theme: Theme) => [
   {
     image: screeningAppScreenshot,
     title: 'COVID-19 Screening',
-    alt: '',
+    alt: 'COVID-19 Screening',
     text: 'An improved clone of common workplace COVID-19 screening apps. One solution that I implemented was to have the application remember if a user has already completed the daily screening, and other general UX improvements such as transitions. Users can have the results emailed to them as well in case of cellular data limitations.',
     demoURL:
       process.env.NODE_ENV === 'production'
@@ -73,7 +92,7 @@ const portfolioCards = (theme: Theme) => [
   {
     image: proShopAppScreenshot,
     title: 'e-Commerce Store',
-    alt: '',
+    alt: 'e-Commerce Store',
     text: 'A fully-functioning e-commerce application for a fictional technology supplier. Features include a shopping cart, product reviews,  administrator portal, integration with PayPal, and shipment tracking.',
     demoURL:
       process.env.NODE_ENV === 'production'
@@ -90,7 +109,7 @@ const portfolioCards = (theme: Theme) => [
   {
     image: vocabularyTrainerScreenshot,
     title: 'Vocabulary Trainer Game',
-    alt: '',
+    alt: 'Vocabulary Trainer Game',
     text: "An API for a word-guessing game. Users are presented with a definition and must guess the corresponding word. Hints can be requested. Game state is saved and games can be resumed on a user's next site visit through use of `localstorage`. Click to PLAY!",
     gitHubURL: 'https://github.com/brendandagys/Vocabulary-Trainer',
     healthCheckUrl:
@@ -104,7 +123,7 @@ const portfolioCards = (theme: Theme) => [
   {
     image: hubAppScreenshot,
     title: 'Emergency Response Communication Hub',
-    alt: '',
+    alt: 'Emergency Response Communication Hub',
     text: 'A communication hub/messaging system for staff of a fictional hospital to track management of entry/exit points, communication with Fire/Police departments, and other internal staff in the event of an emergency.',
     gitHubURL:
       'https://github.com/brendandagys/Hospital-Emergency-Response-Management-and-Communication-Web-App',
@@ -114,7 +133,7 @@ const portfolioCards = (theme: Theme) => [
   {
     image: waitingRoomAppScreenshot,
     title: 'Waiting Room Notifier',
-    alt: '',
+    alt: 'Waiting Room Notifier',
     text: 'A simple application that allows a clinic or waiting room assistant to optionally record contact information of those waiting. The person waiting can be sent an email or text when it is time for their appointment in the case that they wish to leave the waiting room.',
     gitHubURL:
       'https://github.com/brendandagys/Hospital-Clinic-Waiting-Room-Notification-Web-App',
@@ -124,7 +143,7 @@ const portfolioCards = (theme: Theme) => [
   {
     image: musicTheoryAppScreenshot,
     title: 'Music Theory Practice Tool',
-    alt: '',
+    alt: 'Music Theory Practice Tool',
     text: 'A command-line program that offers various options for practice/study, such a chord recital or scale practice. Audio files are included in the program so that users can hear and practice to pedal tones.',
     gitHubURL: 'https://github.com/brendandagys/Guitar-Theory-Practice-Tool',
     descriptionContent: <MusicTheoryPracticeDescription theme={theme} />,
@@ -133,7 +152,7 @@ const portfolioCards = (theme: Theme) => [
   {
     image: incidentReportingAppScreenshot,
     title: 'Incident Reporting Tool',
-    alt: '',
+    alt: 'Incident Reporting Tool',
     text: "A Python GUI application built with Tkinter that allows for 'incident' data's entry, storage, and analysis by members of an organization's Security team.",
     gitHubURL:
       'https://github.com/brendandagys/Hospital-Protective-Services-Incident-Reporting-Software',
@@ -143,7 +162,7 @@ const portfolioCards = (theme: Theme) => [
   {
     image: auditAppScreenshot,
     title: 'Auditing Tool',
-    alt: '',
+    alt: 'Auditing Tool',
     text: 'A Python GUI application built with Tkinter that provides a data entry, storage, and analysis solution via multiple reports for a paper-based auditing process.',
     gitHubURL:
       'https://github.com/brendandagys/Hospital-Medical-Device-Reprocessing-Auditing-Software',

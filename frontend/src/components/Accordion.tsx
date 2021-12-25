@@ -64,7 +64,7 @@ export default function CustomizedAccordions({
 }: {
   theme: Theme
 }): React.ReactElement {
-  const [expanded, setExpanded] = useState<string | false>('panel1')
+  const [expanded, setExpanded] = useState<string | false>('panel2')
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
