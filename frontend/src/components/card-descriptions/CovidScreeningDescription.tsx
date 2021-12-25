@@ -7,6 +7,10 @@ const StyledTypography = styled(Typography)`
   text-indent: 12px;
 `
 
+const StyledListItem = styled.li`
+  margin-top: -12px;
+`
+
 const Description = ({ theme }: { theme: Theme }) => {
   return (
     <Container sx={{ textAlign: 'justify' }}>
@@ -28,17 +32,21 @@ const Description = ({ theme }: { theme: Theme }) => {
       <StyledTypography>
         The items that I wanted to improve were:
       </StyledTypography>
-      <br />
-      <StyledTypography>
-        Having large buttons that are easy to press, with appropriate spacing
-        between (e.g. Yes/No).
-      </StyledTypography>
-      <br />
-      <StyledTypography>
-        Automation and animation. For example, when all questions are answered,
-        scroll immediately to the ‘Submit’ button so that the user does not need
-        to do this – only click.
-      </StyledTypography>
+      <ul>
+        <StyledListItem style={{ marginTop: '10px' }}>
+          <StyledTypography style={{ textIndent: '0px' }}>
+            Having large buttons that are easy to press, with appropriate
+            spacing between (e.g. Yes/No).
+          </StyledTypography>
+        </StyledListItem>
+        <StyledListItem style={{ marginTop: '10px' }}>
+          <StyledTypography style={{ textIndent: '0px' }}>
+            Automation and animation. For example, when all questions are
+            answered, scroll immediately to the ‘Submit’ button so that the user
+            does not need to do this – only click.
+          </StyledTypography>
+        </StyledListItem>
+      </ul>
       <br />
       <StyledTypography>
         Remember that a user has answered the questions on a given day. This was
