@@ -42,7 +42,7 @@ const portfolioCards = (theme: Theme) => [
     image: personalBlogScreenshot,
     title: 'Personal Blog',
     alt: 'Personal Blog',
-    text: 'A place for me to post blog articles and connect with others. Built with Next.js and GraphQL. Also utilized GraphCMS to manage content handily.',
+    text: 'A place for me to post blog articles and connect with others. Built with Next.js and GraphQL. I also utilized GraphCMS to manage content handily. Server-side rendering from Next.js provides a very speedy rendering time for quick delivery of content.',
     demoURL:
       process.env.NODE_ENV === 'production'
         ? 'https://blog.brendandagys.com'

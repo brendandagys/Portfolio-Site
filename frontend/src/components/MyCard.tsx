@@ -235,12 +235,17 @@ const MyCard = ({
             </StyledAnchor>
             {!descriptionContent ? null : (
               <Button
+                className={
+                  theme.palette.mode === 'dark'
+                    ? 'hvr-underline-from-left'
+                    : 'hvr-underline-from-left-purple'
+                }
+                size='small'
                 style={{
                   backgroundColor:
                     theme.palette.colorMode.descriptionButtonColor,
                   margin: '0 10px 5px auto',
                 }}
-                size='small'
                 variant='contained'
                 startIcon={<TextSnippetIcon sx={{ mb: '2px' }} />}
                 onClick={() => showCardContentInDialog(descriptionContent)}
