@@ -106,7 +106,7 @@ export default function AlertDialogSlide({
       fullWidth={true}
       maxWidth={maxWidth}
     >
-      <StyledDialogHeader sx={formOverrides}>
+      <StyledDialogHeader sx={{ ...formOverrides, overflowY: 'visible' }}>
         {theme.palette.mode === 'dark' ? (
           <DarkModeIcon
             sx={{
@@ -136,8 +136,8 @@ export default function AlertDialogSlide({
             display: 'flex',
             flexDirection: 'column',
             mx: 'auto',
-            mt: 1,
-            mb: 2,
+            // mt: 1,
+            // mb: 4,
             width: 'fit-content',
           }}
         >
