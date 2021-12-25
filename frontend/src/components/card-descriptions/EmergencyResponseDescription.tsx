@@ -1,10 +1,16 @@
 import { Theme } from '@mui/material'
 import { Typography, Container } from '@mui/material'
 
+import styled from 'styled-components'
+
+const StyledTypography = styled(Typography)`
+  text-indent: 12px;
+`
+
 const Description = ({ theme }: { theme: Theme }) => {
   return (
     <Container sx={{ textAlign: 'justify' }}>
-      <Typography>
+      <StyledTypography>
         This project was my first foray into Web development. The purpose of the
         tool is to allow a Security/Safety team to monitor the organization’s
         response to ‘codes’ being called. A ‘code’ is an event such as a missing
@@ -16,9 +22,9 @@ const Description = ({ theme }: { theme: Theme }) => {
         because it must be easily accessible, and it is unrealistic to expect
         staff to carry their laptops or to download an app, even in advance of
         an emergency.
-      </Typography>
+      </StyledTypography>
       <br />
-      <Typography>
+      <StyledTypography>
         I began building this app by following the Mozilla Docs ‘Local Library’
         tutorial, where you learn the essentials of Django with a sensible
         project. Once I felt that I was comfortable enough to depart from their
@@ -27,9 +33,9 @@ const Description = ({ theme }: { theme: Theme }) => {
         researched these problems and learned so much as I grew my Django and
         Python knowledge. I really developed my core Web development skills here
         as well: HTML, CSS, and vanilla JavaScript, which I am proud of.
-      </Typography>
+      </StyledTypography>
       <br />
-      <Typography>
+      <StyledTypography>
         The project is set up as follows. Multiple pages contain forms for each
         of the locations that staff should congregate. A senior staff member who
         takes the lead at one of the locations can update each form. There is
@@ -37,19 +43,19 @@ const Description = ({ theme }: { theme: Theme }) => {
         Marshall to see the completion of each form, on one page, in real-time.
         This was accomplished using AJAX requests, which blew my mind at the
         time!
-      </Typography>
+      </StyledTypography>
       <br />
-      <Typography>
+      <StyledTypography>
         There is also a chat functionality and messaging system through which
         commands can be distributed to any staff member on the app.
-      </Typography>
+      </StyledTypography>
       <br />
-      <Typography>
+      <StyledTypography>
         Other notable milestones during my work on this project was the depth at
         which I learned JQuery to traverse the DOM. Even though I may never use
         it again, it taught me a lot about how JavaScript works, and I am glad I
         learned it!
-      </Typography>
+      </StyledTypography>
     </Container>
   )
 }

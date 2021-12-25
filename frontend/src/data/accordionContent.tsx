@@ -91,22 +91,22 @@ export const accordionContentSkills = (
     </StyledTypography>
     <ul>
       <StyledListItem style={{ marginTop: '10px' }}>
-        <StyledTypography>
+        <StyledTypography style={{ textIndent: '0px' }}>
           SQL and relational/non-relational database design
         </StyledTypography>
       </StyledListItem>
       <StyledListItem>
-        <StyledTypography>
+        <StyledTypography style={{ textIndent: '0px' }}>
           Git, version control systems, and virtual environments
         </StyledTypography>
       </StyledListItem>
       <StyledListItem>
-        <StyledTypography>
+        <StyledTypography style={{ textIndent: '0px' }}>
           Machine learning models (regression, classifiers, clustering, etc.)
         </StyledTypography>
       </StyledListItem>
       <StyledListItem>
-        <StyledTypography>
+        <StyledTypography style={{ textIndent: '0px' }}>
           Strong communication, presentation, and team-building skills
         </StyledTypography>
       </StyledListItem>
@@ -170,19 +170,19 @@ export const accordionContentHowSiteWasBuilt = (
     <div>
       <ul>
         <StyledListItem style={{ marginTop: '10px' }}>
-          <StyledTypography>
+          <StyledTypography style={{ textIndent: '0px' }}>
             CloudFront, for Distributions that pointed to S3 buckets and
             ECS-hosted APIs
           </StyledTypography>
         </StyledListItem>
         <StyledListItem>
-          <StyledTypography>
+          <StyledTypography style={{ textIndent: '0px' }}>
             Amazon Certificate Manager (ACM), to create TLS certificates to
             implement security on my Distributions and Load Balancers
           </StyledTypography>
         </StyledListItem>
         <StyledListItem>
-          <StyledTypography>
+          <StyledTypography style={{ textIndent: '0px' }}>
             Amazon Virtual Private Cloud (VPC), to create an isolated
             environment for some of my services to live
           </StyledTypography>
