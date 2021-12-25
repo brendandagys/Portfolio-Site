@@ -15,6 +15,8 @@ import postgresqlIcon from './postgresql-icon.svg'
 import sqlIcon from './sql-icon.svg'
 import redisIcon from './redis-icon.svg'
 import gitIcon from './git-icon.svg'
+import graphQLIcon from './graphql-icon.svg'
+import nextJSIcon from './nextjs-icon.svg'
 
 import awsSolutionsArchitectBadge from './aws-solutions-architect-badge.png'
 import awsDeveloperBadge from './aws-developer-badge.png'
@@ -24,11 +26,15 @@ export const technologyIcons = [
   javaScriptIcon,
   typeScriptIcon,
   reactIcon,
+  nextJSIcon,
   pythonIcon,
   djangoIcon,
   cppIcon,
   nodeJsIcon,
   dockerIcon,
+  graphQLIcon,
+  postgresqlIcon,
+  sqlIcon,
   gitIcon,
   redisIcon,
   materialUIIcon,
@@ -36,8 +42,6 @@ export const technologyIcons = [
   html5Icon,
   cssIcon,
   jQueryIcon,
-  postgresqlIcon,
-  sqlIcon,
 ]
 
 export const awsIcons = [
