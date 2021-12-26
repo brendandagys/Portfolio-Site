@@ -70,12 +70,7 @@ const App = (): JSX.Element => {
         alignItems='center'
         justifyContent='center'
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-        sx={{
-          // backgroundColor: '#af8c9d',
-          // backgroundImage:
-          //   'linear-gradient(to top left, #6ab7ff, #1e88e5, #005cb2)',
-          background: theme.palette.background.default,
-        }}
+        sx={{ background: theme.palette.background.default }}
       >
         <Grid item xs={12}>
           <StyledTopBorderDiv />
@@ -84,13 +79,7 @@ const App = (): JSX.Element => {
           <Drawer anchor='right' theme={theme} toggleMode={toggleMode} />
         </Grid>
 
-        <Grid
-          container
-          // sx={{
-          //   backgroundImage:
-          //     'linear-gradient(to top left, #6ab7ff, #1e88e5, #005cb2)',
-          // }}
-        >
+        <Grid container>
           <Grid item xs={12}>
             <HomepageTitles theme={theme} />
           </Grid>
@@ -113,7 +102,6 @@ const App = (): JSX.Element => {
                 variant='overline'
                 title='Just a few of my favorite technologies...'
                 customStyle={{ marginTop: '50px', textAlign: 'center' }}
-                // theme={theme}
               />
               <IconGallery
                 icons={awsIcons}
@@ -121,7 +109,6 @@ const App = (): JSX.Element => {
                 variant='overline'
                 title='I also am an:'
                 customStyle={{ marginTop: '50px', textAlign: 'center' }}
-                // theme={theme}
               />
             </Grid>
           </BackgroundColor>
