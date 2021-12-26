@@ -174,29 +174,12 @@ const MyCard = ({
                 fontFamily: 'Courier New',
                 paddingTop: '7px',
                 paddingBottom: '7px',
-                // borderTop: '1px solid slategray',
-                // borderBottom: '1px solid slategray',
               }}
             >
               Temporarily offline
             </animated.div>
           )}
-          {/* {demoURL || dialogContent ? null : (
-          <Typography
-            style={{
-              color: 'firebrick',
-              backgroundColor: '#ffffff10',
-              position: 'absolute',
-              width: '345px',
-              marginTop: '85px',
-              zIndex: 200,
-              backdropFilter: 'blur(12px)',
-              fontSize: '1.25rem',
-            }}
-          >
-            Temporarily offline
-          </Typography>
-        )} */}
+
           <CardActionArea {...cardActionAreaProps}>
             <CardMedia
               component='img'

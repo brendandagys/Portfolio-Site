@@ -110,7 +110,7 @@ const portfolioCards = (theme: Theme) => [
     image: vocabularyTrainerScreenshot,
     title: 'Vocabulary Trainer Game',
     alt: 'Vocabulary Trainer Game',
-    text: "An API for a word-guessing game. Users are presented with a definition and must guess the corresponding word. Hints can be requested. Game state is saved and games can be resumed on a user's next site visit through use of `localstorage`. Click to PLAY!",
+    text: "An API for a word-guessing game. Users are presented with a definition and must guess the corresponding word. Hints can be requested. Game state is saved and games can be resumed on a user's next site visit through use of `localstorage`. CLICK TO PLAY!",
     gitHubURL: 'https://github.com/brendandagys/Vocabulary-Trainer',
     healthCheckUrl:
       process.env.NODE_ENV === 'production'
