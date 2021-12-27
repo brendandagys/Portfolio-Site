@@ -84,7 +84,7 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
 
       if (data === true) setInitialGameStarted(true)
 
-      console.log(data)
+      // console.log(data)
     } catch (e) {
       await getGameId()
     }
