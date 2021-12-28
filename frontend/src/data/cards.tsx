@@ -9,6 +9,8 @@ import hubAppScreenshot from '../images/hub-app-screenshot.png'
 import musicTheoryAppScreenshot from '../images/music-theory-app-screenshot.png'
 import waitingRoomAppScreenshot from '../images/waiting-room-app-screenshot.png'
 import personalBlogScreenshot from '../images/personal-blog-app-screenshot.png'
+import browserEditorScreenshot from '../images/browser-editor-app-screenshot.png'
+import spendingScreenshot from '../images/spending-app-screenshot.png'
 
 import VocabularyTrainer from '../components/VocabularyTrainer'
 import { Theme } from '@mui/material'
@@ -31,6 +33,7 @@ export type CardDataType = {
   demoURL?: string
   gitHubURL: string
   healthCheckUrl?: string
+  healthCheckStatusCode?: number
   text: string
   dialogContent?: React.ReactChild
   descriptionContent?: React.ReactChild
@@ -50,8 +53,8 @@ const portfolioCards = (theme: Theme) => [
     gitHubURL: 'https://github.com/brendandagys/Personal-Blog',
     healthCheckUrl:
       process.env.NODE_ENV === 'production'
-        ? 'https://blog.brendandagys.com'
-        : 'http://localhost:3005',
+        ? 'https://blog.brendandagys.com/api/health'
+        : 'http://localhost:3005/api/health',
     descriptionContent: <PersonalBlogDescription theme={theme} />,
     tooltipContent: 'Click anywhere on the tile to view the application!',
   },
@@ -67,8 +70,8 @@ const portfolioCards = (theme: Theme) => [
     gitHubURL: 'https://github.com/brendandagys/Finances',
     healthCheckUrl:
       process.env.NODE_ENV === 'production'
-        ? 'https://finances.brendandagys.com'
-        : 'http://localhost:5001',
+        ? 'https://finances.brendandagys.com/api/health'
+        : 'http://localhost:5001/api/health',
     descriptionContent: <FinancesDescription theme={theme} />,
     tooltipContent: 'Click anywhere on the tile to view the application!',
   },
@@ -84,8 +87,8 @@ const portfolioCards = (theme: Theme) => [
     gitHubURL: 'https://github.com/brendandagys/COVID-19-Screening-App',
     healthCheckUrl:
       process.env.NODE_ENV === 'production'
-        ? 'https://screening.brendandagys.com'
-        : 'http://localhost:5002',
+        ? 'https://screening.brendandagys.com/api/health'
+        : 'http://localhost:5002/api/health',
     descriptionContent: <CovidScreeningDescription theme={theme} />,
     tooltipContent: 'Click anywhere on the tile to view the application!',
   },
@@ -101,8 +104,8 @@ const portfolioCards = (theme: Theme) => [
     gitHubURL: 'https://github.com/brendandagys',
     healthCheckUrl:
       process.env.NODE_ENV === 'production'
-        ? 'https://e-commerce.brendandagys.com'
-        : 'http://localhost:5003',
+        ? 'https://e-commerce.brendandagys.com/api/health'
+        : 'http://localhost:5003/api/health',
     descriptionContent: <EcommerceDescription theme={theme} />,
     tooltipContent: 'Click anywhere on the tile to view the application!',
   },
@@ -114,10 +117,47 @@ const portfolioCards = (theme: Theme) => [
     gitHubURL: 'https://github.com/brendandagys/Vocabulary-Trainer',
     healthCheckUrl:
       process.env.NODE_ENV === 'production'
-        ? 'https://vocabulary.brendandagys.com'
-        : 'http://localhost:5004',
+        ? 'https://vocabulary.brendandagys.com/api/health'
+        : 'http://localhost:5004/api/health',
     dialogContent: <VocabularyTrainer theme={theme} />,
     descriptionContent: <VocabularyTrainerDescription theme={theme} />,
+    tooltipContent: 'Click anywhere on the tile to view the application!',
+  },
+  {
+    image: browserEditorScreenshot,
+    title: 'Browser-Based Code Editor/Transpiler',
+    alt: 'Browser-Based Code Editor/Transpiler',
+    text: 'A React-TypeScript application that allows users to use an interactive browser-based coding environment to type JavaScript code. The editor is in a markdown format, with multiple coding cells that users can add, remove, and re-arrange to their liking.',
+    demoURL:
+      process.env.NODE_ENV === 'production'
+        ? 'https://code.brendandagys.com'
+        : 'http://localhost:3004',
+    gitHubURL:
+      'https://github.com/brendandagys/Browser-Based-Code-Editor-Transpiler',
+    // healthCheckUrl:
+    //   process.env.NODE_ENV === 'production'
+    //     ? 'https://code.brendandagys.com'
+    //     : 'http://localhost:3004',
+    // healthCheckStatusCode: 200,
+    // descriptionContent: <BrowserEditorDescription theme={theme} />,
+    tooltipContent: 'Click anywhere on the tile to view the application!',
+  },
+  {
+    image: spendingScreenshot,
+    title: 'Personal Budgeting Assistant',
+    alt: 'Personal Budgeting Assistant',
+    text: 'A Web app that I use to track my spending habits. A form allows for customized input of purchases. Afterward, a list of all purchases can be viewed and filtered by category of purchase or a specific time period. Chart.js was used to create dynamic charts to visualize spending patterns. Please use U: guest | P: guest to log in and explore.',
+    demoURL:
+      process.env.NODE_ENV === 'production'
+        ? 'https://spending.brendandagys.com'
+        : 'http://localhost:8000',
+    gitHubURL: 'https://github.com/brendandagys/Personal-Budgeting-Assistant',
+    healthCheckUrl:
+      process.env.NODE_ENV === 'production'
+        ? 'https://spending.brendandagys.com'
+        : 'http://localhost:8000',
+    healthCheckStatusCode: 302,
+    // descriptionContent: <SpendingDescription theme={theme} />,
     tooltipContent: 'Click anywhere on the tile to view the application!',
   },
   {

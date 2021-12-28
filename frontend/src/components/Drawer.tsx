@@ -80,8 +80,8 @@ const drawerItems2: DrawerItem[] = [
   {
     text: 'Blog',
     icon: <MenuBookIcon />,
-    // href: 'https://brendandagys.com',
-    subtitle: 'Under construction...',
+    href: 'https://blog.brendandagys.com',
+    // subtitle: 'Under construction...',
   },
   {
     text: 'Resume',
@@ -167,7 +167,7 @@ export default function TemporaryDrawer({
             <FileDownloadIcon fontSize='small' />
           </ListItemIcon>
         ) : null}
-        {subtitle ? (
+        {subtitle && !href ? (
           <Typography
             style={{
               fontSize: '0.6rem',

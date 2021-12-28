@@ -24,6 +24,7 @@ type MyCardProps = {
   demoURL?: string
   gitHubURL: string
   healthCheckUrl?: string
+  healthCheckStatusCode?: number
   theme: Theme
   dialogContent?: React.ReactChild
   descriptionContent?: React.ReactChild
@@ -55,6 +56,7 @@ const MyCard = ({
   demoURL,
   gitHubURL,
   healthCheckUrl,
+  healthCheckStatusCode,
   theme,
   dialogContent,
   descriptionContent,
@@ -79,14 +81,21 @@ const MyCard = ({
     async (url: string) => {
       console.log(`Checking health of '${title}'...`)
       try {
-        const { data: healthStatus } = await axios.get(`${url}/api/health`)
-        healthStatus ? setHealthy(true) : setHealthy(false)
+        const { data: healthStatus, status } = await axios.get(`${url}`)
+        // console.log(status)
+        if (healthCheckStatusCode && healthCheckStatusCode === status) {
+          setHealthy(true)
+        } else if (healthStatus) {
+          setHealthy(true)
+        } else {
+          setHealthy(false)
+        }
       } catch {
         setHealthy(false)
         console.log(`${title} is offline.`)
       }
     },
-    [title]
+    [title, healthCheckStatusCode]
   )
 
   useEffect(() => {

@@ -30,7 +30,7 @@ app.use('/api/documents', (req: Request, res: Response) => {
 })
 
 app.get('/api/health', (req: Request, res: Response) => {
-  res.send('API server for site is healthy!')
+  res.send('API server for `brendandagys.com` is healthy!')
 })
 
 app.get('*', (req: Request, res: Response) => {
