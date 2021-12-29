@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 const StyledTypography = styled(Typography)`
   text-indent: 12px;
+  font-size: 0.9rem;
 `
 
 const StyledListItem = styled.li`
@@ -13,7 +14,7 @@ const StyledListItem = styled.li`
 
 const Description = ({ theme }: { theme: Theme }) => {
   return (
-    <Container sx={{ textAlign: 'justify' }}>
+    <Container sx={{ px: 0 }}>
       <StyledTypography>
         During this COVID-19 pandemic, it is very common to see varying methods
         for tracking staff wellness and safety. Some workplaces and businesses

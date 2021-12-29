@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import {
   Box,
-  SwipeableDrawer,
+  Drawer,
   Fab,
   List,
   Divider,
@@ -268,8 +268,7 @@ export default function TemporaryDrawer({
       >
         <MenuIcon />
       </Fab>
-      <SwipeableDrawer
-        onOpen={() => console.log('Swiped open')}
+      <Drawer
         anchor={anchor}
         open={state[anchor]}
         onClose={toggleDrawer(anchor, false)}
@@ -288,7 +287,7 @@ export default function TemporaryDrawer({
             sx={{
               cursor: 'pointer',
               display: 'flex',
-              width: '100%',
+              maxWidth: '100%',
               alignItems: 'center',
               justifyContent: 'center',
               bgcolor: `${theme.palette.colorMode.modeButtonBackground}`,
@@ -322,7 +321,7 @@ export default function TemporaryDrawer({
             ^ Click to change
           </Typography> */}
         </div>
-      </SwipeableDrawer>
+      </Drawer>
     </div>
   )
 }

@@ -5,11 +5,12 @@ import styled from 'styled-components'
 
 const StyledTypography = styled(Typography)`
   text-indent: 12px;
+  font-size: 0.9rem;
 `
 
 const Description = ({ theme }: { theme: Theme }) => {
   return (
-    <Container sx={{ textAlign: 'justify' }}>
+    <Container sx={{ px: 0 }}>
       <StyledTypography>
         This was the first full-stack React app I built, and it is truly very
         feature-full. Full disclosure: I followed a Udemy tutorial course to

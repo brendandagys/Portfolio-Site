@@ -39,7 +39,6 @@ const StyledCard = styled(({ style, ...rest }) => (
   max-width: 345px;
   text-align: center;
   border-radius: 20px;
-  // border: 3px solid black;
   border: 3px solid ${({ theme }) => theme.palette.colorMode.cardOutlineColor};
   background-color: ${({ theme }) => theme.palette.colorMode.s0};
 `
@@ -168,28 +167,28 @@ const MyCard = ({
           onMouseOver={() => setSelected(true)}
           onMouseLeave={() => setSelected(false)}
         >
-          {healthy ? null : (
-            <animated.div
-              style={{
-                ...springProps,
-                color: 'firebrick',
-                backgroundColor: '#d3d3d3',
-                position: 'absolute',
-                width: '345px',
-                marginTop: '85px',
-                zIndex: 200,
-                backdropFilter: 'blur(12px)',
-                fontSize: '1.5rem',
-                fontFamily: 'Courier New',
-                paddingTop: '7px',
-                paddingBottom: '7px',
-              }}
-            >
-              Temporarily offline
-            </animated.div>
-          )}
-
           <CardActionArea {...cardActionAreaProps}>
+            {healthy ? null : (
+              <animated.div
+                style={{
+                  ...springProps,
+                  color: 'firebrick',
+                  backgroundColor: '#d3d3d3',
+                  position: 'absolute',
+                  width: '100%',
+                  marginTop: '85px',
+                  zIndex: 200,
+                  backdropFilter: 'blur(12px)',
+                  fontSize: '1.5rem',
+                  fontFamily: 'Courier New',
+                  paddingTop: '7px',
+                  paddingBottom: '7px',
+                }}
+              >
+                Temporarily offline
+              </animated.div>
+            )}
+
             <CardMedia
               component='img'
               height='190'
@@ -197,6 +196,7 @@ const MyCard = ({
               alt={alt}
               style={cardMediaProps}
             />
+
             <CardContent style={{ borderTop: '1px solid lightgray' }}>
               <Typography gutterBottom variant='h5' component='div'>
                 {title}

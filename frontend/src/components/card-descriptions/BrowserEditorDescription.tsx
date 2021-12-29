@@ -5,11 +5,12 @@ import styled from 'styled-components'
 
 const StyledTypography = styled(Typography)`
   text-indent: 12px;
+  font-size: 0.9rem;
 `
 
 const Description = ({ theme }: { theme: Theme }) => {
   return (
-    <Container sx={{ textAlign: 'justify' }}>
+    <Container sx={{ px: 0 }}>
       <StyledTypography>
         A React-TypeScript application that allows users to use an interactive
         browser-based coding environment to type JavaScript code. The editor is

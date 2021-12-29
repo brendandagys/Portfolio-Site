@@ -5,11 +5,12 @@ import styled from 'styled-components'
 
 const StyledTypography = styled(Typography)`
   text-indent: 12px;
+  font-size: 0.9rem;
 `
 
 const Description = ({ theme }: { theme: Theme }) => {
   return (
-    <Container sx={{ textAlign: 'justify' }}>
+    <Container sx={{ px: 0 }}>
       <StyledTypography>
         This Python GUI tool is similar to the ‘Medical Device Reprocessing
         Auditing Tool.’ It presents a GUI interface with a form, and allows

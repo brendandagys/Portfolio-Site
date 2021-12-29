@@ -16,6 +16,8 @@ import styled from 'styled-components'
 
 import Brightness5Icon from '@mui/icons-material/Brightness5'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
+import CancelIcon from '@mui/icons-material/Cancel'
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined'
 import Slide from '@mui/material/Slide'
 import { TransitionProps } from '@mui/material/transitions'
 import { forwardRef, useState } from 'react'
@@ -126,8 +128,29 @@ export default function AlertDialogSlide({
             onClick={toggleMode}
           />
         )}
+        {theme.palette.mode === 'dark' ? (
+          <CancelOutlinedIcon
+            sx={{
+              position: 'absolute',
+              right: '24px',
+              '&:hover': { opacity: 0.75, cursor: 'pointer' },
+            }}
+            fontSize='large'
+            onClick={handleClose}
+          />
+        ) : (
+          <CancelIcon
+            sx={{
+              position: 'absolute',
+              right: '24px',
+              '&:hover': { opacity: 0.65, cursor: 'pointer' },
+            }}
+            fontSize='large'
+            onClick={handleClose}
+          />
+        )}
         <DialogContentText color='inherit' align='center'>
-          Change the width of the window.
+          Change width:
         </DialogContentText>
         <Box
           noValidate

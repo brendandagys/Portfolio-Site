@@ -5,11 +5,12 @@ import styled from 'styled-components'
 
 const StyledTypography = styled(Typography)`
   text-indent: 12px;
+  font-size: 0.9rem;
 `
 
 const Description = ({ theme }: { theme: Theme }) => {
   return (
-    <Container sx={{ textAlign: 'justify' }}>
+    <Container sx={{ px: 0 }}>
       <StyledTypography>
         I built this command-line tool using Python many years ago, because as
         an avid guitar player I wanted a tool that I could use to train exactly

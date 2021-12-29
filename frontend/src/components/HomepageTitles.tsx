@@ -6,7 +6,7 @@ const HomepageTitles = ({ theme }: { theme: Theme }): React.ReactElement => {
       <Typography
         variant='h3'
         align='center'
-        mt='3.5rem'
+        mt='6.75rem'
         px='100px'
         sx={{
           color: theme.palette.colorMode.titleTextColor,
