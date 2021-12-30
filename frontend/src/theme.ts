@@ -119,7 +119,10 @@ export const getTheme = (mode: PaletteMode) => {
             },
       background:
         mode === 'light'
-          ? { default: '#fff' }
+          ? {
+              default:
+                'linear-gradient(90deg, rgb(0, 219, 222, 0.2) 0%, rgb(252, 0, 255, 0.2) 100%)',
+            }
           : { default: 'linear-gradient(260deg, #efd5ff 0%, #515ada 100%)' },
 
       colorMode:

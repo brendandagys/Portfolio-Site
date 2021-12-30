@@ -17,6 +17,7 @@ const StyledImageList = styled(({ variant, ...rest }: ImageListProps) => (
   margin: 1rem auto auto;
   padding: 5px;
   max-width: 600px;
+  width: 90%;
   height: auto;
   border-radius: ${({ theme }) =>
     theme.palette.mode === 'dark' ? '8px' : '8px'};
@@ -28,6 +29,7 @@ type MyImageListProps = {
   variant?: 'masonry' | 'quilted' | 'standard' | 'woven'
   imageListImages: ImageListImage[]
   theme: Theme
+  style?: React.CSSProperties
 }
 
 function srcset(image: string, size: number, rows = 1, cols = 1) {
@@ -42,6 +44,7 @@ function srcset(image: string, size: number, rows = 1, cols = 1) {
 const MyImageList = ({
   variant,
   imageListImages,
+  style,
 }: MyImageListProps): React.ReactElement => {
   return (
     <StyledImageList
@@ -49,6 +52,7 @@ const MyImageList = ({
       cols={4}
       rowHeight={221}
       sx={{ boxShadow: 10 }}
+      style={style}
     >
       {imageListImages.map((item, index) => (
         <Tooltip

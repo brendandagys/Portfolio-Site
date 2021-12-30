@@ -172,9 +172,7 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
       </Grid>
       <Grid item container justifyContent='center' xs={8}>
         <StyledGridItem item xs={5} sx={{ mx: 'auto', mb: 'auto' }}>
-          <Typography variant='h5' align='center'>
-            Current word
-          </Typography>
+          <Typography align='center'>Current word</Typography>
           <Typography align='center'>
             {apiData?.current_word_number
               ? `${apiData.current_word_number} / ${apiData.num_words_to_play}`
@@ -192,9 +190,7 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
             WebkitTransition: 'all .45s ease-in',
           }}
         >
-          <Typography variant='h5' align='center'>
-            Score
-          </Typography>
+          <Typography align='center'>Score</Typography>
           <Typography align='center'>
             {apiData?.score === undefined ? 'N/A' : apiData.score}
           </Typography>
@@ -203,11 +199,13 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
           <Alert
             variant='outlined'
             // severity='success'
+            icon={false}
             sx={{
               mt: 4,
               mx: 2,
               mb: 'auto',
               color: '#0CAC13',
+              fontSize: '0.8rem',
             }}
           >
             <AlertTitle>GAME OVER</AlertTitle>
@@ -218,7 +216,7 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
         {apiData?.game_over ? null : (
           <>
             <Grid item xs={12} mt={4} mx={1}>
-              <Typography variant='h5' align='center'>
+              <Typography variant='h6' align='center'>
                 Definition
               </Typography>
               <Typography align='center'>
@@ -277,14 +275,14 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
       </Grid>
       <Grid item container justifyContent='center' xs={4}>
         <StyledGridItem item xs={12}>
-          <Typography variant='h5' align='center'>
-            Words seen:
+          <Typography sx={{ mb: 1 }} align='center'>
+            Words seen
           </Typography>
           {apiData?.words_used ? (
             <TransitionGroup className='words-used-list'>
               {apiData.words_used.map((word, index) => (
                 <CSSTransition key={index} timeout={300} classNames='word'>
-                  <Typography align='center' variant='subtitle1'>
+                  <Typography align='center' style={{ fontSize: '0.8rem' }}>
                     {word}
                   </Typography>
                 </CSSTransition>

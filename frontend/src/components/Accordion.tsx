@@ -80,7 +80,7 @@ export default function CustomizedAccordions({
         sx={{ boxShadow: 20 }}
       >
         <AccordionSummary aria-controls='panel1d-content' id='panel1d-header'>
-          <StyledTypography style={{ fontSize: '1.3rem' }}>
+          <StyledTypography style={{ fontSize: '1.15rem' }}>
             My background
           </StyledTypography>
         </AccordionSummary>
@@ -100,7 +100,7 @@ export default function CustomizedAccordions({
         onChange={handleChange('panel2')}
       >
         <AccordionSummary aria-controls='panel2d-content' id='panel2d-header'>
-          <StyledTypography style={{ fontSize: '1.3rem' }}>
+          <StyledTypography style={{ fontSize: '1.15rem' }}>
             My most-used technologies and skills
           </StyledTypography>
         </AccordionSummary>
@@ -120,7 +120,7 @@ export default function CustomizedAccordions({
         onChange={handleChange('panel3')}
       >
         <AccordionSummary aria-controls='panel3d-content' id='panel3d-header'>
-          <StyledTypography style={{ fontSize: '1.3rem' }}>
+          <StyledTypography style={{ fontSize: '1.15rem' }}>
             How I built this Website
           </StyledTypography>
         </AccordionSummary>

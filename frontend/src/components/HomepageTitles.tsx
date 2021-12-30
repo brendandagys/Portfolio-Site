@@ -7,15 +7,16 @@ const HomepageTitles = ({ theme }: { theme: Theme }): React.ReactElement => {
         variant='h3'
         align='center'
         mt='6.75rem'
-        px='100px'
+        px={7}
+        py={1}
         sx={{
           color: theme.palette.colorMode.titleTextColor,
           backgroundColor: 'rgba(255, 255, 255, .15)',
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
-          width: '45%',
+          // width: '45%',
           mx: 'auto',
-          py: '10px',
+          // py: '10px',
           borderRadius: '12px',
           fontWeight: 'bold',
         }}
@@ -25,7 +26,8 @@ const HomepageTitles = ({ theme }: { theme: Theme }): React.ReactElement => {
       <Typography
         align='center'
         variant='h4'
-        p='30px'
+        py='30px'
+        px={4}
         sx={{ fontWeight: 'light', color: theme.palette.fontColor.secondary }}
       >
         Hi, I'm Brendan. Welcome to my site!

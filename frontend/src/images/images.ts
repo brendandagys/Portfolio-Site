@@ -17,6 +17,8 @@ import redisIcon from './redis-icon.svg'
 import gitIcon from './git-icon.svg'
 import graphQLIcon from './graphql-icon.svg'
 import nextJSIcon from './nextjs-icon.svg'
+import reduxIcon from './redux-icon.svg'
+import tailwindCssIcon from './tailwindcss-icon.svg'
 
 import awsSolutionsArchitectBadge from './aws-solutions-architect-badge.png'
 import awsDeveloperBadge from './aws-developer-badge.png'
@@ -26,6 +28,7 @@ export const technologyIcons = [
   javaScriptIcon,
   typeScriptIcon,
   reactIcon,
+  reduxIcon,
   nextJSIcon,
   pythonIcon,
   djangoIcon,
@@ -38,6 +41,7 @@ export const technologyIcons = [
   gitIcon,
   redisIcon,
   materialUIIcon,
+  tailwindCssIcon,
   bootstrap5Icon,
   html5Icon,
   cssIcon,

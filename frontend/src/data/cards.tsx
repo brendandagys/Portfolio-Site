@@ -25,6 +25,8 @@ import MusicTheoryPracticeDescription from '../components/card-descriptions/Musi
 import IncidentReportingDescription from '../components/card-descriptions/IncidentReportingDescription'
 import DeviceReprocessingDescription from '../components/card-descriptions/DeviceReprocessingDescription'
 import PersonalBlogDescription from '../components/card-descriptions/PersonalBlogDescription'
+import BrowserEditorDescription from '../components/card-descriptions/BrowserEditorDescription'
+import SpendingDescription from '../components/card-descriptions/SpendingDescription'
 
 export type CardDataType = {
   image: string
@@ -139,7 +141,7 @@ const portfolioCards = (theme: Theme) => [
     //     ? 'https://code.brendandagys.com'
     //     : 'http://localhost:3004',
     // healthCheckStatusCode: 200,
-    // descriptionContent: <BrowserEditorDescription theme={theme} />,
+    descriptionContent: <BrowserEditorDescription theme={theme} />,
     tooltipContent: 'Click anywhere on the tile to view the application!',
   },
   {
@@ -157,7 +159,7 @@ const portfolioCards = (theme: Theme) => [
         ? 'https://spending.brendandagys.com'
         : 'http://localhost:8000',
     healthCheckStatusCode: 302,
-    // descriptionContent: <SpendingDescription theme={theme} />,
+    descriptionContent: <SpendingDescription theme={theme} />,
     tooltipContent: 'Click anywhere on the tile to view the application!',
   },
   {

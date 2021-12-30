@@ -27,6 +27,7 @@ import { hexPatternLight } from './css/hex-pattern-light'
 import styled from 'styled-components'
 
 import useLocalStorage from './hooks/useLocalStorage'
+import useWindowDimensions from './hooks/useWindowDimensions'
 
 const StyledBackgroundColor = styled(BackgroundColor)`
   border-radius: 30px 30px 0 0;
@@ -53,6 +54,7 @@ const App = (): JSX.Element => {
 
   const [mode, setMode] = useLocalStorage('colorMode', 'dark')
   const [theme, setTheme] = useState<Theme>(getTheme(mode as PaletteMode))
+  const { width } = useWindowDimensions()
 
   useEffect(() => {
     checkHealth()
@@ -70,7 +72,12 @@ const App = (): JSX.Element => {
         alignItems='center'
         justifyContent='center'
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-        sx={{ background: theme.palette.background.default }}
+        sx={{
+          background: theme.palette.background.default,
+          backgroundColor: theme.palette.background.default,
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+        }}
       >
         <Grid item xs={12}>
           <StyledTopBorderDiv />
@@ -80,7 +87,7 @@ const App = (): JSX.Element => {
         </Grid>
 
         <Grid container>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ textAlign: 'center' }}>
             <HomepageTitles theme={theme} />
           </Grid>
 
@@ -89,6 +96,7 @@ const App = (): JSX.Element => {
               variant='quilted'
               imageListImages={imageQuiltImages}
               theme={theme}
+              style={width < 400 ? { marginLeft: '1.49rem' } : {}}
             />
           </Grid>
         </Grid>

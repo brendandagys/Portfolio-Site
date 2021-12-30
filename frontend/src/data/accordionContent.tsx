@@ -4,6 +4,7 @@ import { Typography } from '@mui/material'
 const StyledTypography = styled(Typography)`
   margin: 1rem 0;
   text-indent: 12px;
+  font-size: 0.9rem;
   // text-align: justify;
 `
 

@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 /* Overline From Center */
 .hvr-overline-from-center-light {
   display: inline-block;
