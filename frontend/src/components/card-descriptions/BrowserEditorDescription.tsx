@@ -10,7 +10,7 @@ const StyledTypography = styled(Typography)`
 
 const Description = ({ theme }: { theme: Theme }) => {
   return (
-    <Container sx={{ px: 0 }}>
+    <Container sx={{ px: 0, pt: 2 }}>
       <StyledTypography>
         This project was built based on a Udemy course that I purchased for the
         purpose of learning to integrate a React project with TypeScript. It

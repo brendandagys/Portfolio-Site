@@ -10,7 +10,7 @@ const StyledTypography = styled(Typography)`
 
 const Description = ({ theme }: { theme: Theme }) => {
   return (
-    <Container sx={{ px: 0 }}>
+    <Container sx={{ px: 0, pt: 2 }}>
       <StyledTypography>
         This blog was built to host content about my personal interests. These
         interests focus around Web development, guitar, coding, cycling, and

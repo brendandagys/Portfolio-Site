@@ -14,7 +14,7 @@ const StyledListItem = styled.li`
 
 const Description = ({ theme }: { theme: Theme }) => {
   return (
-    <Container sx={{ px: 0 }}>
+    <Container sx={{ px: 0, pt: 2 }}>
       <StyledTypography>
         During this COVID-19 pandemic, it is very common to see varying methods
         for tracking staff wellness and safety. Some workplaces and businesses

@@ -20,6 +20,7 @@ declare module '@mui/material/styles/createPalette' {
       accordionHeaderTextColor: string
       accordionContentTextColor: string
       contactFormBackgroundColor: string
+      contactFormMultilineBackgroundColor: string
       copyrightColor: string
       contactFormTextFieldColor: string
       cardOutlineColor: string
@@ -62,6 +63,7 @@ declare module '@mui/material/styles/createPalette' {
       accordionHeaderTextColor: string
       accordionContentTextColor: string
       contactFormBackgroundColor: string
+      contactFormMultilineBackgroundColor: string
       copyrightColor: string
       contactFormTextFieldColor: string
       cardOutlineColor: string
@@ -143,14 +145,15 @@ export const getTheme = (mode: PaletteMode) => {
               accordionHeaderBackgroundColor: '#fff',
               accordionHeaderTextColor: '#000',
               accordionContentTextColor: 'rgba(10,10,10,0.7)',
-              contactFormBackgroundColor: '#fff',
+              contactFormBackgroundColor: '#fafafa',
+              contactFormMultilineBackgroundColor: '#fff',
               copyrightColor: 'rgba(10,10,10,0.8)',
               contactFormTextFieldColor: '#7510f7',
               cardOutlineColor: '#1e88e5',
               imageListBackgroundColor: '#6ab7ff',
               gitHubButtonColor: '#1e88e5',
               descriptionButtonColor: '#a77af5',
-              drawerBackgroundColor: '',
+              drawerBackgroundColor: '#fafafa',
               drawerTextColor: 'rgba(10,10,10,0.7)',
               drawerHoverColor: '',
               modalTextFieldColor: 'rgba(10,10,10,0.8)',
@@ -175,6 +178,7 @@ export const getTheme = (mode: PaletteMode) => {
               accordionHeaderTextColor: '#fff',
               accordionContentTextColor: '#f2f2f2',
               contactFormBackgroundColor: '#262626',
+              contactFormMultilineBackgroundColor: '#333333',
               copyrightColor: '#f2f2f2',
               contactFormTextFieldColor: '#fff',
               cardOutlineColor: '#000',

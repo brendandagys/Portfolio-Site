@@ -92,6 +92,9 @@ const ContactForm = ({ theme }: { theme: Theme }): React.ReactElement => {
           '& .MuiInput-underline:after': {
             borderBottomColor: `${theme.palette.secondary.main}`,
           },
+          '& .MuiInputBase-multiline': {
+            backgroundColor: `${theme.palette.colorMode.contactFormMultilineBackgroundColor}`,
+          },
           '& .MuiOutlinedInput-root': {
             // '& fieldset': {
             //   borderColor: `${theme.palette.text.primary}`,
