@@ -34,7 +34,7 @@ const Description = ({ theme }: { theme: Theme }) => {
       <StyledTypography>
         This project of course taught me a lot about TypeScript and how to
         integrate it into a React application, but it also helped me to
-        understand the whole transpiling process and the importance of producing
+        understand the transpiling process and the importance of producing
         JavaScript code that is browser-agnostic. Once I had finished, I had
         learned many new workflows and best practices that I began implementing
         into my development routine and understood at a deeper level the process

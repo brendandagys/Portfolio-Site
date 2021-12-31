@@ -22,6 +22,8 @@ import Slide from '@mui/material/Slide'
 import { TransitionProps } from '@mui/material/transitions'
 import { forwardRef, useState } from 'react'
 
+import useWindowDimensions from '../hooks/useWindowDimensions'
+
 const StyledDialogHeader = styled(DialogContent)`
   background-color: ${({ theme }) =>
     theme.palette.colorMode.modalHeaderBackgroundColor};
@@ -30,6 +32,8 @@ const StyledDialogHeader = styled(DialogContent)`
 const StyledDialogContent = styled(DialogContent)`
   background-color: ${({ theme }) => theme.palette.colorMode.s4};
   color: ${({ theme }) => theme.palette.fontColor.primary};
+  padding: 0.5rem;
+  padding-right: 2.5%;
 `
 
 // const StyledColorModeBox = styled(Box)`
@@ -64,6 +68,7 @@ export default function AlertDialogSlide({
   children?: React.ReactChild
 }) {
   const [maxWidth, setMaxWidth] = useState<DialogProps['maxWidth']>('sm')
+  const { width } = useWindowDimensions()
 
   const handleMaxWidthChange = (event: SelectChangeEvent<typeof maxWidth>) => {
     setMaxWidth(
@@ -168,7 +173,7 @@ export default function AlertDialogSlide({
             <InputLabel htmlFor='max-width'>Size</InputLabel>
             <Select
               autoFocus
-              // color='secondary'
+              disabled={width < 750}
               value={maxWidth}
               onChange={handleMaxWidthChange}
               label='maxWidth'

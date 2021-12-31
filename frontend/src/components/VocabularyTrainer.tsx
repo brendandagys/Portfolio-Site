@@ -172,7 +172,9 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
       </Grid>
       <Grid item container justifyContent='center' xs={8}>
         <StyledGridItem item xs={5} sx={{ mx: 'auto', mb: 'auto' }}>
-          <Typography align='center'>Current word</Typography>
+          <Typography align='center' sx={{ fontWeight: '900' }}>
+            Word #
+          </Typography>
           <Typography align='center'>
             {apiData?.current_word_number
               ? `${apiData.current_word_number} / ${apiData.num_words_to_play}`
@@ -190,7 +192,9 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
             WebkitTransition: 'all .45s ease-in',
           }}
         >
-          <Typography align='center'>Score</Typography>
+          <Typography align='center' sx={{ fontWeight: '900' }}>
+            Score
+          </Typography>
           <Typography align='center'>
             {apiData?.score === undefined ? 'N/A' : apiData.score}
           </Typography>
@@ -216,7 +220,11 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
         {apiData?.game_over ? null : (
           <>
             <Grid item xs={12} mt={4} mx={1}>
-              <Typography variant='h6' align='center'>
+              <Typography
+                variant='h6'
+                align='center'
+                sx={{ fontWeight: '900' }}
+              >
                 Definition
               </Typography>
               <Typography align='center'>
@@ -232,7 +240,7 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
                 }}
               >
                 <FormControl>
-                  <div style={{ margin: '15px 0' }}>
+                  <div style={{ margin: '15px 8px' }}>
                     <MyTextField
                       ref={guessTextFieldRef}
                       autoFocus
@@ -275,7 +283,7 @@ const VocabularyTrainer = ({ theme }: { theme: Theme }) => {
       </Grid>
       <Grid item container justifyContent='center' xs={4}>
         <StyledGridItem item xs={12}>
-          <Typography sx={{ mb: 1 }} align='center'>
+          <Typography align='center' sx={{ mb: 1, fontWeight: '900' }}>
             Words seen
           </Typography>
           {apiData?.words_used ? (

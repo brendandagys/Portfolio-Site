@@ -101,7 +101,7 @@ export default function CustomizedAccordions({
       >
         <AccordionSummary aria-controls='panel2d-content' id='panel2d-header'>
           <StyledTypography style={{ fontSize: '1.15rem' }}>
-            My most-used technologies and skills
+            Technologies and skills
           </StyledTypography>
         </AccordionSummary>
         <AccordionDetails

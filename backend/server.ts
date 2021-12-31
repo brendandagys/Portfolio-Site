@@ -4,13 +4,14 @@ import dotenv from 'dotenv'
 
 dotenv.config({ path: __dirname + (process.env.ENVPATH ?? '/.env') })
 
+const ORIGIN = process.env.ORIGIN ?? 'http://localhost:3000'
 const PORT = process.env.PORT ?? 80
 
 const app = express()
 
 app.use((req, res, next) => {
   res.set({
-    'Access-Control-Allow-Origin': 'https://brendandagys.com',
+    'Access-Control-Allow-Origin': ORIGIN,
     Vary: 'Origin',
   })
   next()
