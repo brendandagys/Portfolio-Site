@@ -157,9 +157,7 @@ export default function AlertDialogSlide({
         <DialogContentText
           color='inherit'
           align='center'
-          style={
-            width < 750 ? { color: 'rgba(0,0,0,0.38)', fontSize: '0.8rem' } : {}
-          }
+          style={{ color: theme.palette.fontColor.primary, fontSize: '0.8rem' }}
         >
           {width < 750 ? 'Widen page to change size' : 'Change width:'}
         </DialogContentText>
@@ -178,6 +176,7 @@ export default function AlertDialogSlide({
           <FormControl size='small' sx={{ mt: 2, minWidth: 120 }}>
             <InputLabel
               htmlFor='max-width'
+              color='primary'
               style={width < 750 ? { color: 'rgba(0,0,0,0.38)' } : {}}
             >
               Size

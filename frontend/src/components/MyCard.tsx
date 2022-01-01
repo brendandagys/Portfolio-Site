@@ -35,7 +35,7 @@ type MyCardProps = {
 const StyledCard = styled(({ style, ...rest }) => (
   <Card style={style} {...rest} />
 ))`
-  margin: auto;
+  margin: 8px auto;
   max-width: 370px; // 345px original
   text-align: center;
   border-radius: 20px;
