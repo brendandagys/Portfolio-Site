@@ -27,7 +27,7 @@ app.use('/api/documents', (req: Request, res: Response) => {
 
   const file = `${__dirname}/documents/${path}`
 
-  res.download(file, 'Brendan Dagys - Resume.pdf')
+  res.sendFile(file)
 })
 
 app.get('/api/health', (req: Request, res: Response) => {

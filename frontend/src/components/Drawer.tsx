@@ -136,18 +136,15 @@ export default function TemporaryDrawer({
       method: 'get',
       url: '/api/documents/resume.pdf',
       responseType: 'blob',
-      // data: dates
-    }).then((response) => {
-      let blob = new Blob([response.data], { type: 'application/pdf' })
-      // Does NOT work on iOS, and immediately downloads file to device
-      let link = document.createElement('a')
-      link.href = window.URL.createObjectURL(blob)
-      link.download = 'Brendan Dagys - Resume.pdf'
-      link.target = '_self'
-      link.click()
-      // let url = window.URL.createObjectURL(blob) // This will open in new window to view, which is better
-      // window.open(url, '_blank')
     })
+      .then((response) => {
+        const blob = new Blob([response.data], { type: 'application/pdf' })
+        const fileURL = URL.createObjectURL(blob)
+        window.open(fileURL)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
   }
 
   const listItem = (
