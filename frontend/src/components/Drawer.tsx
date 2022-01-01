@@ -1,4 +1,4 @@
-import { Fragment, SyntheticEvent, useState } from 'react'
+import { SyntheticEvent, useState } from 'react'
 import { scroller } from 'react-scroll'
 import axios from 'axios'
 
@@ -16,6 +16,8 @@ import {
   IconButton,
   Typography,
 } from '@mui/material'
+
+import { Roll } from 'react-awesome-reveal'
 
 import drawerIcons from '../data/drawerIcons'
 
@@ -257,17 +259,21 @@ export default function TemporaryDrawer({
   )
 
   return (
-    <div>
+    <Roll
+      triggerOnce
+      delay={500}
+      style={{ zIndex: 999, position: 'fixed', top: 0, right: 0 }}
+    >
       <Fab
         color='primary'
         aria-label='menu'
         onClick={toggleDrawer(anchor, true)}
         sx={{
           position: 'fixed',
-          right: '2rem',
+          right: '1.9rem',
           top: '1.76rem',
           zIndex: 999,
-          boxShadow: 10,
+          boxShadow: 11,
         }}
       >
         <MenuIcon />
@@ -326,6 +332,6 @@ export default function TemporaryDrawer({
           </Typography> */}
         </div>
       </Drawer>
-    </div>
+    </Roll>
   )
 }
