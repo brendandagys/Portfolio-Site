@@ -10,7 +10,7 @@ const StyledTypography = styled(Typography)`
 
 const Description = ({ theme }: { theme: Theme }) => {
   return (
-    <Container sx={{ px: 0, pt: 2 }}>
+    <Container sx={{ px: 1.15, pt: 2 }}>
       <StyledTypography>
         I am very conscious about being wise with my money, and wanted a tool
         that could track my financial growth in ways that I desired and that no

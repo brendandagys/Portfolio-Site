@@ -10,7 +10,7 @@ const StyledTypography = styled(Typography)`
 
 const Description = ({ theme }: { theme: Theme }) => {
   return (
-    <Container sx={{ px: 0, pt: 2 }}>
+    <Container sx={{ px: 1.15, pt: 2 }}>
       <StyledTypography>
         This project was my first foray into Web development. The purpose of the
         tool is to allow a Security/Safety team to monitor the organization’s

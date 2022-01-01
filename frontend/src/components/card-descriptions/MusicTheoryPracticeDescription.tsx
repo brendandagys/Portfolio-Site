@@ -10,7 +10,7 @@ const StyledTypography = styled(Typography)`
 
 const Description = ({ theme }: { theme: Theme }) => {
   return (
-    <Container sx={{ px: 0, pt: 2 }}>
+    <Container sx={{ px: 1.15, pt: 2 }}>
       <StyledTypography>
         I built this command-line tool using Python many years ago, because as
         an avid guitar player I wanted a tool that I could use to train exactly

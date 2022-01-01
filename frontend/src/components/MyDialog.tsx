@@ -154,8 +154,14 @@ export default function AlertDialogSlide({
             onClick={handleClose}
           />
         )}
-        <DialogContentText color='inherit' align='center'>
-          Change width:
+        <DialogContentText
+          color='inherit'
+          align='center'
+          style={
+            width < 750 ? { color: 'rgba(0,0,0,0.38)', fontSize: '0.8rem' } : {}
+          }
+        >
+          {width < 750 ? 'Widen page to change size' : 'Change width:'}
         </DialogContentText>
         <Box
           noValidate
@@ -170,7 +176,12 @@ export default function AlertDialogSlide({
           }}
         >
           <FormControl size='small' sx={{ mt: 2, minWidth: 120 }}>
-            <InputLabel htmlFor='max-width'>Size</InputLabel>
+            <InputLabel
+              htmlFor='max-width'
+              style={width < 750 ? { color: 'rgba(0,0,0,0.38)' } : {}}
+            >
+              Size
+            </InputLabel>
             <Select
               autoFocus
               disabled={width < 750}

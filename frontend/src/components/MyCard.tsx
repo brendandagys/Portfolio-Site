@@ -36,7 +36,7 @@ const StyledCard = styled(({ style, ...rest }) => (
   <Card style={style} {...rest} />
 ))`
   margin: auto;
-  max-width: 345px;
+  max-width: 370px; // 345px original
   text-align: center;
   border-radius: 20px;
   border: 3px solid ${({ theme }) => theme.palette.colorMode.cardOutlineColor};

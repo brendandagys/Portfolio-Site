@@ -96,7 +96,7 @@ const App = (): JSX.Element => {
               variant='quilted'
               imageListImages={imageQuiltImages}
               theme={theme}
-              style={width < 400 ? { marginLeft: '1.49rem' } : {}}
+              style={width < 400 ? { marginLeft: '1.485rem' } : {}}
             />
           </Grid>
         </Grid>

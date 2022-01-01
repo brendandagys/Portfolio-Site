@@ -265,7 +265,7 @@ export default function TemporaryDrawer({
         sx={{
           position: 'fixed',
           right: '2rem',
-          top: '2rem',
+          top: '1.76rem',
           zIndex: 999,
           boxShadow: 10,
         }}

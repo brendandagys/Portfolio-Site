@@ -10,7 +10,7 @@ const StyledTypography = styled(Typography)`
 
 const Description = ({ theme }: { theme: Theme }) => {
   return (
-    <Container sx={{ px: 0, pt: 2 }}>
+    <Container sx={{ px: 1.15, pt: 2 }}>
       <StyledTypography>
         I have built three iterations of a finances/budgeting/spending tracker,
         and this is the second iteration and the last one built with Django. I
@@ -24,7 +24,7 @@ const Description = ({ theme }: { theme: Theme }) => {
         and this is the second iteration and the last one built with Django. I
         built the newest version with React and Redux; however, this one added
         many improvements over my first attempt with Django about a year
-        earlier. One example was the improvements I made to the purchase
+        earlier. One example was the various improvements I made to the purchase
         filters. This application allows users to customize the date range from
         which purchases are displayed and displays more detailed breakdowns of
         the categories of those purchases in the timeframe. Charts that were
