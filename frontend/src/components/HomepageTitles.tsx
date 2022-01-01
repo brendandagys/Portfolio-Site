@@ -15,9 +15,10 @@ const HomepageTitles = ({ theme }: { theme: Theme }): React.ReactElement => {
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
           // width: '45%',
+          maxWidth: '550px',
           mx: 'auto',
           // py: '10px',
-          borderRadius: '12px',
+          // borderRadius: '12px',
           fontWeight: 'bold',
         }}
       >

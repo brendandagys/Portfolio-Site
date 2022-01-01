@@ -108,14 +108,14 @@ const App = (): JSX.Element => {
               <IconGallery
                 icons={technologyIcons}
                 variant='overline'
-                title='Just a few of my favorite technologies...'
+                title='A few of my favorite technologies...'
                 customStyle={{ marginTop: '50px', textAlign: 'center' }}
               />
               <IconGallery
                 icons={awsIcons}
                 width='145px'
                 variant='overline'
-                title='I also am an:'
+                title='I am an:'
                 customStyle={{ marginTop: '50px', textAlign: 'center' }}
               />
             </Grid>

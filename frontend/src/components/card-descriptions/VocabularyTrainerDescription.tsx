@@ -10,7 +10,7 @@ const StyledTypography = styled(Typography)`
 
 const Description = ({ theme }: { theme: Theme }) => {
   return (
-    <Container sx={{ px: 1.15, pt: 2 }}>
+    <Container sx={{ px: 1.15, py: 2 }}>
       <StyledTypography>
         I built this game as a Python command-line program while on a vacation
         in 2020 (exciting, I know!). I had amassed a large collection of

@@ -10,7 +10,7 @@ const StyledTypography = styled(Typography)`
 
 const Description = ({ theme }: { theme: Theme }) => {
   return (
-    <Container sx={{ px: 1.15, pt: 2 }}>
+    <Container sx={{ px: 1.15, py: 2 }}>
       <StyledTypography>
         This project helped me further solidify my Django understanding and
         knowledge. One complaint that I heard routinely was that patients who

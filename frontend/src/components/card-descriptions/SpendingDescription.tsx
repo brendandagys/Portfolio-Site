@@ -10,7 +10,7 @@ const StyledTypography = styled(Typography)`
 
 const Description = ({ theme }: { theme: Theme }) => {
   return (
-    <Container sx={{ px: 1.15, pt: 2 }}>
+    <Container sx={{ px: 1.15, py: 2 }}>
       <StyledTypography>
         I have built three iterations of a finances/budgeting/spending tracker,
         and this is the second iteration and the last one built with Django. I

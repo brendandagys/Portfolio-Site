@@ -10,7 +10,7 @@ const StyledTypography = styled(Typography)`
 
 const Description = ({ theme }: { theme: Theme }) => {
   return (
-    <Container sx={{ px: 1.15, pt: 2 }}>
+    <Container sx={{ px: 1.15, py: 2 }}>
       <StyledTypography>
         This was the first full-stack React app I built, and it is truly very
         feature-full. Full disclosure: I followed a Udemy tutorial course to
