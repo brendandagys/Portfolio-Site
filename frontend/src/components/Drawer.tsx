@@ -140,7 +140,13 @@ export default function TemporaryDrawer({
       .then((response) => {
         const blob = new Blob([response.data], { type: 'application/pdf' })
         const fileURL = URL.createObjectURL(blob)
-        window.open(fileURL)
+        const link = document.createElement('a')
+        link.href = fileURL
+        link.target = '_blank'
+        link.rel = 'noreferrer'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
       })
       .catch((e) => {
         console.log(e)
