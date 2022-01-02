@@ -3,6 +3,22 @@ import { Theme, Typography } from '@mui/material'
 const HomepageTitles = ({ theme }: { theme: Theme }): React.ReactElement => {
   return (
     <div>
+      <a
+        href='/api/documents/resume.pdf'
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        Download Autumn
+      </a>
+      <br />
+      <a
+        href='/api/documents/autumn.pdf'
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        Download Resume
+      </a>
+
       <Typography
         variant='h3'
         align='center'
