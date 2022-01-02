@@ -6,7 +6,12 @@ RUN npm i typescript && npx tsc -p ./tsconfig.json
 FROM node:14.17-alpine
 WORKDIR /usr/src/backend
 COPY --from=builder usr/src/backend/dist ./dist
+COPY ./documents ./dist/documents
 COPY ["package.json", "package-lock.json", "./"]
 RUN npm i --production
+
+RUN pwd
+RUN ls dist
+
 EXPOSE 1080
 CMD ["node", "dist/server.js"]

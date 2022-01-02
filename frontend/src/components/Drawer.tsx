@@ -48,6 +48,7 @@ type DrawerItem = {
   icon: React.ReactElement
   href?: string
   download?: boolean
+  fileName?: string
   subtitle?: string
 }
 
@@ -89,6 +90,7 @@ const drawerItems2: DrawerItem[] = [
     text: 'Resume',
     icon: <DescriptionIcon />,
     download: true,
+    fileName: 'brendan-dagys-resume.pdf',
   },
 ]
 
@@ -131,10 +133,10 @@ export default function TemporaryDrawer({
       })
   }
 
-  const getResume = async () => {
+  const getFile = async (fileName: string) => {
     axios({
       method: 'get',
-      url: '/api/documents/resume.pdf',
+      url: `/api/documents/${fileName}`,
       responseType: 'blob',
     })
       .then((response) => {
@@ -159,6 +161,7 @@ export default function TemporaryDrawer({
     scrollTo?: string,
     href?: string,
     download?: boolean,
+    fileName?: string,
     subtitle?: string
   ) => {
     const listItemContent = (
@@ -201,7 +204,7 @@ export default function TemporaryDrawer({
             backgroundColor: theme.palette.colorMode.drawerHoverColor,
           },
         }}
-        onClick={download ? getResume : undefined}
+        onClick={download && fileName ? () => getFile(fileName) : undefined}
       >
         {listItemContent}
       </ListItemButton>
@@ -249,11 +252,22 @@ export default function TemporaryDrawer({
       <Divider component='div' />
       <List>
         {drawerItems2.map(
-          ({ text, scrollTo, icon, href, download, subtitle }, index) => (
+          (
+            { text, scrollTo, icon, href, download, fileName, subtitle },
+            index
+          ) => (
             <Box key={index}>
               {scrollTo
                 ? listItem(text, icon)
-                : listItem(text, icon, undefined, href, download, subtitle)}
+                : listItem(
+                    text,
+                    icon,
+                    undefined,
+                    href,
+                    download,
+                    fileName,
+                    subtitle
+                  )}
             </Box>
           )
         )}

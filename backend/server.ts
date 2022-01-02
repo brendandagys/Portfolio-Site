@@ -22,9 +22,9 @@ app.use(express.json())
 app.use('/api/contact', contactRoutes)
 
 app.use('/api/documents', (req: Request, res: Response) => {
+  if (process.env.NODE_ENV === 'production') console.log('DIRNAME:', __dirname)
   const pathSplit = req.originalUrl.split('/')
   const path = pathSplit[pathSplit.length - 1]
-  console.log('DIRNAME:', __dirname)
   const file = `${__dirname}/documents/${path}`
 
   res.sendFile(file)
