@@ -103,7 +103,7 @@ const portfolioCards = (theme: Theme) => [
       process.env.NODE_ENV === 'production'
         ? 'https://e-commerce.brendandagys.com'
         : 'http://localhost:3003',
-    gitHubURL: 'https://github.com/brendandagys',
+    gitHubURL: 'https://github.com/brendandagys/e-Commerce-Store',
     healthCheckUrl:
       process.env.NODE_ENV === 'production'
         ? 'https://e-commerce.brendandagys.com/api/health'

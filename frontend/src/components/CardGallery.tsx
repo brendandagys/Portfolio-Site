@@ -14,8 +14,8 @@ import {
   // JackInTheBox,
   // Roll,
   // Rotate,
-  Slide,
-  // Zoom,
+  // Slide,
+  Zoom,
 } from 'react-awesome-reveal'
 
 const StyledBox = styled(Box)`
@@ -48,7 +48,7 @@ const CardGallery = ({
   }
   return (
     <>
-      <Slide direction='right' cascade={true} triggerOnce>
+      <Zoom cascade={true} triggerOnce>
         <StyledBox>
           <Typography
             variant='h3'
@@ -113,7 +113,7 @@ const CardGallery = ({
             }
           )}
         </Grid>
-      </Slide>
+      </Zoom>
       <AlertDialogSlide
         theme={theme}
         open={open}

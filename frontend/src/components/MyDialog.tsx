@@ -157,7 +157,13 @@ export default function AlertDialogSlide({
         <DialogContentText
           color='inherit'
           align='center'
-          style={{ color: theme.palette.fontColor.primary, fontSize: '0.8rem' }}
+          style={{
+            color: theme.palette.fontColor.primary,
+            fontSize: '0.8rem',
+            opacity: 0.5,
+            maxWidth: '170px', // Make sure <p> doesn't overlap buttons
+            margin: 'auto',
+          }}
         >
           {width < 750 ? 'Widen page to change size' : 'Change width:'}
         </DialogContentText>
