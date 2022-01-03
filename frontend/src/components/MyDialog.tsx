@@ -112,6 +112,8 @@ export default function AlertDialogSlide({
       aria-describedby='alert-dialog-slide-description'
       fullWidth={true}
       maxWidth={maxWidth}
+      disableScrollLock={true}
+      PaperProps={{ style: { minWidth: '350px' } }}
     >
       <StyledDialogHeader sx={{ ...formOverrides, overflowY: 'visible' }}>
         {theme.palette.mode === 'dark' ? (
@@ -159,7 +161,7 @@ export default function AlertDialogSlide({
           align='center'
           style={{
             color: theme.palette.fontColor.primary,
-            fontSize: '0.8rem',
+            fontSize: '0.7rem',
             opacity: 0.5,
             maxWidth: '170px', // Make sure <p> doesn't overlap buttons
             margin: 'auto',

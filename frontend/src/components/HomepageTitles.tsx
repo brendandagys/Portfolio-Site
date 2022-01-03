@@ -1,6 +1,11 @@
 import { Theme, Typography } from '@mui/material'
+import useWindowDimensions from '../hooks/useWindowDimensions'
 
 const HomepageTitles = ({ theme }: { theme: Theme }): React.ReactElement => {
+  const { width } = useWindowDimensions()
+
+  const borderRadius = width < 600 ? '0px' : '12px'
+
   return (
     <div>
       <div
@@ -8,8 +13,9 @@ const HomepageTitles = ({ theme }: { theme: Theme }): React.ReactElement => {
           background:
             'linear-gradient(90deg, rgba(0, 219, 222, 0.2) 0%, rgba(252, 0, 255, 0.2) 100%)',
           maxWidth: '550px',
+          // width: '95%',
           margin: 'auto',
-          borderRadius: '12px',
+          borderRadius,
         }}
       >
         <Typography
@@ -25,7 +31,7 @@ const HomepageTitles = ({ theme }: { theme: Theme }): React.ReactElement => {
             WebkitBackdropFilter: 'blur(12px)',
             maxWidth: '550px',
             mx: 'auto',
-            borderRadius: '12px',
+            borderRadius,
             fontWeight: 'bold',
           }}
         >

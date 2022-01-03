@@ -89,7 +89,15 @@ const MyCard = ({
         } else {
           setHealthy(false)
         }
-      } catch {
+      } catch (e: any) {
+        if (e.response) {
+          const { data, status, headers } = e.response
+
+          console.log(data)
+          console.log(status)
+          console.log(headers)
+        }
+
         setHealthy(false)
         console.log(`${title} is offline.`)
       }
