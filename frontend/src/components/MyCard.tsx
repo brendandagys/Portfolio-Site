@@ -81,7 +81,7 @@ const MyCard = ({
       console.log(`Checking health of '${title}'...`)
       try {
         const { data: healthStatus, status } = await axios.get(`${url}`)
-        // console.log(status)
+        // console.log(url, status)
         if (healthCheckStatusCode && healthCheckStatusCode === status) {
           setHealthy(true)
         } else if (healthStatus) {

@@ -174,7 +174,6 @@ export default function TemporaryDrawer({
             disableFocusListener
             disableTouchListener
             placement='bottom'
-            arrow
             title='Click to view'
           >
             <ListItemText primary={text} />
@@ -191,7 +190,6 @@ export default function TemporaryDrawer({
             disableFocusListener
             disableTouchListener
             placement='bottom'
-            arrow
             title='Click to download'
           >
             <ListItemIcon
