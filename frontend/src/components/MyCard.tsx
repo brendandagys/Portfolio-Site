@@ -88,8 +88,8 @@ const MyCard = ({
             healthCheckStatusCode === (response.status ?? 200)
           ) {
             setHealthy(true)
-            // } else if (response.data) {
-            //   setHealthy(true)
+          } else if (response.data) {
+            setHealthy(true)
           } else {
             setHealthy(false)
           }
