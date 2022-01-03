@@ -71,7 +71,7 @@ const CardGallery = ({
           spacing={4}
           // justifyContent='space-evenly'
           // alignItems='stretch'
-          px={4}
+          px={1.5}
         >
           {cards.map(
             (
