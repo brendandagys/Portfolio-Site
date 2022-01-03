@@ -75,16 +75,15 @@ const App = (): JSX.Element => {
         sx={{
           background: theme.palette.background.default,
           backgroundColor: theme.palette.background.default,
-          backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
         }}
       >
         <Grid item xs={12}>
           <StyledTopBorderDiv />
         </Grid>
-        <Grid item>
-          <Drawer anchor='right' theme={theme} toggleMode={toggleMode} />
-        </Grid>
+        {/* <Grid item> */}
+        <Drawer anchor='right' theme={theme} toggleMode={toggleMode} />
+        {/* </Grid> */}
 
         <Grid container>
           <Grid item xs={12} sx={{ textAlign: 'center' }}>
