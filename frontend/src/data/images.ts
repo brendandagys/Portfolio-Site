@@ -15,12 +15,12 @@ export type ImageListImage = {
 const images = [
   {
     img: neighborhoodPortrait,
-    title: 'Toronto portrait',
+    title: 'Portrait',
     cols: 2,
   },
   {
     img: algonquinPortrait,
-    title: '2021 Algonquin portage trip',
+    title: 'Algonquin portage trip',
     tooltip:
       'On our July 2021 Algonquin portage trip that I did with some good friends. Beautiful scenery and long portages abound!',
     cols: 2,
@@ -30,7 +30,7 @@ const images = [
     img: boston,
     title: '2018 trip to Boston',
     tooltip:
-      'I could see myself living in America some day... I visited Boston in 2018 and found it so interesting to walk through and explore once again.',
+      'I could see myself living in America some day... I visited Boston in 2018 and found it so interesting to walk through and explore for my second time.',
     cols: 2,
   },
   {

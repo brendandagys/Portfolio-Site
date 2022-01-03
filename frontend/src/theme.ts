@@ -123,9 +123,13 @@ export const getTheme = (mode: PaletteMode) => {
         mode === 'light'
           ? {
               default:
-                'linear-gradient(90deg, rgb(0, 219, 222, 0.2) 0%, rgb(252, 0, 255, 0.2) 100%)',
+                'linear-gradient(90deg, rgba(0, 219, 222, 0.2) 0%, rgba(252, 0, 255, 0.2) 100%)',
             }
-          : { default: 'linear-gradient(260deg, #efd5ff 0%, #515ada 100%)' },
+          : {
+              default:
+                'linear-gradient(to left bottom, #d2b3f4, #b192ea, #8875e2, rgba(81,90,218,1))',
+            },
+      // : { default: 'linear-gradient(260deg, #efd5ff 0%, #515ada 100%)' },
 
       colorMode:
         mode === 'light'

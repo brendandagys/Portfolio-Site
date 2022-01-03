@@ -144,6 +144,7 @@ export default function TemporaryDrawer({
         const fileURL = URL.createObjectURL(blob)
         const link = document.createElement('a')
         link.href = fileURL
+        link.download = fileName
         link.target = '_blank'
         link.rel = 'noreferrer'
         document.body.appendChild(link)
