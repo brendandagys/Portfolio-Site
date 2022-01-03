@@ -1,5 +1,6 @@
 import { SyntheticEvent, useState } from 'react'
 import { scroller } from 'react-scroll'
+import { Tooltip } from '@mui/material'
 import axios from 'axios'
 
 import {
@@ -35,10 +36,6 @@ const {
   Brightness4Icon,
   Brightness7Icon,
 } = drawerIcons
-
-// const StyledFab = styled(Fab)`
-//   box-shadow: 1.7px 1.7px 5px grey;
-// `
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right'
 
@@ -133,7 +130,7 @@ export default function TemporaryDrawer({
       })
   }
 
-  const getFile = async (fileName: string) => {
+  const getFile = async (fileName: string, downloadFlag?: boolean) => {
     axios({
       method: 'get',
       url: `/api/documents/${fileName}`,
@@ -144,7 +141,9 @@ export default function TemporaryDrawer({
         const fileURL = URL.createObjectURL(blob)
         const link = document.createElement('a')
         link.href = fileURL
-        link.download = fileName
+
+        if (downloadFlag) link.download = fileName
+
         link.target = '_blank'
         link.rel = 'noreferrer'
         document.body.appendChild(link)
@@ -170,15 +169,46 @@ export default function TemporaryDrawer({
         <ListItemIcon style={{ color: theme.palette.text.secondary }}>
           {icon}
         </ListItemIcon>
-        <ListItemText primary={text} />
+        {fileName ? (
+          <Tooltip
+            disableFocusListener
+            disableTouchListener
+            placement='bottom'
+            arrow
+            title='Click to view'
+          >
+            <ListItemText primary={text} />
+          </Tooltip>
+        ) : (
+          <ListItemText primary={text} />
+        )}
         {href ? (
           <ListItemIcon style={{ color: theme.palette.text.secondary }}>
             <OpenInNewIcon fontSize='small' />
           </ListItemIcon>
-        ) : download ? (
-          <ListItemIcon style={{ color: theme.palette.text.secondary }}>
-            <FileDownloadIcon fontSize='small' />
-          </ListItemIcon>
+        ) : fileName && download ? (
+          <Tooltip
+            disableFocusListener
+            disableTouchListener
+            placement='bottom'
+            arrow
+            title='Click to download'
+          >
+            <ListItemIcon
+              onClick={(e) => {
+                e.stopPropagation()
+                getFile(fileName, true)
+              }}
+              sx={{
+                '&:hover': {
+                  opacity: 0.65,
+                },
+              }}
+              style={{ color: theme.palette.text.secondary }}
+            >
+              <FileDownloadIcon fontSize='small' />
+            </ListItemIcon>
+          </Tooltip>
         ) : null}
         {subtitle && !href ? (
           <Typography
@@ -205,7 +235,7 @@ export default function TemporaryDrawer({
             backgroundColor: theme.palette.colorMode.drawerHoverColor,
           },
         }}
-        onClick={download && fileName ? () => getFile(fileName) : undefined}
+        onClick={fileName ? () => getFile(fileName) : undefined}
       >
         {listItemContent}
       </ListItemButton>
@@ -320,7 +350,7 @@ export default function TemporaryDrawer({
               justifyContent: 'center',
               bgcolor: `${theme.palette.colorMode.modeButtonBackground}`,
               color: `${theme.palette.colorMode.modeButtonTextColor}`,
-              mt: 1,
+              mt: 2,
               p: 1,
             }}
           >
