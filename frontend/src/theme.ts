@@ -127,7 +127,7 @@ export const getTheme = (mode: PaletteMode) => {
             }
           : {
               default:
-                'linear-gradient(to left bottom, #d2b3f4, #b192ea, #8875e2, rgba(81,90,218,1))',
+                'linear-gradient(to left bottom, #d2b3f4, #b192ea, #8875e2, rgba(81,90,218,1), #000 90%)',
             },
       // : { default: 'linear-gradient(260deg, #efd5ff 0%, #515ada 100%)' },
 
