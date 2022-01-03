@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import styled from 'styled-components'
 import {
   Button,
@@ -79,28 +79,34 @@ const MyCard = ({
   const checkHealth = useCallback(
     async (url: string) => {
       console.log(`Checking health of '${title}'...`)
-      try {
-        const { data: healthStatus, status } = await axios.get(`${url}`)
-        // console.log(url, status)
-        if (healthCheckStatusCode && healthCheckStatusCode === status) {
-          setHealthy(true)
-        } else if (healthStatus) {
-          setHealthy(true)
-        } else {
+      axios
+        .get(`${url}`)
+        .then((response) => {
+          // console.log(url, status)
+          if (
+            healthCheckStatusCode &&
+            healthCheckStatusCode === (response.status ?? 200)
+          ) {
+            setHealthy(true)
+            // } else if (response.data) {
+            //   setHealthy(true)
+          } else {
+            setHealthy(false)
+          }
+        })
+        .catch((e: AxiosError) => {
+          // console.log(e)
+          // if (e.response) {
+          //   const { data, status, headers } = e.response
+
+          //   console.log(data)
+          //   console.log(status)
+          //   console.log(headers)
+          // }
+
           setHealthy(false)
-        }
-      } catch (e: any) {
-        if (e.response) {
-          const { data, status, headers } = e.response
-
-          console.log(data)
-          console.log(status)
-          console.log(headers)
-        }
-
-        setHealthy(false)
-        console.log(`${title} is offline.`)
-      }
+          console.log(`${title} is offline.`)
+        })
     },
     [title, healthCheckStatusCode]
   )

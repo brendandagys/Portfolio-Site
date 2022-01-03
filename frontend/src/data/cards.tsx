@@ -140,7 +140,6 @@ const portfolioCards = (theme: Theme) => [
     //   process.env.NODE_ENV === 'production'
     //     ? 'https://code.brendandagys.com'
     //     : 'http://localhost:3004',
-    // healthCheckStatusCode: 200,
     descriptionContent: <BrowserEditorDescription theme={theme} />,
     tooltipContent: 'Click anywhere on the tile to view the application!',
   },
