@@ -187,7 +187,7 @@ export const getTheme = (mode: PaletteMode) => {
               contactFormTextFieldColor: '#fff',
               cardOutlineColor: '#000',
               imageListBackgroundColor: '#303030',
-              gitHubButtonColor: '#3d3d3d',
+              gitHubButtonColor: '#181818',
               descriptionButtonColor: '#1976d2',
               drawerBackgroundColor: '#303030',
               drawerTextColor: '#f2f2f2',

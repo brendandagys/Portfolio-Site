@@ -211,16 +211,43 @@ const MyCard = ({
               style={cardMediaProps}
             />
 
-            <CardContent style={{ borderTop: '1px solid lightgray' }}>
+            <CardContent
+              style={{
+                borderTop: '1px solid lightgray',
+                backgroundColor:
+                  theme.palette.mode === 'dark'
+                    ? theme.palette.colorMode.s4
+                    : undefined,
+                color:
+                  theme.palette.mode === 'dark'
+                    ? theme.palette.fontColor.primary
+                    : undefined,
+              }}
+            >
               <Typography gutterBottom variant='h5' component='div'>
                 {title}
               </Typography>
-              <Typography variant='body2' color='text.secondary'>
+              <Typography
+                variant='body2'
+                style={{
+                  color:
+                    theme.palette.mode === 'dark'
+                      ? theme.palette.fontColor.slate
+                      : '#00000080',
+                }}
+              >
                 {children}
               </Typography>
             </CardContent>
           </CardActionArea>
-          <CardActions>
+          <CardActions
+            style={{
+              backgroundColor:
+                theme.palette.mode === 'dark'
+                  ? theme.palette.colorMode.s5
+                  : theme.palette.fontColor.slate,
+            }}
+          >
             <StyledAnchor href={gitHubURL} target='_blank' rel='noreferrer'>
               <Button
                 className={
