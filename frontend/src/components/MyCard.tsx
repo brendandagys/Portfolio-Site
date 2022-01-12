@@ -149,7 +149,8 @@ const MyCard = ({
   return (
     <Tooltip
       disableFocusListener
-      disableTouchListener
+      // disableTouchListener
+      enterTouchDelay={200}
       placement='top'
       arrow
       PopperProps={{
@@ -180,6 +181,8 @@ const MyCard = ({
           elevation={selected ? 24 : 3}
           onMouseOver={() => setSelected(true)}
           onMouseLeave={() => setSelected(false)}
+          onTouchStart={() => setSelected(true)}
+          onTouchEnd={() => setSelected(false)}
         >
           <CardActionArea {...cardActionAreaProps}>
             {healthy ? null : (

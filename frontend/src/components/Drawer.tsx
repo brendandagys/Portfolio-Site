@@ -27,6 +27,7 @@ const {
   WorkIcon,
   EmailIcon,
   GitHubIcon,
+  LinkedInIcon,
   MenuBookIcon,
   DescriptionIcon,
   MenuIcon,
@@ -73,15 +74,20 @@ const drawerItems1: DrawerItem[] = [
 ]
 const drawerItems2: DrawerItem[] = [
   {
+    text: 'Blog',
+    icon: <MenuBookIcon />,
+    href: 'https://blog.brendandagys.com',
+    // subtitle: 'Under construction...',
+  },
+  {
     text: 'GitHub',
     icon: <GitHubIcon />,
     href: 'https://github.com/brendandagys',
   },
   {
-    text: 'Blog',
-    icon: <MenuBookIcon />,
-    href: 'https://blog.brendandagys.com',
-    // subtitle: 'Under construction...',
+    text: 'LinkedIn',
+    icon: <LinkedInIcon />,
+    href: 'https://linkedin.com/in/brendandagys',
   },
   {
     text: 'Resume',
