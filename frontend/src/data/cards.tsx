@@ -11,6 +11,7 @@ import waitingRoomAppScreenshot from '../images/waiting-room-app-screenshot.png'
 import personalBlogScreenshot from '../images/personal-blog-app-screenshot.png'
 import browserEditorScreenshot from '../images/browser-editor-app-screenshot.png'
 import spendingScreenshot from '../images/spending-app-screenshot.png'
+import cloudFormationScreenshot from '../images/cloudformation-screenshot.png'
 
 import VocabularyTrainer from '../components/VocabularyTrainer'
 import { Theme } from '@mui/material'
@@ -27,6 +28,7 @@ import DeviceReprocessingDescription from '../components/card-descriptions/Devic
 import PersonalBlogDescription from '../components/card-descriptions/PersonalBlogDescription'
 import BrowserEditorDescription from '../components/card-descriptions/BrowserEditorDescription'
 import SpendingDescription from '../components/card-descriptions/SpendingDescription'
+import CloudFormationDescription from '../components/card-descriptions/CloudFormationDescription'
 
 export type CardDataType = {
   image: string
@@ -93,6 +95,15 @@ const portfolioCards = (theme: Theme) => [
         : 'http://localhost:5002/api/health',
     descriptionContent: <CovidScreeningDescription theme={theme} />,
     tooltipContent: 'Click anywhere on the tile to view the application!',
+  },
+  {
+    image: cloudFormationScreenshot,
+    title: 'React-TypeScript Deployment with CloudFormation',
+    alt: 'React-TypeScript Deployment with CloudFormation',
+    text: 'A GitHub repository that contains CloudFormation templates that describe infrastructure to deploy your React-TypeScript application on AWS. Technologies include Docker, Fargate, S3, and many other services. Also, see my blog post that goes into step-by-step detail!',
+    gitHubURL: 'https://github.com/brendandagys/COVID-19-Screening-App',
+    descriptionContent: <CloudFormationDescription theme={theme} />,
+    tooltipContent: 'Click anywhere to view the GitHub repository!',
   },
   {
     image: proShopAppScreenshot,
