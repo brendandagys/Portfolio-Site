@@ -35,7 +35,7 @@ type MyCardProps = {
 const StyledCard = styled(({ style, ...rest }) => (
   <Card style={style} {...rest} />
 ))`
-  margin: 8px auto;
+  margin: 12px auto;
   max-width: 370px; // 345px original
   text-align: center;
   border-radius: 20px;
@@ -77,7 +77,7 @@ const MyCard = ({
   })
 
   const checkHealth = useCallback(
-    async (url: string) => {
+    (url: string) => {
       console.log(`Checking health of '${title}'...`)
       axios
         .get(`${url}`)
