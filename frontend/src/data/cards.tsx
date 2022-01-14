@@ -158,7 +158,7 @@ const portfolioCards = (theme: Theme) => [
     image: spendingScreenshot,
     title: 'Personal Budgeting Assistant',
     alt: 'Personal Budgeting Assistant',
-    text: 'A Web app that I use to track my spending habits. A form allows for customized input of purchases. Afterward, a list of all purchases can be viewed and filtered by category of purchase or a specific time period. Chart.js was used to create dynamic charts to visualize spending patterns. Please use U: guest | P: guest to log in and explore.',
+    text: 'A Web app that I use to track my spending habits. A form allows for customized input of purchases. Afterward, a list of all purchases can be viewed and filtered by category of purchase or a specific time period. Chart.js was used to create dynamic charts to visualize spending patterns.',
     demoURL:
       process.env.NODE_ENV === 'production'
         ? 'https://spending.brendandagys.com'
