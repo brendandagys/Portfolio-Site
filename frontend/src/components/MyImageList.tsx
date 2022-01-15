@@ -65,7 +65,7 @@ const MyImageList = ({
               {!item.tooltip ? null : <>{item.tooltip}</>}
             </>
           }
-          enterTouchDelay={200}
+          enterTouchDelay={100}
         >
           <ImageListItem
             key={item.img}

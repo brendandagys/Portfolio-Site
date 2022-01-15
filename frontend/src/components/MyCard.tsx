@@ -150,7 +150,7 @@ const MyCard = ({
     <Tooltip
       disableFocusListener
       // disableTouchListener
-      enterTouchDelay={200}
+      enterTouchDelay={100}
       placement='top'
       arrow
       PopperProps={{
