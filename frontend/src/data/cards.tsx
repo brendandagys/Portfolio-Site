@@ -1,7 +1,7 @@
 import React from 'react'
 import screeningAppScreenshot from '../images/screening-app-screenshot.png'
 import financesAppScreenshot from '../images/finances-app-screenshot.png'
-import proShopAppScreenshot from '../images/proshop-app-screenshot.png'
+import guitarShopAppScreenshot from '../images/guitar-shop-app-screenshot.png'
 import vocabularyTrainerScreenshot from '../images/vocabulary-trainer-app-screenshot.png'
 import auditAppScreenshot from '../images/audit-app-screenshot.png'
 import incidentReportingAppScreenshot from '../images/incident-reporting-app-screenshot.png'
@@ -106,10 +106,10 @@ const portfolioCards = (theme: Theme) => [
     tooltipContent: 'Click anywhere to view the GitHub repository!',
   },
   {
-    image: proShopAppScreenshot,
-    title: 'e-Commerce Store',
-    alt: 'e-Commerce Store',
-    text: 'A fully-functioning e-commerce application for a fictional technology supplier. Features include a shopping cart, product reviews,  administrator portal, integration with PayPal, and shipment tracking.',
+    image: guitarShopAppScreenshot,
+    title: 'e-Commerce Guitar Store',
+    alt: 'e-Commerce Guitar Store',
+    text: 'A fully-functioning e-commerce application for a fictional guitar store. Features include a shopping cart, product reviews, administrator portal, integration with PayPal, and shipment tracking.',
     demoURL:
       process.env.NODE_ENV === 'production'
         ? 'https://e-commerce.brendandagys.com'
