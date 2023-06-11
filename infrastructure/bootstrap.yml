@@ -7,7 +7,7 @@ Conditions:
 Parameters:
   Repository:
     Type: String
-    Default: business-site
+    Default: my-site
 
   Branch:
     Type: String
@@ -23,12 +23,12 @@ Parameters:
 
   Domain:
     Type: String
-    Default: spainluxury.holiday
+    Default: brendandagys.com
     Description: Domain for the assets bucket
 
   HostedZoneId:
     Type: String
-    Default: Z00358393282BXBWKBN4
+    Default: Z1048063LC3J2IKH5GGI
     Description: Route 53 Hosted Zone ID for `Domain`
 
 Resources:
@@ -108,7 +108,8 @@ Resources:
                   - route53:ListResourceRecordSets
                   - route53:ChangeResourceRecordSets
                   - route53:GetHostedZone
-                Resource: !Sub arn:aws:route53:::hostedzone/${HostedZoneId}
+                Resource: '*'
+                # Resource: !Sub arn:aws:route53:::hostedzone/${HostedZoneId}
               - Effect: Allow
                 Action: route53:GetChange
                 Resource: !Sub arn:aws:route53:::change/*
@@ -162,7 +163,7 @@ Resources:
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
 
-  LoggingBucket:
+  CloudFrontLoggingBucket:
     Type: AWS::S3::Bucket
     Condition: CreateLoggingBucketAndPolicy
     DeletionPolicy: Retain
@@ -174,7 +175,7 @@ Resources:
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
 
-  LoggingBucketPolicy:
+  CloudFrontLoggingBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Condition: CreateLoggingBucketAndPolicy
     DeletionPolicy: Retain

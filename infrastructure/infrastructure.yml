@@ -34,7 +34,7 @@ Parameters:
   HostedZoneId:
     Description: Route 53 Hosted Zone ID
     Type: String
-    Default: Z00358393282BXBWKBN4
+    Default: Z1048063LC3J2IKH5GGI
 
   CloudFrontHostedZoneId:
     Type: String
