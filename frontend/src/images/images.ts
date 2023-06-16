@@ -20,9 +20,17 @@ import nextJSIcon from './nextjs-icon.svg'
 import reduxIcon from './redux-icon.svg'
 import tailwindCssIcon from './tailwindcss-icon.svg'
 
-import awsSolutionsArchitectBadge from './aws-solutions-architect-badge.png'
-import awsDeveloperBadge from './aws-developer-badge.png'
-import awsCloudPractitionerBadge from './aws-cloud-practitioner-badge.png'
+// import awsSolutionsArchitectBadge from './aws-solutions-architect-badge.png'
+// import awsDeveloperBadge from './aws-developer-badge.png'
+// import awsCloudPractitionerBadge from './aws-cloud-practitioner-badge.png'
+
+import ccp from './ccp.png';
+import dva from './dva.png';
+import saa from './saa.png';
+import soa from './soa.png';
+import sap from './sap.png';
+import dop from './dop.png';
+import scs from './scs.png';
 
 export const technologyIcons = [
   javaScriptIcon,
@@ -49,7 +57,11 @@ export const technologyIcons = [
 ]
 
 export const awsIcons = [
-  awsSolutionsArchitectBadge,
-  awsDeveloperBadge,
-  awsCloudPractitionerBadge,
+  sap,
+  dop,
+  scs,
+  saa,
+  soa,
+  dva,
+  ccp,
 ]
