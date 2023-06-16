@@ -114,7 +114,7 @@ const App = (): JSX.Element => {
                 icons={awsIcons}
                 width='145px'
                 variant='overline'
-                title='I am an:'
+                title='I am AWS certified:'
                 customStyle={{ marginTop: '50px', textAlign: 'center' }}
               />
             </Grid>
