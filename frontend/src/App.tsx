@@ -107,7 +107,7 @@ const App = (): JSX.Element => {
               <IconGallery
                 icons={technologyIcons}
                 variant='overline'
-                title='A few of my favorite technologies...'
+                title='A few technologies I enjoy working with...'
                 customStyle={{ marginTop: '50px', textAlign: 'center' }}
               />
               <IconGallery

@@ -7,7 +7,7 @@ const HomepageTitles = ({ theme }: { theme: Theme }): React.ReactElement => {
   const borderRadius = width < 600 ? '0px' : '12px'
 
   return (
-    <div>
+    <div style={{ padding: '0 2rem' }}>
       <div
         style={{
           background:

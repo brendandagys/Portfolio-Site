@@ -1,49 +1,62 @@
-import javaScriptIcon from './javascript-icon.svg'
-import typeScriptIcon from './typescript-icon.svg'
-import reactIcon from './react-icon.png'
-import pythonIcon from './python-icon.svg'
-import djangoIcon from './django-icon.svg'
-import cppIcon from './cplusplus-icon.svg'
-import materialUIIcon from './material-ui-icon.svg'
+// import cppIcon from './cplusplus-icon.svg'
+// import jQueryIcon from './jquery-icon.svg'
+import awsIcon from './aws-icon.svg'
 import bootstrap5Icon from './bootstrap5-icon.png'
-import html5Icon from './html5-icon.svg'
 import cssIcon from './css-icon.svg'
+import djangoIcon from './django-icon.svg'
 import dockerIcon from './docker-icon.svg'
-import jQueryIcon from './jquery-icon.svg'
-import nodeJsIcon from './node-js-icon.svg'
-import postgresqlIcon from './postgresql-icon.svg'
-import sqlIcon from './sql-icon.svg'
-import redisIcon from './redis-icon.svg'
 import gitIcon from './git-icon.svg'
 import graphQLIcon from './graphql-icon.svg'
+import html5Icon from './html5-icon.svg'
+import javaScriptIcon from './javascript-icon.svg'
+import kubernetesIcon from './kubernetes-icon.svg'
+import materialUIIcon from './material-ui-icon.svg'
 import nextJSIcon from './nextjs-icon.svg'
+import nodeJsIcon from './node-js-icon.svg'
+import nuxtIcon from './nuxt-icon.svg'
+import postgresqlIcon from './postgresql-icon.svg'
+import pythonIcon from './python-icon.svg'
+import reactIcon from './react-icon.png'
+import redisIcon from './redis-icon.svg'
 import reduxIcon from './redux-icon.svg'
+import rustIcon from './rust-icon.svg'
+import sqlIcon from './sql-icon.svg'
 import tailwindCssIcon from './tailwindcss-icon.svg'
+import terraformIcon from './terraform-icon.svg'
+import typeScriptIcon from './typescript-icon.svg'
+import vueIcon from './vue-icon.svg'
+import yewIcon from './yew-icon.svg'
 
 // import awsSolutionsArchitectBadge from './aws-solutions-architect-badge.png'
 // import awsDeveloperBadge from './aws-developer-badge.png'
 // import awsCloudPractitionerBadge from './aws-cloud-practitioner-badge.png'
 
 import ccp from './ccp.png';
+import dop from './dop.png';
 import dva from './dva.png';
 import saa from './saa.png';
-import soa from './soa.png';
 import sap from './sap.png';
-import dop from './dop.png';
 import scs from './scs.png';
+import soa from './soa.png';
 
 export const technologyIcons = [
-  javaScriptIcon,
+  rustIcon,
+  awsIcon,
   typeScriptIcon,
+  javaScriptIcon,
+  nodeJsIcon,
   reactIcon,
-  reduxIcon,
-  nextJSIcon,
+  vueIcon,
   pythonIcon,
   djangoIcon,
-  cppIcon,
-  nodeJsIcon,
+  terraformIcon,
+  kubernetesIcon,
   dockerIcon,
+  yewIcon,
+  reduxIcon,
   graphQLIcon,
+  nextJSIcon,
+  nuxtIcon,
   postgresqlIcon,
   sqlIcon,
   gitIcon,
@@ -53,7 +66,8 @@ export const technologyIcons = [
   bootstrap5Icon,
   html5Icon,
   cssIcon,
-  jQueryIcon,
+  // cppIcon,
+  // jQueryIcon,
 ]
 
 export const awsIcons = [
