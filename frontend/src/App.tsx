@@ -44,10 +44,10 @@ const StyledTopBorderDiv = styled.div`
 `
 
 const App = (): JSX.Element => {
-  const checkHealth = async () => {
-    const { data: healthStatus } = await axios.get('/api/health')
-    console.log(healthStatus)
-  }
+  // const checkHealth = async () => {
+  //   const { data: healthStatus } = await axios.get('/api/health')
+  //   console.log(healthStatus)
+  // }
 
   const toggleMode = () =>
     setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
@@ -56,9 +56,9 @@ const App = (): JSX.Element => {
   const [theme, setTheme] = useState<Theme>(getTheme(mode as PaletteMode))
   const { width } = useWindowDimensions()
 
-  useEffect(() => {
-    checkHealth()
-  }, [])
+  // useEffect(() => {
+  //   checkHealth()
+  // }, [])
 
   useEffect(() => {
     setTheme(getTheme(mode as PaletteMode))
