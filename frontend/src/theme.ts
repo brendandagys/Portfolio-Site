@@ -203,7 +203,7 @@ export const getTheme = (mode: PaletteMode) => {
               primary: '#000',
               secondary: 'rgba(10,10,10,0.9)',
               tertiary: '#fff',
-              slate: '#f2f2f2',
+              slate: 'slategray',
               white: '#fff',
               gray: '#888888',
               black: '#000',
