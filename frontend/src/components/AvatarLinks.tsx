@@ -21,7 +21,7 @@ const ContactItemsRowDiv = styled.div`
   border-radius: 30px 30px 0 0;
   text-align: center;
   background-color: ${({ theme }) => theme.palette.secondary.main};
-  box-shadow: 0px -1px 10px #d3d3d3;
+  box-shadow: 0px 7px 20px #d3d3d3;
 `
 
 const StyledLink = styled.a`

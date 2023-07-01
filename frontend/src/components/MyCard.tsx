@@ -119,62 +119,62 @@ const MyCard = ({
 
   const cardActionAreaProps = dialogContent
     ? {
-        onClick: () => {
-          if (healthy) {
-            showCardContentInDialog(dialogContent)
-          } else if (healthCheckUrl) {
-            checkHealth(healthCheckUrl)
-            // showCardContentInDialog(dialogContent)
-          }
-        },
-      }
+      onClick: () => {
+        if (healthy) {
+          showCardContentInDialog(dialogContent)
+        } else if (healthCheckUrl) {
+          checkHealth(healthCheckUrl)
+          // showCardContentInDialog(dialogContent)
+        }
+      },
+    }
     : demoURL && healthy
-    ? {
+      ? {
         href: demoURL,
         target: '_blank',
         rel: 'noreferrer',
       }
-    : demoURL
-    ? {
-        onClick: () => {
-          if (!healthy) {
-            checkHealth(demoURL)
-          }
-        },
-      }
-    : {}
+      : demoURL
+        ? {
+          onClick: () => {
+            if (!healthy) {
+              checkHealth(demoURL)
+            }
+          },
+        }
+        : {}
 
   const cardMediaProps = healthy ? {} : { opacity: '0.6' }
 
   return (
-    <Tooltip
-      disableFocusListener
-      // disableTouchListener
-      enterTouchDelay={100}
-      placement='top'
-      arrow
-      PopperProps={{
-        popperOptions: {
-          modifiers: [
-            {
-              name: 'offset',
-              options: { offset: [0, -6] },
-            },
-          ],
-        },
-      }}
-      title={
-        <>
-          {healthCheckUrl && healthy ? (
-            <small>{tooltipContent}</small>
-          ) : healthCheckUrl ? (
-            <small>Link disabled as application is offline.</small>
-          ) : (
-            <small>{tooltipContent}</small>
-          )}
-        </>
-      }
-    >
+    // <Tooltip
+    //   disableFocusListener
+    //   // disableTouchListener
+    //   enterTouchDelay={100}
+    //   placement='top'
+    //   arrow
+    //   PopperProps={{
+    //     popperOptions: {
+    //       modifiers: [
+    //         {
+    //           name: 'offset',
+    //           options: { offset: [0, -6] },
+    //         },
+    //       ],
+    //     },
+    //   }}
+    //   title={
+    //     <>
+    //       {healthCheckUrl && healthy ? (
+    //         <small>{tooltipContent}</small>
+    //       ) : healthCheckUrl ? (
+    //         <small>Link disabled as application is offline.</small>
+    //       ) : (
+    //         <small>{tooltipContent}</small>
+    //       )}
+    //     </>
+    //   }
+    // >
       <div>
         <StyledCard
           raised
@@ -186,9 +186,8 @@ const MyCard = ({
         >
           <CardActionArea {...cardActionAreaProps}>
             {healthy ? null : (
-              <animated.div
+              <div
                 style={{
-                  ...springProps,
                   color: 'firebrick',
                   backgroundColor: '#d3d3d3',
                   position: 'absolute',
@@ -203,7 +202,7 @@ const MyCard = ({
                 }}
               >
                 Temporarily offline
-              </animated.div>
+              </div>
             )}
 
             <CardMedia
@@ -253,12 +252,6 @@ const MyCard = ({
           >
             <StyledAnchor href={gitHubURL} target='_blank' rel='noreferrer'>
               <Button
-                className={
-                  theme.palette.mode === 'dark'
-                    ? 'hvr-underline-from-left-thin-dark'
-                    : 'hvr-underline-from-left-thin-light'
-                }
-                size='small'
                 style={{
                   backgroundColor: theme.palette.colorMode.gitHubButtonColor,
                   margin: '0 auto 5px 10px',
@@ -271,12 +264,6 @@ const MyCard = ({
             </StyledAnchor>
             {!descriptionContent ? null : (
               <Button
-                className={
-                  theme.palette.mode === 'dark'
-                    ? 'hvr-underline-from-left'
-                    : 'hvr-underline-from-left-purple'
-                }
-                size='small'
                 style={{
                   backgroundColor:
                     theme.palette.colorMode.descriptionButtonColor,
@@ -292,7 +279,7 @@ const MyCard = ({
           </CardActions>
         </StyledCard>
       </div>
-    </Tooltip>
+    // </Tooltip>
   )
 }
 
