@@ -7,8 +7,6 @@ const StyledDiv = styled.div`
 `
 
 const StyledTypography = styled(Typography)`
-  // padding-left: clamp(20px, 8%, 30%);
-  // padding-right: clamp(20px, 8%, 30%);
   margin-left: auto;
   margin-right: auto;
   max-width: 850px;

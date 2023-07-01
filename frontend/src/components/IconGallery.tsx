@@ -8,9 +8,10 @@ const StyledDiv = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 1rem;
+  margin: 1rem auto 0;
   padding: 0 30px;
   background-color: ${({ theme }) => theme.palette.secondary.main};
+  max-width: 1300px;
 `
 
 const StyledImageDiv = styled(({ width, ...rest }) => {
