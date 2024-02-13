@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import axios, { AxiosError } from 'axios'
-import styled from 'styled-components'
+import React, { useState, useEffect, useCallback } from 'react';
+import axios, { AxiosError } from 'axios';
+import styled from 'styled-components';
 import {
   Button,
   CardActionArea,
@@ -12,25 +12,25 @@ import {
   Typography,
   Theme,
   Tooltip,
-} from '@mui/material'
-import GitHubIcon from '@mui/icons-material/GitHub'
-import TextSnippetIcon from '@mui/icons-material/TextSnippet'
-import { useSpring, animated, config } from 'react-spring'
+} from '@mui/material';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import { useSpring, animated, config } from 'react-spring';
 
 type MyCardProps = {
-  image: string
-  title: string
-  alt: string
-  demoURL?: string
-  gitHubURL: string
-  healthCheckUrl?: string
-  healthCheckStatusCode?: number
-  theme: Theme
-  dialogContent?: React.ReactChild
-  descriptionContent?: React.ReactChild
-  tooltipContent: string
-  showCardContentInDialog: (dialogContent: React.ReactChild) => void
-} & CardProps
+  image: string;
+  title: string;
+  alt: string;
+  demoURL?: string;
+  gitHubURL: string;
+  healthCheckUrl?: string;
+  healthCheckStatusCode?: number;
+  theme: Theme;
+  dialogContent?: React.ReactChild;
+  descriptionContent?: React.ReactChild;
+  tooltipContent: string;
+  showCardContentInDialog: (dialogContent: React.ReactChild) => void;
+} & CardProps;
 
 const StyledCard = styled(({ style, ...rest }) => (
   <Card style={style} {...rest} />
@@ -41,11 +41,11 @@ const StyledCard = styled(({ style, ...rest }) => (
   border-radius: 20px;
   border: 3px solid ${({ theme }) => theme.palette.colorMode.cardOutlineColor};
   background-color: ${({ theme }) => theme.palette.colorMode.s0};
-`
+`;
 
 const StyledAnchor = styled.a`
   text-decoration: none;
-`
+`;
 
 const MyCard = ({
   children,
@@ -62,9 +62,9 @@ const MyCard = ({
   tooltipContent,
   showCardContentInDialog,
 }: MyCardProps): React.ReactElement => {
-  const [selected, setSelected] = useState(false)
-  const [flip, set] = useState(false)
-  const [healthy, setHealthy] = useState(true)
+  const [selected, setSelected] = useState(false);
+  const [flip, set] = useState(false);
+  const [healthy, setHealthy] = useState(true);
 
   const springProps = useSpring({
     to: { opacity: 1 },
@@ -74,11 +74,11 @@ const MyCard = ({
     delay: 100,
     config: config.molasses,
     onRest: () => set(!flip),
-  })
+  });
 
   const checkHealth = useCallback(
     (url: string) => {
-      console.log(`Checking health of '${title}'...`)
+      console.log(`Checking health of '${title}'...`);
       axios
         .get(`${url}`)
         .then((response) => {
@@ -87,11 +87,11 @@ const MyCard = ({
             healthCheckStatusCode &&
             healthCheckStatusCode === (response.status ?? 200)
           ) {
-            setHealthy(true)
+            setHealthy(true);
           } else if (response.data) {
-            setHealthy(true)
+            setHealthy(true);
           } else {
-            setHealthy(false)
+            setHealthy(false);
           }
         })
         .catch((e: AxiosError) => {
@@ -104,26 +104,26 @@ const MyCard = ({
           //   console.log(headers)
           // }
 
-          setHealthy(false)
-          console.log(`${title} is offline.`)
-        })
+          setHealthy(false);
+          console.log(`${title} is offline.`);
+        });
     },
     [title, healthCheckStatusCode]
-  )
+  );
 
   useEffect(() => {
     if (healthCheckUrl) {
-      checkHealth(healthCheckUrl)
+      checkHealth(healthCheckUrl);
     }
-  }, [checkHealth, healthCheckUrl, dialogContent])
+  }, [checkHealth, healthCheckUrl]);
 
   const cardActionAreaProps = dialogContent
     ? {
       onClick: () => {
         if (healthy) {
-          showCardContentInDialog(dialogContent)
+          showCardContentInDialog(dialogContent);
         } else if (healthCheckUrl) {
-          checkHealth(healthCheckUrl)
+          checkHealth(healthCheckUrl);
           // showCardContentInDialog(dialogContent)
         }
       },
@@ -138,13 +138,13 @@ const MyCard = ({
         ? {
           onClick: () => {
             if (!healthy) {
-              checkHealth(demoURL)
+              checkHealth(demoURL);
             }
           },
         }
-        : {}
+        : {};
 
-  const cardMediaProps = healthy ? {} : { opacity: '0.6' }
+  const cardMediaProps = healthy ? {} : { opacity: '0.6' };
 
   return (
     // <Tooltip
@@ -175,112 +175,112 @@ const MyCard = ({
     //     </>
     //   }
     // >
-      <div>
-        <StyledCard
-          raised
-          elevation={selected ? 24 : 3}
-          onMouseOver={() => setSelected(true)}
-          onMouseLeave={() => setSelected(false)}
-          onTouchStart={() => setSelected(true)}
-          onTouchEnd={() => setSelected(false)}
-        >
-          <CardActionArea {...cardActionAreaProps}>
-            {healthy ? null : (
-              <div
-                style={{
-                  color: 'firebrick',
-                  backgroundColor: '#d3d3d3',
-                  position: 'absolute',
-                  width: '100%',
-                  marginTop: '85px',
-                  zIndex: 200,
-                  backdropFilter: 'blur(12px)',
-                  fontSize: '1.5rem',
-                  fontFamily: 'Courier New',
-                  paddingTop: '7px',
-                  paddingBottom: '7px',
-                }}
-              >
-                Temporarily offline
-              </div>
-            )}
-
-            <CardMedia
-              component='img'
-              height='190'
-              image={image}
-              alt={alt}
-              style={cardMediaProps}
-            />
-
-            <CardContent
+    <div>
+      <StyledCard
+        raised
+        elevation={selected ? 24 : 3}
+        onMouseOver={() => setSelected(true)}
+        onMouseLeave={() => setSelected(false)}
+        onTouchStart={() => setSelected(true)}
+        onTouchEnd={() => setSelected(false)}
+      >
+        <CardActionArea {...cardActionAreaProps}>
+          {healthy ? null : (
+            <div
               style={{
-                borderTop: '1px solid lightgray',
-                backgroundColor:
-                  theme.palette.mode === 'dark'
-                    ? theme.palette.colorMode.s4
-                    : undefined,
-                color:
-                  theme.palette.mode === 'dark'
-                    ? theme.palette.fontColor.primary
-                    : undefined,
+                color: 'firebrick',
+                backgroundColor: '#d3d3d3',
+                position: 'absolute',
+                width: '100%',
+                marginTop: '85px',
+                zIndex: 200,
+                backdropFilter: 'blur(12px)',
+                fontSize: '1.5rem',
+                fontFamily: 'Courier New',
+                paddingTop: '7px',
+                paddingBottom: '7px',
               }}
             >
-              <Typography gutterBottom variant='h5' component='div'>
-                {title}
-              </Typography>
-              <Typography
-                variant='body2'
-                style={{
-                  color:
-                    theme.palette.mode === 'dark'
-                      ? theme.palette.fontColor.slate
-                      : '#00000080',
-                }}
-              >
-                {children}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions
+              Temporarily offline
+            </div>
+          )}
+
+          <CardMedia
+            component='img'
+            height='190'
+            image={image}
+            alt={alt}
+            style={cardMediaProps}
+          />
+
+          <CardContent
             style={{
+              borderTop: '1px solid lightgray',
               backgroundColor:
                 theme.palette.mode === 'dark'
-                  ? theme.palette.colorMode.s5
-                  : theme.palette.fontColor.slate,
+                  ? theme.palette.colorMode.s4
+                  : undefined,
+              color:
+                theme.palette.mode === 'dark'
+                  ? theme.palette.fontColor.primary
+                  : undefined,
             }}
           >
-            <StyledAnchor href={gitHubURL} target='_blank' rel='noreferrer'>
-              <Button
-                style={{
-                  backgroundColor: theme.palette.colorMode.gitHubButtonColor,
-                  margin: '0 auto 5px 10px',
-                }}
-                variant='contained'
-                startIcon={<GitHubIcon sx={{ mb: '2px' }} />}
-              >
-                GitHub
-              </Button>
-            </StyledAnchor>
-            {!descriptionContent ? null : (
-              <Button
-                style={{
-                  backgroundColor:
-                    theme.palette.colorMode.descriptionButtonColor,
-                  margin: '0 10px 5px auto',
-                }}
-                variant='contained'
-                startIcon={<TextSnippetIcon sx={{ mb: '2px' }} />}
-                onClick={() => showCardContentInDialog(descriptionContent)}
-              >
-                Description
-              </Button>
-            )}
-          </CardActions>
-        </StyledCard>
-      </div>
+            <Typography gutterBottom variant='h5' component='div'>
+              {title}
+            </Typography>
+            <Typography
+              variant='body2'
+              style={{
+                color:
+                  theme.palette.mode === 'dark'
+                    ? theme.palette.fontColor.slate
+                    : '#00000080',
+              }}
+            >
+              {children}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions
+          style={{
+            backgroundColor:
+              theme.palette.mode === 'dark'
+                ? theme.palette.colorMode.s5
+                : theme.palette.fontColor.slate,
+          }}
+        >
+          <StyledAnchor href={gitHubURL} target='_blank' rel='noreferrer'>
+            <Button
+              style={{
+                backgroundColor: theme.palette.colorMode.gitHubButtonColor,
+                margin: '0 auto 5px 10px',
+              }}
+              variant='contained'
+              startIcon={<GitHubIcon sx={{ mb: '2px' }} />}
+            >
+              GitHub
+            </Button>
+          </StyledAnchor>
+          {!descriptionContent ? null : (
+            <Button
+              style={{
+                backgroundColor:
+                  theme.palette.colorMode.descriptionButtonColor,
+                margin: '0 10px 5px auto',
+              }}
+              variant='contained'
+              startIcon={<TextSnippetIcon sx={{ mb: '2px' }} />}
+              onClick={() => showCardContentInDialog(descriptionContent)}
+            >
+              Description
+            </Button>
+          )}
+        </CardActions>
+      </StyledCard>
+    </div>
     // </Tooltip>
-  )
-}
+  );
+};
 
-export default MyCard
+export default MyCard;

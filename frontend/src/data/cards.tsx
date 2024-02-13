@@ -1,48 +1,48 @@
-import React from 'react'
-import screeningAppScreenshot from '../images/screening-app-screenshot.png'
-import financesAppScreenshot from '../images/finances-app-screenshot.png'
-import guitarShopAppScreenshot from '../images/guitar-shop-app-screenshot.png'
-import vocabularyTrainerScreenshot from '../images/vocabulary-trainer-app-screenshot.png'
-import auditAppScreenshot from '../images/audit-app-screenshot.png'
-import incidentReportingAppScreenshot from '../images/incident-reporting-app-screenshot.png'
-import hubAppScreenshot from '../images/hub-app-screenshot.png'
-import musicTheoryAppScreenshot from '../images/music-theory-app-screenshot.png'
-import waitingRoomAppScreenshot from '../images/waiting-room-app-screenshot.png'
-import personalBlogScreenshot from '../images/personal-blog-app-screenshot.png'
-import browserEditorScreenshot from '../images/browser-editor-app-screenshot.png'
-import spendingScreenshot from '../images/spending-app-screenshot.png'
-import cloudFormationScreenshot from '../images/cloudformation-screenshot.png'
+import React from 'react';
+import screeningAppScreenshot from '../images/screening-app-screenshot.png';
+import financesAppScreenshot from '../images/finances-app-screenshot.png';
+import guitarShopAppScreenshot from '../images/guitar-shop-app-screenshot.png';
+import vocabularyTrainerScreenshot from '../images/vocabulary-trainer-app-screenshot.png';
+import auditAppScreenshot from '../images/audit-app-screenshot.png';
+import incidentReportingAppScreenshot from '../images/incident-reporting-app-screenshot.png';
+import hubAppScreenshot from '../images/hub-app-screenshot.png';
+import musicTheoryAppScreenshot from '../images/music-theory-app-screenshot.png';
+import waitingRoomAppScreenshot from '../images/waiting-room-app-screenshot.png';
+import personalBlogScreenshot from '../images/personal-blog-app-screenshot.png';
+import browserEditorScreenshot from '../images/browser-editor-app-screenshot.png';
+import spendingScreenshot from '../images/spending-app-screenshot.png';
+import cloudFormationScreenshot from '../images/cloudformation-screenshot.png';
 
-import VocabularyTrainer from '../components/VocabularyTrainer'
-import { Theme } from '@mui/material'
+import VocabularyTrainer from '../components/VocabularyTrainer';
+import { Theme } from '@mui/material';
 
-import FinancesDescription from '../components/card-descriptions/FinancesDescription'
-import CovidScreeningDescription from '../components/card-descriptions/CovidScreeningDescription'
-import EcommerceDescription from '../components/card-descriptions/EcommerceDescription'
-import EmergencyResponseDescription from '../components/card-descriptions/EmergencyResponseDescription'
-import WaitingRoomNotificationDescription from '../components/card-descriptions/WaitingRoomNotificationDescription'
-import VocabularyTrainerDescription from '../components/card-descriptions/VocabularyTrainerDescription'
-import MusicTheoryPracticeDescription from '../components/card-descriptions/MusicTheoryPracticeDescription'
-import IncidentReportingDescription from '../components/card-descriptions/IncidentReportingDescription'
-import DeviceReprocessingDescription from '../components/card-descriptions/DeviceReprocessingDescription'
-import PersonalBlogDescription from '../components/card-descriptions/PersonalBlogDescription'
-import BrowserEditorDescription from '../components/card-descriptions/BrowserEditorDescription'
-import SpendingDescription from '../components/card-descriptions/SpendingDescription'
-import CloudFormationDescription from '../components/card-descriptions/CloudFormationDescription'
+import FinancesDescription from '../components/card-descriptions/FinancesDescription';
+import CovidScreeningDescription from '../components/card-descriptions/CovidScreeningDescription';
+import EcommerceDescription from '../components/card-descriptions/EcommerceDescription';
+import EmergencyResponseDescription from '../components/card-descriptions/EmergencyResponseDescription';
+import WaitingRoomNotificationDescription from '../components/card-descriptions/WaitingRoomNotificationDescription';
+import VocabularyTrainerDescription from '../components/card-descriptions/VocabularyTrainerDescription';
+import MusicTheoryPracticeDescription from '../components/card-descriptions/MusicTheoryPracticeDescription';
+import IncidentReportingDescription from '../components/card-descriptions/IncidentReportingDescription';
+import DeviceReprocessingDescription from '../components/card-descriptions/DeviceReprocessingDescription';
+import PersonalBlogDescription from '../components/card-descriptions/PersonalBlogDescription';
+import BrowserEditorDescription from '../components/card-descriptions/BrowserEditorDescription';
+import SpendingDescription from '../components/card-descriptions/SpendingDescription';
+import CloudFormationDescription from '../components/card-descriptions/CloudFormationDescription';
 
 export type CardDataType = {
-  image: string
-  title: string
-  alt: string
-  demoURL?: string
-  gitHubURL: string
-  healthCheckUrl?: string
-  healthCheckStatusCode?: number
-  text: string
-  dialogContent?: React.ReactChild
-  descriptionContent?: React.ReactChild
-  tooltipContent: string
-}
+  image: string;
+  title: string;
+  alt: string;
+  demoURL?: string;
+  gitHubURL: string;
+  healthCheckUrl?: string;
+  healthCheckStatusCode?: number;
+  text: string;
+  dialogContent?: React.ReactChild;
+  descriptionContent?: React.ReactChild;
+  tooltipContent: string;
+};
 
 const portfolioCards = (theme: Theme) => [
   {
@@ -221,6 +221,6 @@ const portfolioCards = (theme: Theme) => [
     descriptionContent: <DeviceReprocessingDescription theme={theme} />,
     tooltipContent: 'No demo available. Please clone from GitHub.',
   },
-]
+];
 
-export default portfolioCards
+export default portfolioCards;
