@@ -1,20 +1,20 @@
-import styled from 'styled-components'
-import axios from 'axios'
+import styled from 'styled-components';
+import axios from 'axios';
 
-import { useState, Fragment } from 'react'
+import { useState, Fragment } from 'react';
 
-import { Box, FormControl, Typography, Button } from '@mui/material'
+import { Box, FormControl, Typography, Button } from '@mui/material';
 
-import MyTextField from './MyTextField'
-import ContactThankYouModal from './ContactThankYouModal'
-import AvatarLinks from './AvatarLinks'
+import MyTextField from './MyTextField';
+import ContactThankYouModal from './ContactThankYouModal';
+import AvatarLinks from './AvatarLinks';
 
-import SendIcon from '@mui/icons-material/Send'
+import SendIcon from '@mui/icons-material/Send';
 
-import { contactAvatarLinks } from '../data/avatarLinks'
-import React from 'react'
+import { contactAvatarLinks } from '../data/avatarLinks';
+import React from 'react';
 
-import { Theme } from '@mui/material'
+import { Theme } from '@mui/material';
 
 const StyledBox = styled(Box)`
   margin: auto auto 2.7rem auto;
@@ -22,7 +22,7 @@ const StyledBox = styled(Box)`
   width: 90%;
   maxwidth: 800px;
   // padding-bottom: 3rem;
-`
+`;
 
 const StyledMyTextField = styled(MyTextField)`
   min-width: 35ch;
@@ -30,53 +30,53 @@ const StyledMyTextField = styled(MyTextField)`
   margin-right: 10px;
   // max-width: 350px;
   // width: 37%;
-`
+`;
 
 const StyledMyTextFieldWider = styled(MyTextField)`
   width: 75%;
   min-width: 35ch;
   // max-width: 900px;
-`
+`;
 
 const StyledSendButtonDiv = styled.div`
   margin-top: 2rem;
-`
+`;
 
-const ContactForm = ({ theme }: { theme: Theme }): React.ReactElement => {
+const ContactForm = ({ theme }: { theme: Theme; }): React.ReactElement => {
   const defaultValues = {
     name: '',
     email: '',
     subject: '',
     message: '',
-  }
+  };
 
-  const [formValues, setFormValues] = useState(defaultValues)
-  const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+  const [formValues, setFormValues] = useState(defaultValues);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues({
       ...formValues,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    handleOpen()
+    handleOpen();
 
-    const messageWithBreaks = formValues.message.replace(/\n/g, '<br />')
+    const messageWithBreaks = formValues.message.replace(/\n/g, '<br />');
 
     axios.post('/api/contact', {
       ...formValues,
       message: messageWithBreaks,
-    })
-    setFormValues(defaultValues)
+    });
+    setFormValues(defaultValues);
 
-    console.log("Thanks! I'll be in touch very soon! :)")
-  }
+    console.log("Thanks! I'll be in touch very soon! :)");
+  };
 
   return (
     <>
@@ -183,7 +183,7 @@ const ContactForm = ({ theme }: { theme: Theme }): React.ReactElement => {
             <Button
               type='submit'
               variant='contained'
-              className='hvr-underline-from-left'
+              // className='hvr-underline-from-left'
               endIcon={<SendIcon />}
             >
               Send
@@ -194,7 +194,7 @@ const ContactForm = ({ theme }: { theme: Theme }): React.ReactElement => {
       <AvatarLinks avatars={contactAvatarLinks} theme={theme} />
       <ContactThankYouModal open={open} handleClose={handleClose} />
     </>
-  )
-}
+  );
+};
 
-export default ContactForm
+export default ContactForm;
