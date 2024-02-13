@@ -1,4 +1,4 @@
-import Dialog from '@mui/material/Dialog'
+import Dialog from '@mui/material/Dialog';
 import {
   DialogProps,
   DialogContent,
@@ -10,31 +10,31 @@ import {
   MenuItem,
   SelectChangeEvent,
   Theme,
-} from '@mui/material'
+} from '@mui/material';
 
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-import Brightness5Icon from '@mui/icons-material/Brightness5'
-import DarkModeIcon from '@mui/icons-material/DarkMode'
-import CancelIcon from '@mui/icons-material/Cancel'
-import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined'
-import Slide from '@mui/material/Slide'
-import { TransitionProps } from '@mui/material/transitions'
-import { forwardRef, useState } from 'react'
+import Brightness5Icon from '@mui/icons-material/Brightness5';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import CancelIcon from '@mui/icons-material/Cancel';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import Slide from '@mui/material/Slide';
+import { TransitionProps } from '@mui/material/transitions';
+import { forwardRef, useState } from 'react';
 
-import useWindowDimensions from '../hooks/useWindowDimensions'
+import useWindowDimensions from '../hooks/useWindowDimensions';
 
 const StyledDialogHeader = styled(DialogContent)`
   background-color: ${({ theme }) =>
     theme.palette.colorMode.modalHeaderBackgroundColor};
   color: ${({ theme }) => theme.palette.fontColor.primary};
-`
+`;
 const StyledDialogContent = styled(DialogContent)`
   background-color: ${({ theme }) => theme.palette.colorMode.s4};
   color: ${({ theme }) => theme.palette.fontColor.primary};
   padding: 0.5rem;
   padding-right: 2.5%;
-`
+`;
 
 // const StyledColorModeBox = styled(Box)`
 //   border-radius: 10px;
@@ -46,12 +46,12 @@ const StyledDialogContent = styled(DialogContent)`
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
-    children?: React.ReactElement<any, any>
+    children: React.ReactElement<any, any>;
   },
   ref: React.Ref<unknown>
 ) {
-  return <Slide direction='up' ref={ref} {...props} />
-})
+  return <Slide direction='up' ref={ref} {...props} />;
+});
 
 export default function AlertDialogSlide({
   open,
@@ -60,22 +60,22 @@ export default function AlertDialogSlide({
   toggleMode,
   children,
 }: {
-  open: boolean
-  handleClose: () => void
+  open: boolean;
+  handleClose: () => void;
   // showDialog: () => void
-  theme: Theme
-  toggleMode: () => void
-  children?: React.ReactChild
+  theme: Theme;
+  toggleMode: () => void;
+  children?: React.ReactChild;
 }) {
-  const [maxWidth, setMaxWidth] = useState<DialogProps['maxWidth']>('sm')
-  const { width } = useWindowDimensions()
+  const [maxWidth, setMaxWidth] = useState<DialogProps['maxWidth']>('sm');
+  const { width } = useWindowDimensions();
 
   const handleMaxWidthChange = (event: SelectChangeEvent<typeof maxWidth>) => {
     setMaxWidth(
       // @ts-expect-error autofill of arbitrary value is not handled.
       event.target.value
-    )
-  }
+    );
+  };
 
   const formOverrides = {
     '& .MuiInputBase-root': {
@@ -101,7 +101,7 @@ export default function AlertDialogSlide({
         borderColor: `${theme.palette.secondary.main}`,
       },
     },
-  }
+  };
 
   return (
     <Dialog
@@ -209,5 +209,5 @@ export default function AlertDialogSlide({
       </StyledDialogHeader>
       <StyledDialogContent sx={formOverrides}>{children}</StyledDialogContent>
     </Dialog>
-  )
+  );
 }
