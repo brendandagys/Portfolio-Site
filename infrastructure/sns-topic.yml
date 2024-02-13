@@ -1,0 +1,8 @@
+Resources:
+  SnsTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      Subscription:
+        - Endpoint: brendandagys@gmail.com
+          Protocol: email
+      TopicName: my-site-contact-form

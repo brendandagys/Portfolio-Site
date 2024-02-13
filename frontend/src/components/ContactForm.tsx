@@ -75,7 +75,7 @@ const ContactForm = ({ theme }: { theme: Theme; }): React.ReactElement => {
     });
     setFormValues(defaultValues);
 
-    console.log("Thanks! I'll be in touch very soon! :)");
+    console.log("Thanks! I'll be in touch soon!");
   };
 
   return (
