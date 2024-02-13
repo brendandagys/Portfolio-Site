@@ -265,8 +265,7 @@ const MyCard = ({
           {!descriptionContent ? null : (
             <Button
               style={{
-                backgroundColor:
-                  theme.palette.colorMode.descriptionButtonColor,
+                // backgroundColor: theme.palette.colorMode.descriptionButtonColor,
                 margin: '0 10px 5px auto',
               }}
               variant='contained'
