@@ -5,8 +5,6 @@ import { PublishCommand, SNSClient } from '@aws-sdk/client-sns';
 const snsClient = new SNSClient();
 
 const publishToSnsTopic = async (message: string, topicArn: string) => {
-  console.log(await snsClient.config.region());
-  console.log(await snsClient.config.credentials());
   const response = await snsClient.send(
     new PublishCommand({ TopicArn: topicArn, Message: message })
   );
@@ -32,8 +30,7 @@ export const sendContactEmail = asyncHandler(
     } = req.body;
 
     try {
-      // await sendEmail(name, email, subject, message);
-      await publishToSnsTopic(JSON.stringify({ name, email, subject, message }), process.env.MY_SITE_SNS_TOPIC_ARN || '');
+      await publishToSnsTopic(JSON.stringify({ name, email, subject, message }), process.env.SNS_TOPIC_ARN || '');
       res.status(201).json({ emailSent: true });
     } catch (e) {
       console.log("Error sending message:", e);
