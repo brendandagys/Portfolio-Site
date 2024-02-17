@@ -12,6 +12,9 @@ import personalBlogScreenshot from '../images/personal-blog-app-screenshot.png';
 import browserEditorScreenshot from '../images/browser-editor-app-screenshot.png';
 import spendingScreenshot from '../images/spending-app-screenshot.png';
 import cloudFormationScreenshot from '../images/cloudformation-screenshot.png';
+import vacationRentalSiteScreenshot from '../images/vacation-rental-site-screenshot.png';
+import serverlessMergeSortScreenshot from '../images/serverless-merge-sort-screenshot.png';
+import rustLogoScreenshot from '../images/rust-logo-screenshot.png';
 
 import VocabularyTrainer from '../components/VocabularyTrainer';
 import { Theme } from '@mui/material';
@@ -45,6 +48,42 @@ export type CardDataType = {
 };
 
 const portfolioCards = (theme: Theme) => [
+  {
+    image: vacationRentalSiteScreenshot,
+    title: 'Vacation Rental Serverless Website',
+    alt: 'Vacation rentals serverless website',
+    text: 'A serverless application whose backend is made with AWS SAM and Rust Lambda functions + API Gateway, and whose frontend is a React application served by CloudFront. Includes CloudFormation templates for custom resource generation on-the-fly.',
+    demoURL:
+      process.env.NODE_ENV === 'production'
+        ? 'https://calaceite.holiday'
+        : 'http://calaceite.holiday',
+    gitHubURL: 'https://github.com/brendandagys/business-site',
+    tooltipContent: '',
+  },
+  {
+    image: serverlessMergeSortScreenshot,
+    title: 'Serverless Merge Sort with AWS SAM',
+    alt: 'Serverless merge sort with AWS SAM',
+    text: 'A serverless API built with AWS SAM and the Rust programming language, that takes an array of numbers and returns them sorted, using the merge sort algorithm.',
+    gitHubURL: 'https://github.com/brendandagys/Serverless-Merge-Sort-with-AWS-SAM',
+    tooltipContent: '',
+  },
+  {
+    image: rustLogoScreenshot,
+    title: 'Rust DNS Resolver',
+    alt: 'Rust DNS Resolver',
+    text: 'A DNS resolver that takes a domain name and communicates with DNS servers to return the respective IP address.',
+    gitHubURL: 'https://github.com/brendandagys/Rust-DNS-Resolver',
+    tooltipContent: '',
+  },
+  {
+    image: rustLogoScreenshot,
+    title: 'TCP with Rust',
+    alt: 'TCP with Rust',
+    text: 'Initiate a simple TCP stream to make a GET request to my website.',
+    gitHubURL: 'https://github.com/brendandagys/TCP-with-Rust',
+    tooltipContent: '',
+  },
   {
     image: personalBlogScreenshot,
     title: 'Personal Blog',
@@ -80,6 +119,15 @@ const portfolioCards = (theme: Theme) => [
     tooltipContent: 'Click anywhere on the tile to view the application!',
   },
   {
+    image: cloudFormationScreenshot,
+    title: 'React-TypeScript Deployment with CloudFormation',
+    alt: 'React-TypeScript Deployment with CloudFormation',
+    text: 'A GitHub repository that contains CloudFormation templates that describe infrastructure to deploy your React-TypeScript application on AWS. Technologies include Docker, Fargate, S3, and many other services. Also, see my blog post that goes into step-by-step detail!',
+    gitHubURL: 'https://github.com/brendandagys/COVID-19-Screening-App',
+    descriptionContent: <CloudFormationDescription theme={theme} />,
+    tooltipContent: 'Click anywhere to view the GitHub repository!',
+  },
+  {
     image: screeningAppScreenshot,
     title: 'COVID-19 Screening',
     alt: 'COVID-19 Screening',
@@ -95,15 +143,6 @@ const portfolioCards = (theme: Theme) => [
         : 'http://localhost:5002/api/health',
     descriptionContent: <CovidScreeningDescription theme={theme} />,
     tooltipContent: 'Click anywhere on the tile to view the application!',
-  },
-  {
-    image: cloudFormationScreenshot,
-    title: 'React-TypeScript Deployment with CloudFormation',
-    alt: 'React-TypeScript Deployment with CloudFormation',
-    text: 'A GitHub repository that contains CloudFormation templates that describe infrastructure to deploy your React-TypeScript application on AWS. Technologies include Docker, Fargate, S3, and many other services. Also, see my blog post that goes into step-by-step detail!',
-    gitHubURL: 'https://github.com/brendandagys/COVID-19-Screening-App',
-    descriptionContent: <CloudFormationDescription theme={theme} />,
-    tooltipContent: 'Click anywhere to view the GitHub repository!',
   },
   {
     image: guitarShopAppScreenshot,
